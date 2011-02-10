@@ -17,5 +17,5 @@ die("not connected");
             }
             return $db;
         }
-        
+        //qweqwe
 	?>
