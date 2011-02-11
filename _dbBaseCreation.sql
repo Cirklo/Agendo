@@ -512,7 +512,7 @@ CREATE TABLE IF NOT EXISTS `mainconfig` (
 --
 
 INSERT INTO `mainconfig` (`mainconfig_id`, `mainconfig_institute`, `mainconfig_shortname`, `mainconfig_url`, `mainconfig_email`, `mainconfig_password`, `mainconfig_host`, `mainconfig_port`, `mainconfig_SMTPSecure`, `mainconfig_SMTPAuth`) VALUES
-(1, 'FCUL', 'ICAT', 'www.fc.ul.pt', 'mail@mail.com', 'pass', 'host', 25, 'stmp', 0);
+(1, 'IGC', 'IGC', 'www.igc.gulbenkian.pt', 'mail@mail.com', 'pass', 'host', 25, 'stmp', 0);
 
 -- --------------------------------------------------------
 
@@ -922,7 +922,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_login`, `user_passwd`, `user_firstname`, `user_lastname`, `user_dep`, `user_phone`, `user_phonext`, `user_mobile`, `user_email`, `user_alert`) VALUES
-(1, 'admin', '1234', 'admin', 'admin', 1, '123456789', '123', '987654321', 'adminmail@mail.com', 1);
+(1, 'admin', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'admin', 'admin', 1, '123456789', '123', '987654321', 'adminmail@mail.com', 1);
 
 -- --------------------------------------------------------
 
