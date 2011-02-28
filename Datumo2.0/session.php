@@ -49,6 +49,10 @@ function initSession($user_id){
 function startSession(){
 	session_start();
 	// $_SESSION['user_id']=28;
+
+	if(isset($_POST['user_idm']))
+		$_SESSION['user_id'] = $_POST['user_idm'];
+
 	if(isset($_SESSION['user_id'])){
 		$user = $_SESSION['user_id'];
 		return $user; 

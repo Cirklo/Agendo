@@ -201,6 +201,7 @@
 				echo "<tr>";
 					echo "<td colspan=2 style='text-align:right'>";
 						echo "<input type=button style='font-size:11px' onclick=submitUser('".$phpFile."',".$resource.",null,null) value='Login'>";
+						echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",null,null) value='AdminArea'>";
 					echo "</td>\n";
 				echo "</tr>";
 			echo "</table>";
