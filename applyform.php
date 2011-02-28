@@ -8,7 +8,8 @@ function back(){
 </script>
 <?php
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("errorHandler.php");
 
 $error = new errorHandler;
@@ -25,8 +26,8 @@ foreach ($_POST as $key=>$value){
         $key = str_replace('_', ' ',$key);
         if($key == 'Department' or $key == 'Resource' or $key == 'Type'){
             $sql = "SELECT ".strtolower($key)."_name FROM ".strtolower($key)." WHERE ".strtolower($key)."_id = $value";
-            $res = mysql_query($sql) or die (mysql_error().$sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', '')
-            $row = mysql_fetch_row($res);
+            $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql); //$sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', '')
+            $row = dbHelp::mysql_fetch_row2($res);
             $value = $row[0];
         }
         echo "<tr><td>$key</td><td><input type=text class=reg name='$key' id='$key' value='$value' readonly=readonly size=35></td></tr>";

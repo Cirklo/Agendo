@@ -4,13 +4,14 @@
 <?php
 
 require_once("genObjClass.php");
-require_once(".htconnect.php");
+require_once("__dbHelp.php");
+// require_once(".htconnect.php");
 
 function showRestrictions($user_id, $table, $j, $nrows, $userid, $order, $page, $limit, $value){
    $sql = "SELECT admin_permission FROM admin WHERE admin_table LIKE '".$table."' AND admin_user = '".$user_id."' ORDER BY admin_permission ASC";
-   $res = mysql_query($sql);
-   $n = mysql_num_rows($res);
-   $row = mysql_fetch_array($res);
+   $res = dbHelp::mysql_query2($sql);
+   $n = dbHelp::mysql_numrows2($res);
+   $row = dbHelp::mysql_fetch_row2($res);
 
    if($n == 0 and $table == 'user')
        $row[0] = 1;

@@ -3,7 +3,8 @@
 
 <?php
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("errorHandler.php");
 require_once("alert/class.phpmailer.php");
 
@@ -21,9 +22,9 @@ foreach($_POST as $key=>$value){
     if($key == 'Resource') $resource = $value;
 }
 
-$sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_SMTPSecure, mainconfig_SMTPAuth FROM mainconfig WHERE mainconfig_id = 1";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-$row = mysql_fetch_row($res);
+$sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM mainconfig WHERE mainconfig_id = 1";
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+$row = dbHelp::mysql_fetch_row2($res);
 $mail->IsSMTP(); // telling the class to use SMTP
 $mail->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = $row[5];                  // enable SMTP authentication
@@ -36,17 +37,18 @@ $mail->SetFrom($row[3], "Calendar Admin");
 $mail->AddReplyTo($row[3],"Calendar Admin");
 
 // Would only send an email to the person responsible for the equipment
-// $sql = "SELECT user_email FROM user, resource WHERE user_id = resource_resp AND resource_name LIKE '$resource'";
+// $sql = "SELECT user_email from ".dbHelp::getSchemaName()."user, resource WHERE user_id = resource_resp AND resource_name LIKE '$resource'";
 
 // Sends to all users with admin level
-$sql = "SELECT user_email FROM user WHERE user_level = 0";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+$sql = "SELECT user_email from ".dbHelp::getSchemaName()."user WHERE user_level = 0";
+echo "->".$sql."<br>";
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
 // Used when there was just one responsible
-// $row = mysql_fetch_row($res);
-
+// $row = dbHelp::mysql_fetch_row2($res);
+echo "bla->";
 	$mail->Subject = "Calendar administration: new user";
 	$mail->Body = $msg;
-	while ($row = mysql_fetch_array($res)){
+	while ($row = dbHelp::mysql_fetch_row2($res)){
 		$mail->AddAddress($row[0], "");
 	}
 

@@ -40,12 +40,12 @@ class genObj {
     */ 
     function check_field_comment($FieldName,$TableName, $user_id) {
         $error = new errorHandler;
-        mysql_select_db("information_schema");
-        $db = database(1);
+        dbHelp::mysql_select_db2("information_schema");
+        $db = dbHelp::database2(1);
         $sql="SELECT COLUMN_COMMENT FROM COLUMNS WHERE COLUMN_NAME='". $FieldName ."' and TABLE_NAME='". $TableName ."' AND TABLE_SCHEMA LIKE '".$db."'";
-        $res=mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
-        $arr[0]= mysql_fetch_row($res);
-        mysql_select_db($db);
+        $res=dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
+        $arr[0]= dbHelp::mysql_fetch_row2($res);
+        dbHelp::mysql_select_db2($db);
         return $arr[0][0];
     }
     
@@ -61,10 +61,10 @@ class genObj {
     function multiple($ObjName, $nrows, $user_id){ //nrows stands for the number of inserts
         $error = new errorHandler;      
         $sql = "show fields from ".$ObjName;
-        $res = mysql_query($sql);
-        $nfields = mysql_num_rows($res);
+        $res = dbHelp::mysql_query2($sql);
+        $nfields = dbHelp::mysql_numrows2($res);
         $i = 0; //initialize counter
-        while($row = mysql_fetch_array($res)){ //table fields (number and name)
+        while($row = dbHelp::mysql_fetch_row2($res)){ //table fields (number and name)
             $name[$i] = $row[0];
             $i++;
         }
@@ -100,7 +100,7 @@ class genObj {
             $msql .= $arr[$i];
         }
         $msql = substr($msql, 0 , strlen($msql)-1); //remove unwanted chars
-        mysql_query($msql) or die ($error->sqlError(mysql_error(), mysql_errno(), $msql, $ObjName, $user_id));
+        dbHelp::mysql_query2($msql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $msql, $ObjName, $user_id));
     }
     
     /**
@@ -114,12 +114,12 @@ class genObj {
     function add($ObjName, $user_id){
         $error = new errorHandler;
         $sql="insert into $ObjName values ('" . implode("','", $this->vars) . "')";
-        mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
+        dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
 		
 		if($ObjName == "user"){
 			$sql = "select max(".$ObjName."_id) from ".$ObjName; 
-			$idRow = mysql_query($sql) or die (mysql_error().$sql);
-			$idArray = mysql_fetch_row($idRow);
+			$idRow = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+			$idArray = dbHelp::mysql_fetch_row2($idRow);
 			$this->updatePass($ObjName, $user_id, $idArray[0]);
 		}
     }
@@ -130,13 +130,13 @@ class genObj {
 		// require_once("commonCode.php");
 		// Gets password
 		$sql="select ".$ObjName."_passwd from ".$ObjName." where ".$ObjName."_id='$id'";
-		$passRow = mysql_query($sql) or die (mysql_error().$sql);
-		$passArray = mysql_fetch_row($passRow);
+		$passRow = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+		$passArray = dbHelp::mysql_fetch_row2($passRow);
 		$pass = $passArray[0];
 		$pass = cryptPassword($pass);
 		// Encrypts it and updates it on the table
 		$sql=" update $ObjName set ".$ObjName."_passwd='".$pass."' where ".$ObjName."_id='$id'";
-        mysql_query($sql) or die (mysql_error().$sql);
+        dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
 	}
 	
     /**
@@ -152,7 +152,7 @@ class genObj {
         $pkey=$ObjName. "_id";
         $sql="delete from $ObjName where $pkey=" .$this->vars[$pkey];
         usleep(100000);
-        mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
+        dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
     }
     /**
     * @author Nuno Moreno
@@ -188,24 +188,24 @@ class genObj {
         }
         $a=substr($a,0,(strlen($a)-1));
         $sql=" update $ObjName set $a where $pkey='" .$this->vars[$pkey] . "'";
-        mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
+        dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
     }
     
     function check_foreign_key($field) {
-        $db = database(1);
-        mysql_select_db("information_schema");
-        $sql = "SELECT REFERENCED_TABLE_NAME FROM KEY_COLUMN_USAGE WHERE COLUMN_NAME = '".$field."' AND CONSTRAINT_SCHEMA LIKE '".$db."'";
-        $resf = mysql_query($sql);
-        $row = mysql_fetch_row($resf);
-        mysql_select_db($db);
+        $db = dbHelp::database2(1);
+        dbHelp::mysql_select_db2("information_schema");
+        $sql = "SELECT REFERENCED_TABLE_NAME FROM KEY_COLUMN_USAGE WHERE COLUMN_NAME = '".$field."' AND TABLE_SCHEMA LIKE '".$db."'";
+        $resf = dbHelp::mysql_query2($sql);
+        $row = dbHelp::mysql_fetch_row2($resf);
+        dbHelp::mysql_select_db2($db);
         return $row[0];        
     }
     
     function table_fields($table){
         $sql = "show fields from ".$table;
-	$res = mysql_query($sql) or die(mysql_error().$sql);
+	$res = dbHelp::mysql_query2($sql) or die($sql); //mysql_error().$sql);
 	$fields_table = "";
-	while ($row = mysql_fetch_array($res))
+	while ($row = dbHelp::mysql_fetch_row2($res))
 	{
 		$fields_table .= $row[0].", ";
 	}
@@ -216,9 +216,9 @@ class genObj {
     
     function order_by_fk($FKtable){
         $sql = "show fields from ".$FKtable;
-	$res = mysql_query($sql);
-	$resdata = mysql_data_seek($res, 1);
-	$row = mysql_fetch_array($res);
+	$res = dbHelp::mysql_query2($sql);
+	// $resdata = mysql_data_seek($res, 1);
+	$row = dbHelp::mysql_fetch_row2($res);
 	return $row[0];
     }
     

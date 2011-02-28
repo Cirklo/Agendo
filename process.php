@@ -15,7 +15,8 @@
     * 1-> regular, 2-> pre-reserve, 3->deleted, 4->Monitored
     */
     
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+// require_once("__dbHelp.php");
 require_once("permClass.php");
 require_once("alertClass.php");
 require_once("functions.php");
@@ -66,7 +67,7 @@ function add(){
     //checking the permission 
     //$perm= new permClass;
     $perm= new permClass;
-	
+
     if (!$perm->setPermission($user_id,$resource,$user_passwd)) {echo $perm->getWarning();exit;};
     if (!$perm->addRegular()) {echo $perm->getWarning();exit;};
     if (!$perm->addAhead($datetime)) {echo $perm->getWarning();exit;}
@@ -75,51 +76,48 @@ function add(){
     if (!$perm->getEntryStatus()) {echo $perm->getWarning();exit;}
     
     //if there is no associated entries it creates a new set
-    $sql="select repetition_id from repetition where repetition_code='". $code . "'";
-    $res=mysql_query($sql) or die($sql) ;
-    
-    //if there is no related entry already if creats one
-    if (mysql_num_rows($res)==0) {    
-        $sql="insert into repetition values(''," . $code . ")";
-        mysql_query($sql) or die($sql);
+    $sql="select repetition_id from repetition where repetition_code='".$code."'";
+    $res=dbHelp::mysql_query2($sql) or die($sql) ;
+    //if there is no related entry already it creates one
+    if (dbHelp::mysql_numrows2($res)==0) {    
+        $sql="insert into repetition(repetition_code) values(" . $code . ")";
+        dbHelp::mysql_query2($sql) or die($sql);
     }
-    
+
     //getting the entry code
     $sql="select repetition_id from repetition where repetition_code='". $code . "'";
-    $res=mysql_query($sql) or die($sql);
-    $arrrep=mysql_fetch_array($res);
-    
-    
+
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    $arrrep=dbHelp::mysql_fetch_row2($res);
+	//201102251200
     $day=substr($datetime,6,2);
     $month=substr($datetime,4,2);
     $year=substr($datetime,0,4);
     $weekahead=$datetime;
     $notify=new alert($resource);   
     if ($repeat=='false') $enddate='999999999999';
-    
     //building the repetition pattern
     while ((substr($weekahead,0,8)<=$enddate) && ($w<53)) {
         if (!$perm->addAhead($weekahead)) {echo $perm->getWarning();exit;}
         if (!$perm->checkOverlap($weekahead,$slots)) {echo $perm->getWarning();exit;}
-        $sql="insert into entry values(''," . $user_id . ",str_to_date('" . $weekahead ."','%Y%m%d%H%i')," . $slots .",". $assistance ."," . $arrrep[0] .",". $EntryStatus . "," . $resource . ", '".date('Y-m-d H:i:s',time())."',NULL)";
-        mysql_query($sql) or die($sql);
-        
-       
-        $sql="";
-        $sql="SELECT LAST_INSERT_ID()";
-        $res=mysql_query($sql) or die($sql);
-        $last=mysql_fetch_array($res);
+        $sql="insert into entry(entry_user,entry_datetime,entry_slots,entry_assistance,entry_repeat,entry_status,entry_resource,entry_action,entry_comments) values(".$user_id.",".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i')."," . $slots .",". $assistance ."," . $arrrep[0] .",". $EntryStatus . "," . $resource . ", '".date('Y-m-d H:i:s',time())."',NULL)";
+        dbHelp::mysql_query2($sql) or die($sql);
+
+        // $sql="SELECT LAST_INSERT_ID()";
+        $sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = ".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i')." and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
+        $res=dbHelp::mysql_query2($sql) or die($sql);
+        $last=dbHelp::mysql_fetch_row2($res);
         $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
-        $res=mysql_query($sql) or die($sql);
+        $res=dbHelp::mysql_query2($sql) or die($sql);
         $extra= array();
-        for ($i=0;$i<mysql_numrows($res);$i++) {
-            mysql_data_seek($res,$i);
-            $arr=mysql_fetch_array($res);
+        for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+            // mysql_data_seek($res,$i);
+            $arr=dbHelp::mysql_fetch_row2($res);
             $var=$arr[0];
             $val=clean_input($_GET[$var]);
             eval("\$$var='$val';");
-            $sql="insert into xfieldsval values('',". $last[0] . "," . $arr[1] . ",'" . $val . "')";
-            mysql_query($sql) or die($sql);
+            $sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(". $last[0] . "," . $arr[1] . ",'" . $val . "')";
+            dbHelp::mysql_query2($sql) or die($sql);
             $extra[$arr[0]]=$val;
         }
         $notify->setSlots($slots);
@@ -152,12 +150,12 @@ function del(){
   
     // Gets the all the users, entry_ids and status of the given entry_id date, of a given resource
     $sql="SELECT entry_user,entry_id,entry_status FROM entry where entry_datetime=(select entry_datetime from entry where entry_id=".$entry.") and entry_resource=".$resource." AND entry_status IN ( 1, 2, 4 ) order by entry_id";
-    $res=mysql_query($sql) or die($sql);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
     $found=false;
     $perm= new permClass;
-    for ($i=0;$i<mysql_numrows($res);$i++) {
-        mysql_data_seek($res,$i);
-        $arr=mysql_fetch_array($res);
+    for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+        // mysql_data_seek($res,$i);
+        $arr=dbHelp::mysql_fetch_row2($res);
 		// Checks if the current user from the $res list is allowed to delete the current entry
         // if($perm->setPermission($arr[0],$resource,$user_passwd)){
 		// Checks if the given user is allowed to delete the current entry
@@ -175,24 +173,23 @@ function del(){
     if ($entry!=$arr[1]) $deleteall=0; //delete from monitor does not allow delete all 
     
 
-    $extra =" and addtime(entry_datetime,'-" .  $perm->getResourceDelHour() . ":0:0') > now()";
-   
+    // $extra =" and addtime(entry_datetime,'-" .  $perm->getResourceDelHour() . ":0:0') > now()";
+    $extra =" and ".dbHelp::date_sub('entry_datetime',$perm->getResourceDelHour(),'hour')." > now()";
     if ($perm->addBack($arr[1])) $extra =""; //if you can delete back there is no time restriction
     
-    $sql="select entry_repeat,date_format(entry_datetime,'%Y%m%d%H%i'),entry_status from entry where entry_id=". $entry;
-    $res=mysql_query($sql);
-    $arr=mysql_fetch_row($res);
+    $sql="select entry_repeat,".dbHelp::getFromDate('entry_datetime','%Y%m%d%H%i').",entry_status from entry where entry_id=". $entry;
+    $res=dbHelp::mysql_query2($sql);
+    $arr=dbHelp::mysql_fetch_row2($res);
     $status=$arr[2]; // to set the waitlist with the same status as previous one
-    
     if ($deleteall==1){     
         $sql="update entry set entry_status=3 where entry_repeat=" . $arr[0] . $extra;
     } else {
         $sql="update entry set entry_status=3 where entry_id=" . $seekentry . $extra;
     }
-    
     //echo $sql;
-    mysql_query($sql) or die ($sql);
-    if (mysql_affected_rows()==0) {
+    $resPDO = dbHelp::mysql_query2($sql) or die ($sql);
+    // if (mysql_affected_rows()==0) {
+    if (dbHelp::mysql_numrows2($resPDO)==0) {
         echo "No permission to delete selected entry(ies)";
     } else {
 		$notify=new alert($resource);
@@ -204,13 +201,14 @@ function del(){
             if (($perm->getResourceStatus()==4)) { // if there is a manager and user is the same as in the entry, ie, not admin              
                 $notify->toAdmin($arr[1],'','delete');
             }
-            $sql="select @edt:=entry_datetime,@res:=entry_resource from entry where entry_id=". $entry;
-            $res=mysql_query($sql) or die ($sql);
+            // $sql="select @edt:=entry_datetime,@res:=entry_resource from entry where entry_id=". $entry;
+            // $res=dbHelp::mysql_query2($sql) or die ($sql);
             
             $notify->toWaitList('delete'); // for waiting list. As to be send before update the entry to regular.    
             
-            $sql="update entry set entry_status=" . $status ." where entry_status=4 and entry_resource=@res and entry_datetime=@edt";
-            $res=mysql_query($sql) or die ($sql);
+            // $sql="update entry set entry_status=" . $status ." where entry_status=4 and entry_resource=@res and entry_datetime=@edt";
+            $sql="update entry set entry_status=" . $status ." where entry_status=4 and (entry_resource, entry_datetime) in (select entry_resource,entry_datetime from entry where entry_id=". $entry.")";
+            $res=dbHelp::mysql_query2($sql) or die ($sql);
             
         }
         
@@ -237,55 +235,58 @@ function update(){
     
     $perm= new permClass;
  
-           
     if (!$perm->setPermission($user_id,$resource,$user_passwd)) {echo $perm->getWarning();return;}
     if (!$perm->addBack($datetime)) {echo $perm->getWarning();return;}
 
-    $extra =" and addtime(entry_datetime,'-" .  $perm->getResourceDelHour() . ":0:0') > now()";
+    // $extra =" and addtime(entry_datetime,'-" .  $perm->getResourceDelHour() . ":0:0') > now()";
+    $extra =" and ".dbHelp::date_sub('entry_datetime',$perm->getResourceDelHour(),'hour')." > now()";
     if ($perm->addBack($arr[1])) $extra =""; //if you can delete back there is no time restriction
     //if (!$perm->addBack($datetime)) $extra =" and addtime(entry_datetime,'-" .  $perm->getResourceDelHour() . ":0:0') > now()";
     
     if (!$perm->addAhead($datetime)) {echo $perm->getWarning();return;}
     //checking datetime before update
-    $sql="select @edt:=entry_datetime,@res:=entry_resource,entry_user from entry where entry_id=". $entry;
-    $resdt=mysql_query($sql) or die($sql);
-    $arrdt=mysql_fetch_row($resdt);
+    // $sql="select @edt:=entry_datetime,@res:=entry_resource,entry_user from entry where entry_id=". $entry;
+    $sql="select entry_datetime,entry_resource,entry_user from entry where entry_id=". $entry;
+    $resdt=dbHelp::mysql_query2($sql) or die($sql);
+    $arrdt=dbHelp::mysql_fetch_row2($resdt);
     if ($user_id!=$arrdt[2]) {echo "Wrong User";exit;} // if update not from same user
 	
-    $sql="update entry set entry_user=$user_id, entry_datetime=str_to_date('" . $datetime ."','%Y%m%d%H%i'),entry_slots=$slots where entry_id=". $entry;
-    mysql_query($sql . $extra) or die("User not updated!");
+    $sql="update entry set entry_user=".$user_id.", entry_datetime=".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i').",entry_slots=".$slots." where entry_id=". $entry;
+    $resPDO = dbHelp::mysql_query2($sql . $extra) or die("User not updated!");
     
-    if (mysql_affected_rows()==0) {
+    // if (mysql_affected_rows()==0) {
+    if (dbHelp::mysql_numrows2($resPDO)==0) {
         echo "User not updated. ";
     } else {
         //notification for waiting list
-        $sql="select entry_id, user_id from entry,user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
-        $res=mysql_query($sql);
-        $arrStatus=mysql_fetch_row($res);
-        if (mysql_num_rows($res)>0) {
+        // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
+        $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime=".$arrdt[0]." and entry_resource=".$arrdt[1]." order by entry_id";
+        $res=dbHelp::mysql_query2($sql);
+        $arrStatus=dbHelp::mysql_fetch_row2($res);
+        if (dbHelp::mysql_numrows2($res)>0) {
             $notify=new alert($resource);
             $notify->setUser($arrStatus[1]);
             $notify->setEntry($arrStatus[0]);
             $notify->toWaitList('update'); //only eventually notify if not delete from monitor
             
             $sql="delete from entry where entry_id=" . $arrStatus[0]; // deleting a monitoring entry
-            mysql_query($sql);
+            dbHelp::mysql_query2($sql);
             //echo $sql
             
         }
     }
     
     $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
-    $res=mysql_query($sql) or die($sql);
-    for ($i=0;$i<mysql_numrows($res);$i++) {
-        mysql_data_seek($res,$i);
-        $arr=mysql_fetch_array($res);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+        // mysql_data_seek($res,$i);
+        $arr=dbHelp::mysql_fetch_row2($res);
         $var=$arr[0];
         $val=$_GET[$var];
         $extra[$arr[0]]=$val;
         eval("\$$var='$val';");
         $sql="update xfieldsval set xfieldsval_value='$val' where xfieldsval_entry=$entry and xfieldsval_field=" . $arr[1];
-        mysql_query($sql) or die("Entry info not updated!");
+        dbHelp::mysql_query2($sql) or die("Entry info not updated!");
         
     }
     $notify=new alert($resource);
@@ -322,18 +323,18 @@ function monitor(){
     $perm= new permClass;
     if (!$perm->setPermission($user_id,$resource,$user_passwd)) {echo $perm->getWarning();return;}
     
-    $sql="insert into repetition values(''," . $code . ")";
-    mysql_query($sql) or die($sql);
+    $sql="insert into repetition(repetition_code) values(" . $code . ")";
+    dbHelp::mysql_query2($sql) or die($sql);
     
     $sql="select repetition_id from repetition where repetition_code='". $code . "'";
-    $res=mysql_query($sql) or die($sql);
-    $arrrep=mysql_fetch_array($res);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    $arrrep=dbHelp::mysql_fetch_row2($res);
 
 	require_once("commonCode.php");
     $sql="select entry.entry_datetime, resource.resource_resp from entry, resource where entry.entry_resource=resource.resource_id and entry_id=".$entry;
-    $res=mysql_query($sql) or die($sql);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
 	$currentDate = date('Y-m-d H:i:s',time());
-    $arr=mysql_fetch_row($res);
+    $arr=dbHelp::mysql_fetch_row2($res);
 	// Only the "manager"/responsavel of a certain resource can monitor entries in the past
 	if($currentDate > $arr[0] && $user_id != $arr[1]){
 		echo "You cannot monitor entries in the past";
@@ -343,8 +344,8 @@ function monitor(){
 	
 	// Block of code changed to stop users from getting in the waiting list more then once
     $sql="select * from entry where entry_user = ".$user_id." and entry_status != 3 and entry_datetime in (select entry_datetime from entry where entry_id=".$entry.")";
-    $res=mysql_query($sql) or die($sql);
-    $arr=mysql_fetch_array($res);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    $arr=dbHelp::mysql_fetch_row2($res);
     // if ($arr[1]==$user_id) {echo "User already on the waiting list!";exit;};
 
 	if(!empty($arr[0])){
@@ -352,24 +353,25 @@ function monitor(){
 		exit;
 	};
     $sql="select * from entry where entry_id=" . $entry;
-    $res=mysql_query($sql) or die($sql);
-    $arr=mysql_fetch_array($res);
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    $arr=dbHelp::mysql_fetch_row2($res);
     // end of block change
 	
-    $sql="insert into entry values(''," . $user_id . ",'" .$arr[2] . "',". $arr[3] . ",". $arr[4] . ",". $arrrep[0] . ",4," .$arr[7]. ",'".date('Y-m-d H:i:s',time())."',NULL)";  
-    mysql_query($sql) or die($sql);
+    $sql="insert into entry(entry_user,entry_datetime,entry_slots,entry_assistance,entry_repeat,entry_status,entry_resource,entry_action,entry_comments) values(" . $user_id . ",'" .$arr[2] . "',". $arr[3] . ",". $arr[4] . ",". $arrrep[0] . ",4," .$arr[7]. ",'".date('Y-m-d H:i:s',time())."',NULL)";  
+    dbHelp::mysql_query2($sql) or die($sql);
     
-    $sql="SELECT LAST_INSERT_ID()";
-    $res=mysql_query($sql) or die($sql);
-    $last=mysql_fetch_array($res);
+    // $sql="SELECT LAST_INSERT_ID()";
+	$sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = ".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i')." and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
+    $res=dbHelp::mysql_query2($sql) or die($sql);
+    $last=dbHelp::mysql_fetch_row2($res);
         
     $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
-        $res=mysql_query($sql) or die($sql);
-        for ($i=0;$i<mysql_numrows($res);$i++) {
-            mysql_data_seek($res,$i);
-            $arrx=mysql_fetch_array($res);
-            $sql="insert into xfieldsval values('',". $last[0] . "," . $arrx[1] . ",'Update info')";
-            mysql_query($sql) or die($sql);
+        $res=dbHelp::mysql_query2($sql) or die($sql);
+        for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+            // mysql_data_seek($res,$i);
+            $arrx=dbHelp::mysql_fetch_row2($res);
+            $sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(". $last[0] . "," . $arrx[1] . ",'Update info')";
+            dbHelp::mysql_query2($sql) or die($sql);
         }
     echo "Entry monitored!";
     
@@ -407,13 +409,15 @@ function confirm(){
     echo $perm->getResourceStatus(),$perm->getWasAdmin();
     
     $sql="update entry set entry_status=1 where entry_id=" . $entry;
-    mysql_query($sql) or die($sql);
-    if (mysql_affected_rows()!=0)  echo $perm->getWarning();
+    $resPDO = dbHelp::mysql_query2($sql) or die($sql);
+    // if (mysql_affected_rows()!=0)  echo $perm->getWarning();
+    if (dbHelp::mysql_numrows2($resPDO)==0) echo $perm->getWarning();
     
-    $sql="select @dt:=entry_datetime from entry where entry_id=" . $entry;
-    mysql_query($sql) or die($sql);
-    $sql="delete from entry where entry_datetime=@dt and entry_status in (1,2,4) and entry_id<>". $entry . " and entry_resource=" . $resource;
-    mysql_query($sql) or die($sql);
+    // $sql="select @dt:=entry_datetime from entry where entry_id=" . $entry;
+    // dbHelp::mysql_query2($sql) or die($sql);
+    // $sql="delete from entry where entry_datetime=@dt and entry_status in (1,2,4) and entry_id<>". $entry . " and entry_resource=" . $resource;
+    $sql="delete from entry where entry_datetime in (select entry_datetime from entry where entry_id=".$entry.") and entry_status in (1,2,4) and entry_id<>". $entry . " and entry_resource=" . $resource;
+    dbHelp::mysql_query2($sql) or die($sql);
     
 }
 
@@ -432,7 +436,7 @@ function addcomments(){
     
     $sql="update entry set entry_comments='" . $comments . " 'where entry_id=" . $entry;
     if ($comments!='') $notify->toAdmin(date("YmdHi"),'','comment',$comments); 
-    mysql_query($sql) or die($sql);
+    dbHelp::mysql_query2($sql) or die($sql);
     echo "Comment added";
 }
 ?>

@@ -1,0 +1,67 @@
+body{
+	background: #1e4f54;
+}
+
+.hButton, .hButtonSelected, .hCollapseButton, .hPanel{
+	text-align: center;
+	margin: 5;
+	padding: 0;
+	width: 220;
+	cursor: pointer;
+	font-family: Verdana;
+	font-size: 24px;
+}
+
+.hButton{
+	/*
+	font-weight: bold;
+	*/
+	border: 0px solid;
+	background: #1e4f54;
+	color: #f2c53d;
+}
+
+.hButtonSelected{
+	/*
+	border: 1px solid #B9E3FF;
+	font-weight: bold;
+	*/
+	background: #009999;
+	color: #f2c53d;
+}
+
+.hCollapseButton{
+	/*
+	border: 1px solid #f2c53d;
+	background: #ffffff;
+	color: #d2334e;
+	*/
+	background: #1e4f54;
+	color: #f2c53d;
+	font-size: 15;
+}
+
+.hPanel{
+	/*
+	background: #cccccc;
+	border: 1px solid #f2c53d;
+	*/
+	font-size: 12;
+}
+
+.howToText{
+	height: 30;
+	font-size: 12;
+	color: white;
+}
+
+.iframeHowTo{
+	border: 0px solid;
+}
+
+.iframeTopic{
+	border: 0px solid;
+	/*
+	background: #cccccc;
+	*/
+}

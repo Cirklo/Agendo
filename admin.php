@@ -88,7 +88,7 @@ require_once("errorHandler.php");
 
 $error = new errorHandler;
 
-$db = database(1);
+$db = dbHelp::database2(1);
 
 //initialize arrays
 $arr_table = array();
@@ -98,21 +98,21 @@ if($db == 'requisitions'){
    create_basket($user_id);
 }
 
-//Searches available tables for the specific user
+//Searches available tables for the specific user //Doesnt give problems in postgrsql
 $sql = "SELECT admin_table FROM admin WHERE admin_user = '".$user_id."' GROUP BY admin_table ORDER BY admin_table ASC";
-$result = mysql_query($sql);
-$num_rows = mysql_num_rows($result);
+$result = dbHelp::mysql_query2($sql);
+$num_rows = dbHelp::mysql_numrows2($result);
 $i = 0;
-while($line = mysql_fetch_array($result)){
+while($line = dbHelp::mysql_fetch_array2($result)){
    $arr_table[$i] = $line[0];
    $i++;
 }
 //Header
 echo "<h1 align=left>Admin Area</h1>";
-$sql = "SELECT * FROM user WHERE user_id = ".$user_id;
-$res = mysql_query($sql);
+$sql = "SELECT * from ".dbHelp::getSchemaName()."user WHERE user_id = ".$user_id;
+$res = dbHelp::mysql_query2($sql);
 $nfields = mysql_num_fields($res);
-$row = mysql_fetch_array($res);
+$row = dbHelp::mysql_fetch_array2($res);
 echo "Welcome to your admininstration area, ".$row['user_firstname']." ".$row['user_lastname']."!";
 echo "<br /><br />";
 
@@ -136,9 +136,9 @@ echo "<div id=announcements name=announcements style='position:absolute;z-index:
 echo "<table border=0>";
 echo "<tr>";
 $sql = "SELECT announcement_date, announcement_title, announcement_message, announcement_end_date, resource_name FROM announcement, resource WHERE announcement_object=resource_id AND announcement_end_date > now() ORDER BY announcement_end_date ASC";
-$res = mysql_query($sql) or die (mysql_error().$sql);
-if(mysql_num_rows($res) != 0){
-   while ($row = mysql_fetch_array($res)){
+$res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+if(dbHelp::mysql_numrows2($res) != 0){
+   while ($row = dbHelp::mysql_fetch_array2($res)){
        echo "<b>".$row[0]." - ".$row[4]."</b>: ".$row[1]."<br>";
        echo $row[2]."<br>";
        echo "<b>Available until</b>: ".$row[3]."<br><br>";
@@ -167,9 +167,9 @@ if($db == 'animalhouse'){
    echo "<form name=calform method=post>";
    echo "Calendar access: ";
    echo "<select name=usercalendar id=usercalendar>";
-   $sql = "SELECT user_id, user_login FROM user";
-   $res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
-   while($row = mysql_fetch_array($res)){
+   $sql = "SELECT user_id, user_login from ".dbHelp::getSchemaName()."user";
+   $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
+   while($row = dbHelp::mysql_fetch_array2($res)){
    echo "<option value=".$row[0].">".$row[1]."</option>";
    }
    echo "</select>";

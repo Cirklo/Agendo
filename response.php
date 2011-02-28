@@ -8,34 +8,35 @@
   @ ajax request handler
 */
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("functions.php");
-$db = database(1);
-mysql_select_db('information_schema');
+$db = dbHelp::database2(1);
+dbHelp::mysql_select_db2('information_schema');
 
 $id = $_GET['id'];
 $value = clean_input($_GET['val']);
 
-$sql = "SELECT REFERENCED_TABLE_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND COLUMN_NAME = '".$id."' AND CONSTRAINT_SCHEMA LIKE '".$db."'";
-$resf = mysql_query($sql);
-while($row = mysql_fetch_array($resf))
+$sql = "SELECT REFERENCED_TABLE_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND COLUMN_NAME = '".$id."' AND TABLE_SCHEMA LIKE '".$db."'";
+$resf = dbHelp::mysql_query2($sql);
+while($row = dbHelp::mysql_fetch_row2($resf))
 {
 	$table = $row[0];
 	
 }
 
-mysql_select_db($db);
+dbHelp::mysql_select_db2($db);
 
 $sql = "show fields from ".$table;
-$res = mysql_query($sql) or die ($sql);
-mysql_data_seek($res,0);
-$field1 = mysql_fetch_row($res);
-mysql_data_seek($res,1);
-$field2 = mysql_fetch_row($res); 
+$res = dbHelp::mysql_query2($sql) or die ($sql);
+// mysql_data_seek($res,0);
+$field1 = dbHelp::mysql_fetch_row2($res);
+// mysql_data_seek($res,1);
+$field2 = dbHelp::mysql_fetch_row2($res); 
 
 $sql="select " . $field2[0] . ",". $field1[0] . " from $table where lower(" . $field2[0] . ") like lower('" . $value . "%')";
-$res = mysql_query($sql) or die ($sql);
-$arr = mysql_fetch_row($res);
+$res = dbHelp::mysql_query2($sql) or die ($sql);
+$arr = dbHelp::mysql_fetch_row2($res);
 echo $arr[1];
 
 ?>

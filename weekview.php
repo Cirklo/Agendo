@@ -23,16 +23,16 @@
 
 <?php
 error_reporting(1);
-// require_once("commonCode.php");
+require_once("commonCode.php");
 require_once("calClass.php");
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
 require_once("functions.php");
 require_once("genMsg.php");
 
 $resource=clean_input($_GET['resource']);
+// $resource=$_GET['resource'];
 
 if (isset($_GET['update'])) {$update=clean_input($_GET['update']);$entry=clean_input($_GET['update']);} else {$update=0;} ;
-
 //instatiation for calendar
 $calendar=new cal($resource,$update);
 $message=new genMsg;
@@ -41,7 +41,6 @@ $message=new genMsg;
 if (isset($_GET['action'])) {$action =$_GET['action'];} else {$action =0;} ;
 if (isset($_GET['msg'])) {$msg =$_GET['msg'];} else {$msg ='';} ;
  
-
 //html body starts Here
 //##############################################
 echo "<body onload=init(" . $calendar->getStatus() . "," . $calendar->getMaxSlots() . ")>";
@@ -76,9 +75,8 @@ echo "</div>";
 
 //for displaying calendar
 $sql = "SELECT mainconfig_institute, mainconfig_shortname, mainconfig_url FROM mainconfig WHERE mainconfig_id = 1";
-$res = mysql_query($sql);
-$institute = mysql_fetch_row($res);
-
+$res = dbHelp::mysql_query2($sql);
+$institute = dbHelp::mysql_fetch_row2($res);
 
 echo "<div id=calendar class='calendar'> ";
 	echo "<table border=0 class=logo id='logo' width=\"100%\">";
@@ -114,11 +112,11 @@ echo "<div id=calendar class='calendar'> ";
     } else {        
         $calendar->setStartDate(date("Ymd",mktime(0,0,0, date("m"), date("d")-date("N"),date("Y"))));
     }
-    if ($calendar->getStatus()==0 or $calendar->getStatus()==2) { //inactive or invisible
+   if ($calendar->getStatus()==0 or $calendar->getStatus()==2) { //inactive or invisible
         echo "<h1 style='color:#cc8888'>".$calendar->getResourceName()." not available for reservations</h1>";
-        $sql ="SELECT user_firstname,user_lastname,user_email from user,resource where user_id=resource_resp";
-        $res=mysql_query($sql);
-        $arr= mysql_fetch_assoc($res);
+        $sql ="SELECT user_firstname,user_lastname,user_email from ".dbHelp::getSchemaName()."user,resource where user_id=resource_resp";
+        $res = dbHelp::mysql_query2($sql);
+        $arr = dbHelp::mysql_fetch_array2($res);
         echo "<h2>Please contact " . $arr['user_firstname'] . " ".$arr['user_lastname'] . "</h2>";
         echo "<a href=weekview.php?resource=" . ($calendar->getResource() -1) . "&date=" . $calendar->getStartDate() . "><img border=0 src=pics/resminus.png></a>";
         echo "<a href=weekview.php?resource=" . ($calendar->getResource() +1) . "&date=" . $calendar->getStartDate() . "><img border=0 src=pics/resplus.png></a>";
@@ -129,19 +127,26 @@ echo "<div id=calendar class='calendar'> ";
         $entry=clean_input($_GET['entry']);
         $calendar->setEntry($entry);
         $sql ="SELECT xfields_name,xfieldsval_value, xfields_label from xfields , resxfields,xfieldsval where xfieldsval_field= xfields_id and xfields_id=resxfields_field and resxfields_resource=" . $calendar->getResource(). " and xfieldsval_entry=".$calendar->getEntry();
-        $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
-        //$sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
-        $rese=mysql_query($sqle);
-        $arre= mysql_fetch_assoc($rese);
+		
+        // $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
+		$sqlWeekDay = "select ".dbHelp::getFromDate('entry_datetime','%w')." from entry where entry_id=".$calendar->getEntry();
+		$res = dbHelp::mysql_query2($sqlWeekDay);
+		$arr = dbHelp::mysql_fetch_row2($res);
+        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub('entry_datetime',$arr[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
+		
+        // $sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
+        $rese=dbHelp::mysql_query2($sqle);
+        $arre= dbHelp::mysql_fetch_array2($rese);
         $calendar->setStartDate($arre['date']);
         $calendar->setCalRepeat($arre['entry_repeat']);
         $user=$arre['entry_user'];
         $nslots=$arre['entry_slots'];
-        $entrystart=$arre['starttime'];
+        // $entrystart=$arre['starttime'];
+        $entrystart= $arre['dateHour'] + $arre['dateMinutes']/60;
         
         //
         // this is not working!!
-        //I should no make this sql query for everything should be in the collection. This is a hack!
+        //I should not make this sql query for everything should be in the collection. This is a hack!
         //____________________________________
         //$entrystart=$calendar->item($calendar->getEntry()).getStartTime();
         //$nslots=$calendar->item($calendar->getEntry()).getNslots();
@@ -151,16 +156,23 @@ echo "<div id=calendar class='calendar'> ";
     } elseif ($update!=0) {
         $calendar->setEntry($update);
         $sql ="SELECT xfields_name,xfieldsval_value, xfields_label from xfields , resxfields,xfieldsval where xfieldsval_field= xfields_id and xfields_id=resxfields_field and resxfields_resource=" . $calendar->getResource(). " and xfieldsval_entry=".$calendar->getEntry();
-        $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
+		
+        // $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
+		$sqlWeekDay = "select ".dbHelp::getFromDate('entry_datetime','%w')." from entry where entry_id=".$calendar->getEntry();
+		$res = dbHelp::mysql_query2($sqlWeekDay);
+		$arr = dbHelp::mysql_fetch_row2($res);
+        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub('entry_datetime',$arr[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
         //$sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
-        $rese=mysql_query($sqle);
-        $arre= mysql_fetch_assoc($rese);
+        $rese=dbHelp::mysql_query2($sqle);
+        $arre= dbHelp::mysql_fetch_array2($rese);
         $calendar->setStartDate($arre['date']);
         $calendar->setCalRepeat($arre['entry_repeat']);
         $user=$arre['entry_user'];
         $nslots=$arre['entry_slots'];
+        // $entrystart=$arre['starttime'];
         $entrystart=$arre['starttime'];
-        
+		$entrystart= $arre['dateHour'] + $arre['dateMinutes']/60;
+
     } else {
             $calendar->setEntry(0);
             $entrystart=0;
@@ -173,8 +185,8 @@ echo "<div id=calendar class='calendar'> ";
 echo "</div>";
 
 $table='entry';
-$res=mysql_query($sql);
-$nxfields=mysql_num_rows($res);
+$res=dbHelp::mysql_query2($sql);
+$nxfields=dbHelp::mysql_numrows2($res);
 
 //entries menu
 //############
@@ -193,11 +205,11 @@ echo "<tr><td colspan=2>";
 echo "<table style='width:160px;padding:0px;'><tr><td>";
 
 $sql="select resource_status,resource_id from resource where resource_status not in (0,2) order by resource_name";
-$resResources=mysql_query($sql);
+$resResources=dbHelp::mysql_query2($sql);
 $nextDetected = false;
 $currentDetected = false;
 // Loop that finds the previous and next "line" composed of resourceStatus and resourceId of the $calendar->getResource() id
-while($resArray = mysql_fetch_array($resResources)){
+while($resArray = dbHelp::mysql_fetch_row2($resResources)){
 	$currentId = $resArray[1];
 	if($calendar->getResource()!=$currentId){
 		if(!$currentDetected){
@@ -214,19 +226,19 @@ while($resArray = mysql_fetch_array($resResources)){
 
 //// checking next resource (old version ordered by id)
 // $sql="select resource_status,resource_id from resource where resource_status not in (0,2) and resource_id<". ($calendar->getResource() ) . " order by resource_id desc";
-// $resprev=mysql_query($sql);
+// $resprev=dbHelp::mysql_query2($sql);
 
 // $sql="select resource_status,resource_id from resource where resource_status not in (0,2) and resource_id>". ($calendar->getResource() ) . " order by resource_id";
-// $resnext=mysql_query($sql);
+// $resnext=dbHelp::mysql_query2($sql);
 
 
-// $arrprev=mysql_fetch_row($resprev);
-// $arrnext=mysql_fetch_row($resnext);
+// $arrprev=dbHelp::mysql_fetch_row2($resprev);
+// $arrnext=dbHelp::mysql_fetch_row2($resnext);
 
 $n=0;
 
 // Old version
-// if (mysql_num_rows($resprev)>0) {
+// if (dbHelp::mysql_numrows2($resprev)>0) {
 if (sizeof($arrprev)!=0) {
 	echo "<a href=weekview.php?resource=" . $arrprev[1] . "&date=" . $calendar->getStartDate() . "><img border=0 src=pics/resminus.png></a>"; 
 } else {
@@ -239,10 +251,10 @@ echo "<td/><td>";
 $n=0;
 
 //Old version
-// if (mysql_num_rows($resnext)>0) {
+// if (dbHelp::mysql_numrows2($resnext)>0) {
 if (sizeof($arrnext)!=0) {
 		// Part of the old version, didn't seem to be working
-        //while  (($arrnext[0]=='0' or $arrnext[0]=='2') and mysql_fetch_row($resprev)) { $n=$n+1;myqs_dataseek($resprev,$n);}
+        //while  (($arrnext[0]=='0' or $arrnext[0]=='2') and dbHelp::mysql_fetch_row2($resprev)) { $n=$n+1;myqs_dataseek($resprev,$n);}
 	echo "<a href=weekview.php?resource=" . $arrnext[1] . "&date=" . $calendar->getStartDate() . "><img border=0 src=pics/resplus.png></a>";
 } else {
     echo "<img border=0 src=pics/resplus.png>"; 
@@ -254,7 +266,7 @@ echo "<h2 align=center>". $calendar->getResourceName() ."</h2><hr></td></tr>";
 echo "<tr>";
 	echo "<td colspan=2>Repeat Week Pattern</td>";
 	echo "<tr>";
-		echo "<td><center><input lang=send type=checkbox onkeypress='return noenter()' onclick=\"activate_date(document.entrymanage.enddate);\" id=repeat name=repeat value=1></td><td><input style='width:70px' class=inpbox name=enddate lang=send id=enddate size=9 disabled=true type=textbox value=''></td>";
+		echo "<td><center><input lang=send type=checkbox onkeypress='return noenter()' onclick=\"activate_date(document.entrymanage.enddate);\" id=repeat name=repeat value=1></td><td><input style='width:70px' class=inpbox name='enddate' lang=send id='enddate' size=9 disabled=true type=textbox value=''></td>";
 	echo "</tr>\n";
 	echo "<tr>";
 		echo "<td><center><input  lang=send type=checkbox onkeypress='return noenter()' name=assistance value=1></td><td>Assistance</td>";
@@ -267,8 +279,8 @@ echo "<tr>";
 	echo "<script type='text/javascript'>Calendar.setup({inputField	 : 'enddate',baseField    : 'element_2',button: 'enddate',ifFormat: '%Y %e, %D',onSelect: selectDate});	</script></td>";
 echo "</tr>\n";
 for ($i=0;$i<$nxfields;$i++){
-    mysql_data_seek($res,$i);
-    $arrxfields= mysql_fetch_assoc($res);
+    // mysql_data_seek($res,$i);
+    $arrxfields= dbHelp::mysql_fetch_array2($res);
     echo "<tr><td colspan=2>". $arrxfields['xfields_label']. "<br><input lang=send onkeypress='return noenter()' class=inpbox  id='". $arrxfields['xfields_name'].  "'  name='". $arrxfields['xfields_name'].  "' ";
 		if ($calendar->getEntry()!=0) echo "value='" . $arrxfields['xfieldsval_value']. "'";
     echo "></td></tr>\n";

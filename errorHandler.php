@@ -21,9 +21,9 @@ class errorHandler extends PHPMailer{
     
     function __construct() {
     
-        $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_SMTPSecure, mainconfig_SMTPAuth FROM mainconfig WHERE mainconfig_id = 1";
-        $res = mysql_query($sql) or die ($sql);
-        $row = mysql_fetch_row($res);
+        $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM mainconfig WHERE mainconfig_id = 1";
+        $res = dbHelp::mysql_query2($sql) or die ($sql);
+        $row = dbHelp::mysql_fetch_row2($res);
         $this->IsSMTP(); // telling the class to use SMTP
         $this->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
         $this->SMTPAuth   = $row[5];                  // enable SMTP authentication
@@ -102,16 +102,16 @@ class errorHandler extends PHPMailer{
     }
     
     function getUser($id){ //get user login
-        $sql = "SELECT user_login FROM user WHERE user_id =".$id;
-        $res = mysql_query($sql);
-        $row = mysql_fetch_row($res);
+        $sql = "SELECT user_login from ".dbHelp::getSchemaName()."user WHERE user_id =".$id;
+        $res = dbHelp::mysql_query2($sql);
+        $row = dbHelp::mysql_fetch_row2($res);
         return $row[0];
     }
     
-    function getAdmin($id){ //Search for any administration entry
+    function getAdmin($id){ //Search for any administration entry // Doesnt give problems in postgrsql
         $sql = "SELECT admin_table FROM admin WHERE admin_user = '".$id."' GROUP BY admin_table ORDER BY admin_table ASC";
-        $result = mysql_query($sql);
-        $num_rows = mysql_num_rows($result);
+        $result = dbHelp::mysql_query2($sql);
+        $num_rows = dbHelp::mysql_numrows2($result);
         return $num_rows;
     }
 }

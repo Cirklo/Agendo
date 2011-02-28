@@ -19,7 +19,8 @@ function checkpermission(){
 </script>
 <?php
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("errorHandler.php");
 
 //call classes
@@ -36,8 +37,8 @@ echo "<tr><td width=100px>Resource Type</td><td>";
 echo "<select name=Type id=Type onChange=\"ajaxEquiDD(this,'Resource')\">";
 $sql = "SELECT type_id, type_name FROM type";
 echo "<option id=0>Select Resource...</option>";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-while($row = mysql_fetch_array($res)){
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+while($row = dbHelp::mysql_fetch_row2($res)){
     echo "<option value='".$row[0]."'>".$row[1]."</option>";
 }
 echo "</select></td></tr>";

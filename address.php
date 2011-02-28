@@ -4,7 +4,7 @@ $value = $_GET['amt'];
 
 $dbConn = mysql_connect("localhost", "root", "equip!admin") or die ('Error connecting to mysql');
 
-mysql_select_db('labcal') or die (mysql_error());
+dbHelp::mysql_select_db2('labcal') or die ($sql); //mysql_error());
 
 if($value != '0')
 {
@@ -15,8 +15,8 @@ if($value != '0')
 		AND equip_resourceid = '".$value."'
 		GROUP BY board_id";
 	
-	$res_add = mysql_query($query_add);
-	$row_add = mysql_fetch_array($res_add);
+	$res_add = dbHelp::mysql_query2($query_add);
+	$row_add = dbHelp::mysql_fetch_array2($res_add);
 	
 	echo "<br /><strong>Board Address: </strong>\t".$row_add['board_address']."<br />";
 	
@@ -24,9 +24,9 @@ if($value != '0')
 		FROM equip
 		WHERE equip_resourceid = '".$value."'";
 		
-	$res_equip = mysql_query($query_equip);
+	$res_equip = dbHelp::mysql_query2($query_equip);
 	
-	while($row_equip = mysql_fetch_array($res_equip))
+	while($row_equip = dbHelp::mysql_fetch_array2($res_equip))
 	{
 		//echo $row_equip['equip_desc'];
 	}*/

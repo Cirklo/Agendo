@@ -23,18 +23,18 @@ function filter($table, $key, $value, $type, $date1, $date2, $user_id){
 
 function findek($table, $value){
     $sql = "SELECT * FROM ".$table." WHERE ".$table."_id = ".$value;
-    $res = mysql_query($sql) or die (mysql_error().$sql);
-    $row = mysql_fetch_row($res);
+    $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+    $row = dbHelp::mysql_fetch_row2($res);
     return $row[1];
 }
 
 function datetime($field){
-    $db = database(1);
-    mysql_select_db('information_schema');
+    $db = dbHelp::database2(1);
+    dbHelp::mysql_select_db2('information_schema');
     $sql = "SELECT data_type FROM columns WHERE (data_type LIKE 'datetime' OR data_type LIKE 'date') AND column_name = '".$field."' AND table_schema='".$db."'";
-    $res = mysql_query($sql);
-    $row = mysql_fetch_row($res);
-    mysql_select_db($db);
+    $res = dbHelp::mysql_query2($sql);
+    $row = dbHelp::mysql_fetch_row2($res);
+    dbHelp::mysql_select_db2($db);
     return $row[0];   
 }
 

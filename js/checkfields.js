@@ -172,7 +172,8 @@ function validate_form(){
     xmlhttp.open("GET", url, false);
     xmlhttp.send(null);
     var str = xmlhttp.responseText;
-    if(str.length == 3){ //OK
+    // if(str.length == 3){ //OK
+    if(str == 'OK'){ //OK
 	CurForm.action = "applyform.php";
 	CurForm.submit();
     } else { //Already registered

@@ -1,5 +1,7 @@
 <?php
 	session_start();
+	require_once("__dbHelp.php");
+
 /*
   @author Pedro Pires or the Chosen Two
   @copyright 2010-2011 Pedro Pires
@@ -12,7 +14,7 @@
 	// this function is to be entered without a user being logged in
 	function initSession($needsToBeLogged=false){
 		error_reporting(0);
-		require_once(".htconnect.php");
+		// require_once(".htconnect.php");
 		require_once("permClass.php");
         $maxNoActivity = 5*60; // Seconds of session duration of no activity
 		$difference = (time() - $_SESSION['activeTime']);
@@ -40,17 +42,20 @@
 			$_SESSION['user_id'] = $user;
 			$pass = cryptPassword($pass);
 			$_SESSION['user_pass'] = $pass;
-			$sql= "select user_firstname, user_lastname from user where user_id = ".$user;
-			$res=mysql_query($sql) or die ($sql);
-			$arr=mysql_fetch_row($res);
+			$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName()."user where user_id = ".$user;
+			// $res=dbHelp::mysql_query2($sql) or die ($sql);
+			// $arr=dbHelp::mysql_fetch_row2($res);
+			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			$arr=dbHelp::mysql_fetch_row2($res);
 			$_SESSION['user_name'] = $arr[0];
 			$_SESSION['user_lastName'] = $arr[1];
 		}else if(isset($_SESSION['user_name'])){
 			$user = $_SESSION['user_id'];
 			$pass = $_SESSION['user_pass'];
 		}
-		else
+		else{
 			return;
+		}
 
 		if (isset($resource)){
 			$check = new permClass;
@@ -77,14 +82,18 @@
 	}
 	
 	function cryptPassword($uncryptedPass){
+	//admin
+	//*B3580074E39C5F3D8A640E21295E2DC1098387F1
 		// Current encrypting method
-		$sql="select password('". $uncryptedPass ."')";
-		$res=mysql_query($sql);
-		$arrcheck=mysql_fetch_row($res);
-		return $arrcheck[0];
+		// $sql="select password('". $uncryptedPass ."')";
+		// $res=dbHelp::mysql_query2($sql);
+		// $arrcheck=dbHelp::mysql_fetch_row2($res);
+		// return $arrcheck[0];
 		
+	//admin
+	//2127f97535023818d7add4a3c2428e06d382160daab440a9183690f18e285010
 		// The future way to encrypt the password
-		// return hash('sha256', $uncryptedPass);
+		return hash('sha256', $uncryptedPass);
 	}
 	
 // Buttons for help, videos, resources and user/management
@@ -118,10 +127,14 @@
 	// table method
 		echo "<div id=videodiv align='center' style='cursor:pointer;padding:5px;display:none;position:absolute;left:590px;width:150px;color:#444444;background-color:#FFFFFF;opacity:0.9;'>";
 			$sql= "select media_name, media_link, media_description from media order by media_name";
-			$res=mysql_query($sql) or die ($sql);
-			for ($i=0;$i<mysql_numrows($res);$i++) {
-				mysql_data_seek($res,$i);
-				$arr=mysql_fetch_row($res);
+			// $res=dbHelp::mysql_query2($sql) or die ($sql);
+			// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+				// mysql_data_seek($res,$i);
+				// $arr=dbHelp::mysql_fetch_row2($res);
+
+			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+				$arr=dbHelp::mysql_fetch_row2($res);
 				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">".$arr[0]."</a><br>";
 			}
 		echo "</div>";		
@@ -133,10 +146,13 @@
 			echo "<a href=index.php?class=0>ALL Resources</a><hr>";
 			echo "<a href=index.php>Most used</a><br><br>";
 			$sql= "select * from type order by type_name";
-			$res=mysql_query($sql) or die ($sql);
-			for ($i=0;$i<mysql_numrows($res);$i++) {
-				mysql_data_seek($res,$i);
-				$arr=mysql_fetch_row($res);
+			// $res=dbHelp::mysql_query2($sql) or die ($sql);
+			// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+				// mysql_data_seek($res,$i);
+				// $arr=dbHelp::mysql_fetch_row2($res);
+			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+				$arr=dbHelp::mysql_fetch_row2($res);
 				echo "<a href=index.php?class=" .$arr[0] . ">" . $arr[1] . "</a><br>";
 			}
 		echo "</div>";
@@ -146,9 +162,10 @@
 	function echoUserDiv($phpFile, $resource){
 		$user_id = $_SESSION['user_id'];
 		$user_pass = $_SESSION['user_pass'];
-		// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file
 		echo "<script type='text/javascript' src='js/commonCode.js'></script>";
-		echo "<script type='text/javascript'> setUsingSession(false) </script>";
+		// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file
+		if($phpFile=='weekview')
+			echo "<script type='text/javascript'> setUsingSession(false) </script>";
 		// end
 		$display = "table";
 
@@ -157,7 +174,8 @@
 				if(isset($_SESSION['user_name'])){
 					$display = "none";
 					// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file
-					echo "<script type='text/javascript'> setUsingSession(true) </script>";
+					if($phpFile=='weekview')
+						echo "<script type='text/javascript'> setUsingSession(true) </script>";
 					// end
 					echo "<table>";
 						echo "<tr>";
@@ -168,7 +186,7 @@
 						echo "</tr>";
 						echo "<tr>";
 							echo "<td colspan=2 style='text-align:center'>";
-								echo "<input type=button style='font-size:11px' onclick=submitUser('admin',".$resource.",'".$user_id."','".$user_pass."') value='AdminArea'>";
+								echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",'".$user_id."','".$user_pass."') value='AdminArea'>";
 							echo "</td>\n";
 						echo "</tr>";
 					echo "</table>";
@@ -198,18 +216,18 @@
 	}	
 // End of buttons for help, videos, resources and user/management
 	
-	function wtfSQL($path, $res){
-		if($path == "") $path = "c:/a.txt";
+	// function wtfSQL($path, $res){
+		// if($path == "") $path = "c:/a.txt";
 			
-		$fh = fopen($path, "w") or die("Can't open file!");
-		while($resArray = mysql_fetch_row($res)){
-			foreach($resArray as $key=>$value){
-				fwrite($fh, $key."->".$value." ");
-			}
-			fwrite($fh, "\n");
-		}
-		fclose($fh);
-	}
+		// $fh = fopen($path, "w") or die("Can't open file!");
+		// while($resArray = dbHelp::mysql_fetch_row2($res)){
+			// foreach($resArray as $key=>$value){
+				// fwrite($fh, $key."->".$value." ");
+			// }
+			// fwrite($fh, "\n");
+		// }
+		// fclose($fh);
+	// }
 	
 	function wtf($string, $path = "c:/a.txt", $mode = "w"){
 		if($path == "") $path = "c:/a.txt";
@@ -220,4 +238,7 @@
 		fclose($fh);
 	}
 	
+	// function wtf($text){
+		// echo "<script type=\"text/javascript\">alert('".$text."');</script>";
+	// }
 ?>

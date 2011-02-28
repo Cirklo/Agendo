@@ -150,10 +150,11 @@ class cal extends phpCollection{
     
     //private $ResStatus;
     function __construct ($Resource,$update=0){
-        $sql="select * from resource,resstatus,user where resource_status=resstatus_id and user_id=resource_resp and resource_id=" . $Resource;
-        $res=mysql_query($sql) or die ($sql);
-        $arrresource= mysql_fetch_assoc($res);
-        $this->setResource($Resource);
+		// require_once("__dbHelp.php");
+        $sql="select * from resource,resstatus,".dbHelp::getSchemaName()."user where resource_status=resstatus_id and user_id=resource_resp and resource_id=" . $Resource;
+        $res=dbHelp::mysql_query2($sql) or die ($sql);
+        $arrresource= dbHelp::mysql_fetch_array2($res);
+		$this->setResource($Resource);
         $this->setStartTime($arrresource['resource_starttime']);
         $this->setEndTime($arrresource['resource_stoptime']);
         self::$Resolution=$arrresource['resource_resolution'];
@@ -237,6 +238,9 @@ class cal extends phpCollection{
         
         $nline=0;
         $ncells=0;
+		$sqlDate1 = dbHelp::getFromDate('entry_datetime','%Y%m%d');
+		$sqlDate2 = dbHelp::getFromDate('entry_datetime','%H%i');
+		$schemaName = dbHelp::getSchemaName();
         while ($nline<($this->EndTime-$this->StartTime)/(self::$Resolution/60)) {
             echo "<tr>";
             //$this->SlotStart=$this->StartTime+ self::$Resolution*$nline;
@@ -251,7 +255,8 @@ class cal extends phpCollection{
             $txt=$from."-".$to;
             echo "<td align=center width=10% class=date >". $txt ."</td>\n";
                     
-            for($weekday=1;$weekday<8;$weekday++){
+			// $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+           for($weekday=1;$weekday<8;$weekday++){
                 //if ($weekday==0) {
                     
                 //} else {
@@ -259,19 +264,21 @@ class cal extends phpCollection{
                     $cell= new calCell;
                     $this->Day=date("Ymd",mktime(0,0,0,substr($this->StartDate,4,2),substr($this->StartDate,6,2)+$weekday,substr($this->StartDate,0,4)));
                     //echo $this->Day;
-                    $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status, date_format(entry_datetime,'%H')+ date_format(entry_datetime,'%i')/60 time,entry_slots from entry,user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and date_format(entry_datetime,'%Y%m%d')=". $this->Day . " and date_format(entry_datetime,'%H%i')=" . date('Hi',$this->SlotStart) . " order by entry_id";
-                    $res=mysql_query($sql) or die ($sql);
+                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status, date_format(entry_datetime,'%H')+ date_format(entry_datetime,'%i')/60 time,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and date_format(entry_datetime,'%Y%m%d')=". $this->Day . " and date_format(entry_datetime,'%H%i')=" . date('Hi',$this->SlotStart) . " order by entry_id";
+                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+                    $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".$schemaName."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".$sqlDate1."='". $this->Day . "' and ".$sqlDate2."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+                    $res=dbHelp::mysql_query2($sql) or die ($sql);
+                    $arr= dbHelp::mysql_fetch_array2($res);
                     $cell->setStartDate($this->Day);
-                    $arr= mysql_fetch_assoc($res);
                     if ($arr['entry_id']!='') {
                         $cell->setNSlots($arr['entry_slots']);
                         $cell->setEntry($arr['entry_id']);
                         if ($arr['entry_repeat']==$this->CalRepeat) $cell->setRepeat($this->CalRepeat);
                         $cell->setUser($arr['user_login']);
                         $cell->setStartTime($this->SlotStart);
-                        if (mysql_numrows($res)>1){
-                            mysql_data_seek($res,1);
-                            $arr= mysql_fetch_assoc($res);
+                        if (dbHelp::mysql_numrows2($res)>1){
+                            // mysql_data_seek($res,1);
+                            $arr= dbHelp::mysql_fetch_array2($res);
                             //$cell->setStatus(4);
                             $cell->setNextUser($arr['user_login']);
                             //echo $arr['entry_id'];
@@ -319,7 +326,7 @@ class cal extends phpCollection{
                     
                     $ncells=$ncells+1;    
                 //} //case not calendar hours
-            } // end week days
+			} // end week days
             $nline=$nline+1;
             echo "</tr>";
         } // end of time

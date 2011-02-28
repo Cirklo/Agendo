@@ -1,8 +1,9 @@
 <?php
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("errorHandler.php");
-$db = database(1);
+$db = dbHelp::database2(1);
 $error = new errorHandler;
 
 $table = $_GET['table'];
@@ -12,43 +13,43 @@ $value = $_GET['value'];
 // wtf($table."-".$id."-".$value);
 
 $sql = "SHOW FIELDS FROM $table";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-$nfields = mysql_num_rows($res);
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+$nfields = dbHelp::mysql_numrows2($res);
 $arr = array();
-while ($row = mysql_fetch_array($res)){
+while ($row = dbHelp::mysql_fetch_row2($res)){
     $arr[] = $row[0];
 }
 
-mysql_select_db('information_schema');
-$sql = "SELECT COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND CONSTRAINT_SCHEMA LIKE '".$db."'";
-$resf = mysql_query($sql);
+dbHelp::mysql_select_db2('information_schema');
+$sql = "SELECT COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND TABLE_SCHEMA LIKE '".$db."'";
+$resf = dbHelp::mysql_query2($sql);
 
 $Fkeys = array($nfields);
 $FkeysTable = array($nfields);
 
-while ($row = mysql_fetch_array($resf)){
+while ($row = dbHelp::mysql_fetch_row2($resf)){
     $Fkeys[$row[0]] = $row[2];
     $FkeysTable[$row[0]] = $row[1];
 }
 
-mysql_select_db($db);
+dbHelp::mysql_select_db2($db);
 
 $sql = "SELECT * FROM $table WHERE ".$arr[0]."=".$value;
-$res = mysql_query($sql) or die($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-$row = mysql_fetch_row($res);
+$res = dbHelp::mysql_query2($sql) or die($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+$row = dbHelp::mysql_fetch_row2($res);
 echo "<table border=0>";
 for($i = 0; $i < $nfields; $i++){
     if($Fkeys[$arr[$i]] <> ''){
         $sql = "SHOW FIELDS FROM ".$FkeysTable[$arr[$i]];
-        $res = mysql_query($sql) or die ($sql);
-        $data1 = mysql_data_seek($res, 0);
-        $field1 = mysql_fetch_array($res);
-        $data2 = mysql_data_seek($res, 1);
-        $field2 = mysql_fetch_array($res);
+        $res = dbHelp::mysql_query2($sql) or die ($sql);
+        // $data1 = mysql_data_seek($res, 0);
+        $field1 = dbHelp::mysql_fetch_row2($res);
+        // $data2 = mysql_data_seek($res, 1);
+        $field2 = dbHelp::mysql_fetch_row2($res);
 
         $sql = "SELECT ".$field2[0]." FROM ".$FkeysTable[$arr[$i]]." WHERE ".$field1[0]."=".$row[$i];
-        $res = mysql_query($sql) or die (mysql_error().$sql);
-        $fkrow = mysql_fetch_row($res);
+        $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+        $fkrow = dbHelp::mysql_fetch_row2($res);
         $column = substr($arr[$i], strlen($table."_"), strlen($arr[$i])-strlen($table."_"));
         echo "<tr><td><strong>".$column."</strong></td><td>".$fkrow[0]."</td></tr>";
     } else {

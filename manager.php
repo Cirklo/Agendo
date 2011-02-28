@@ -150,7 +150,8 @@ function getdetails(table, val, id){
     * @abstract: Script for administration process
 */
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("genObjClass.php");
 require_once("functions.php");
 require_once("restrictions.php");
@@ -161,17 +162,17 @@ require_once("classSearch.php");
 
 // print_r($_POST);
 //database configuration
-$db = database(1);
+$db = dbHelp::database2(1);
 
 //call classes
 $search = new quickSearch;
 $error = new errorHandler();
 
-//Query for setting the user as an administrator or not
+//Query for setting the user as an administrator or not // Doesnt give problems in postgrsql
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT admin_table FROM admin WHERE admin_user = '".$user_id."' GROUP BY admin_table ORDER BY admin_table ASC";
-$result = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
-$num_rows = mysql_num_rows($result);
+$result = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
+$num_rows = dbHelp::mysql_numrows2($result);
 
 //Paths and filenames
 $picsPath = 'pics/';
@@ -270,9 +271,9 @@ echo "<td><img src=".$picsPath."delete.png border=0></td><td>Delete selected row
 echo "<td><img src=".$picsPath."update.png border=0></td><td>Save changes</td>";
 echo "<td><img src=".$picsPath."copy.png border=0></td><td>Copy data</td>";
 echo "<td><img src=".$picsPath."multiple.png border=0></td><td>Clone row (multiple insert)</td>";*/
-$sql = "SELECT user_login FROM user WHERE user_id=$user_id";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
-$row = mysql_fetch_row($res);
+$sql = "SELECT user_login from ".dbHelp::getSchemaName()."user WHERE user_id=$user_id";
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
+$row = dbHelp::mysql_fetch_row2($res);
 echo "<td align=right>You are logged in as ".$row[0]."! <a href=logout.php>Sign out</a></td>";
 echo "</tr>";
 echo "</table>";
@@ -281,9 +282,9 @@ echo "<table align=center><tr><td>";
 echo "<table border=0 align=center>";
 echo "<tr valign=bottom><td></td><td></td>";
 
-mysql_select_db('information_schema');
-$sql = "SELECT COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND CONSTRAINT_SCHEMA LIKE '".$db."'";
-$resf = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
+dbHelp::mysql_select_db2('information_schema');
+$sql = "SELECT COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM KEY_COLUMN_USAGE where REFERENCED_TABLE_NAME <> 'null' AND TABLE_SCHEMA LIKE '".$db."'";
+$resf = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
 
 
 echo "<form id=dummy method=post>";
@@ -348,7 +349,7 @@ if($FKtable != ''){
     $FKorder = $comment->order_by_FK($FKtable);
 }
 
-mysql_select_db($db);
+dbHelp::mysql_select_db2($db);
 //query for displaying the number of pages available
 if($_GET['userid'] == ''){
     if($FKtable == '')
@@ -361,56 +362,56 @@ if($_GET['userid'] == ''){
 } else {
     if($where == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".$table." WHERE ".$table."_userid = ".$_GET['userid'].$having." ".$order;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table." WHERE ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order;
     else
-        $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
     }else{
     if($FKtable == '')
-        $sql = "SELECT * FROM ".$table.$where." AND ".$table."_userid = ".$_GET['userid'].$having." ".$order;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order;
     else
-        $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
 
     }
 }
 if(!isset($_GET['search'])){
-    $ros = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
-    $numrows = mysql_num_rows($ros);
+    $ros = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
+    $numrows = dbHelp::mysql_numrows2($ros);
 }
 
 //display query
 if($_GET['userid'] == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".$table.$where.$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where.$having." ".$order." LIMIT ".$page.",".$limit;
     else
         if($where == '')
-            $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
         else
-            $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
 
 } else {
     if($where == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".$table." WHERE ".$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table." WHERE ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
     else
-        $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
     }else{
     if($FKtable == '')
-        $sql = "SELECT * FROM ".$table.$where." AND ".$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
     else
-        $sql = "SELECT ".$fields." FROM ".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
     }
 }
 
 //check for quick search
 if(isset($_GET['search'])){
-    $sql = "SELECT search_query FROM search WHERE search_table='$table'";
-    $res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
-    $row = mysql_fetch_row($res);
+    $sql = "SELECT search_query FROM search WHERE search_table='".dbHelp::getSchemaName().$table"'";
+    $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
+    $row = dbHelp::mysql_fetch_row2($res);
     $sql = $row[0];
     $keyword = $_POST['qsearch'];
     $sql .= " lower('".$keyword."') $having ORDER BY 1";
-    $res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
-    $numrows = mysql_num_rows($res);
+    $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
+    $numrows = dbHelp::mysql_numrows2($res);
     if($numrows > $limit){
         echo "<script type='text/javascript'>alert('Too many results to be displayed! Please refine your search or use the filter.');";
         echo "window.location='admin.php';";
@@ -423,9 +424,9 @@ if(isset($_GET['search'])){
     }
 }
 // echo $sql;
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
 $nfields = mysql_num_fields($res);
-$nrows = mysql_num_rows($res);
+$nrows = dbHelp::mysql_numrows2($res);
 $Fkeys = array($nfields);
 $FkeysTable = array($nfields);
 $len = array();
@@ -458,7 +459,7 @@ for($k = 0; $k < $nfields; $k++){
 }
 
 
-while ($row = mysql_fetch_array($resf)){
+while ($row = dbHelp::mysql_fetch_row2($resf)){
     $Fkeys[$row[0]] = $row[2];
     $FkeysTable[$row[0]] = $row[1];
 }
@@ -468,8 +469,8 @@ echo "</tr>";
 for($j = 0; $j < $nrows; $j++){
     echo "<tr style='white-space:nowrap'>";
     echo "<form method=post name=tableman$j>";
-    mysql_data_seek($res,$j);
-    $arr = mysql_fetch_row($res);
+    // mysql_data_seek($res,$j);
+    $arr = dbHelp::mysql_fetch_row2($res);
     $var = showRestrictions($user_id, $table, $j, $_GET['nrows'], $_GET['userid'], $_GET['order'], $page, $limit, $arr[0]);
     for ($i = 0; $i < $nfields; $i++) {
     echo "<td valign=top align=center>";

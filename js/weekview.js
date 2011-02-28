@@ -132,7 +132,7 @@ function ManageEntries(action,ttime,tresolution) {
     var code;
     table=document.getElementById('caltable');
     tablesize=table.rows.length;
-    
+	
     //code serves for eliminating javascript cache and to add multiple entries
     code=Math.random();
     document.getElementById('code').value=code;

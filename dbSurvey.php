@@ -10,7 +10,7 @@
 */
 
 $link = mysql_connect("localhost", "root", "equip!admin") or die("not connected");
-mysql_select_db('bugworkers') or die("Could not select database");
+dbHelp::mysql_select_db2('bugworkers') or die("Could not select database");
 
 
 /*
@@ -28,11 +28,11 @@ $input = $_GET['input'];
 $user_id = $_GET['user'];
 
 $sql = "SELECT resaccess_column, resaccess_value FROM resaccess WHERE resaccess_user = $user_id AND resaccess_table = '$table'";
-$res = mysql_query($sql) or die (mysql_error().$sql);
-$nres = mysql_num_rows($res);
+$res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+$nres = dbHelp::mysql_numrows2($res);
 if($nres != 0){ //user has restriction for this table
 	$having = " HAVING ";
-	while($row = mysql_fetch_array($res)){
+	while($row = dbHelp::mysql_fetch_row2($res)){
 		$row[1] = str_replace(",","','",$row[1]);
 		$having .= $row[0]." IN ('".$row[1]."') AND ";
 	}
@@ -42,19 +42,19 @@ if($nres != 0){ //user has restriction for this table
 }
 
 $sql = "show fields from $table";
-$res = mysql_query($sql);
-$data1 = mysql_data_seek($res, 0);
-$field1 = mysql_fetch_array($res);
-$data2 = mysql_data_seek($res, 1);
-$field2 = mysql_fetch_array($res);
+$res = dbHelp::mysql_query2($sql);
+// $data1 = mysql_data_seek($res, 0);
+$field1 = dbHelp::mysql_fetch_row2($res);
+// $data2 = mysql_data_seek($res, 1);
+$field2 = dbHelp::mysql_fetch_row2($res);
 
 $sql = "SELECT ".$field2[0].",".$field1[0]." FROM ".$table." WHERE LOWER(".$field2[0].") regexp LOWER('".$input."') $having";
-$res = mysql_query($sql);
+$res = dbHelp::mysql_query2($sql);
 $i = 0;
 $arr = array();
 
 
-while($row = mysql_fetch_array($res))
+while($row = dbHelp::mysql_fetch_row2($res))
 { 
 	$arr[] = $row[0];
 }

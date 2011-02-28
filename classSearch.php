@@ -4,8 +4,8 @@ class quickSearch {
 
    function checkSearch($table,$i){
        $sql = "SELECT search_query FROM search WHERE search_table LIKE '$table'";
-       $res = mysql_query($sql) or die (mysql_error());
-       $nrows = mysql_num_rows($res);
+       $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error());
+       $nrows = dbHelp::mysql_numrows2($res);
        if($nrows == 0){ //no search query
            //do nothing
        } else {

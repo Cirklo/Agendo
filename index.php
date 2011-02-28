@@ -28,17 +28,19 @@ function checkfield(field) {
 }
 
 </script>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <?php
-require_once(".htconnect.php");
+// require_once(".htconnect.php"); $connect = new dbConnection();
 require_once("functions.php");
 
 $extra='';
 // Shows a specific resource
 if (isset($_GET['class'])) {
     $class=clean_input($_GET['class']);
-    $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc";
+    // $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc";
+    $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc";
 
     if ($class==0) {
         $sql="select 1,resource_name,resource_id from resource order by resource_name";
@@ -49,12 +51,13 @@ if (isset($_GET['class'])) {
 // Shows most used resources filtered by a month of use
 } else {
     $class='';
-    $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc limit 10";
+    // $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc limit 10";
+    $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc limit 10";
 	// To show the same results uncomment this line and comment the one after
     // $datefilter='';
-    $datefilter=' and entry_datetime between date_sub(now(),interval 1 month) and now()';
+    // $datefilter=' and entry_datetime between date_sub(now(),interval 1 month) and now()';
+    $datefilter=" and entry_datetime between ".dbHelp::date_sub('now()', '1', 'month')." and now()";
 }
-$resResource=mysql_query($sql);
 
 echo "<div id='logo' class=logo>";
 	echo "<table border=0>";
@@ -86,25 +89,35 @@ echo "<table class=equilist>";
 		echo "<td class=title_>Most Used Resources</td>";
 		echo "<td class=title_>Groups</td><td class=title_ >share</td>";
 	echo "</tr>";
-	for ($i=0;$i<mysql_num_rows($resResource);$i++) {
-		mysql_data_seek($resResource,$i);
-		$arrResource=mysql_fetch_array($resResource);
-		$sql="SELECT sum(entry_slots) e,department_name from entry, resource, department, user where $extra entry_user=user_id and user_dep=department_id and department_id<>17 and resource_id=entry_resource and entry_status in (1,2) $datefilter and resource_id=" . $arrResource[2] . " group by department_name order by e desc limit 3";
-
-		$res=mysql_query($sql) or die ($sql);
+	
+	// $resResource=$connect->query($sql) or die ($sql);
+	$resResource=dbHelp::mysql_query2($sql);
+	
+	// for ($i=0;$i<dbHelp::mysql_numrows2($resResource);$i++) {
+		// mysql_data_seek($resResource,$i);
+		// $arrResource=dbHelp::mysql_fetch_array2($resResource);
+	for ($i=0;$i<dbHelp::mysql_numrows2($resResource);$i++) {
+		$arrResource=dbHelp::mysql_fetch_row2($resResource);
 		if ($class=='0' ) {
 			echo "<th><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
 			echo "<td></td>\n";
 			echo "<td style='height:18px;'></td>\n";
 			echo "</tr>\n";
 		} else {
-			for ($j=0;$j<mysql_num_rows($res);$j++) {
-				mysql_data_seek($res,$j);
-				$arr=mysql_fetch_array($res);
+			$sql="SELECT sum(entry_slots) e,department_name from entry, resource, department, ".dbHelp::getSchemaName()."user where $extra entry_user=user_id and user_dep=department_id and department_id<>17 and resource_id=entry_resource and entry_status in (1,2) $datefilter and resource_id=" . $arrResource[2] . " group by department_name order by e desc limit 3";
+			// $res=dbHelp::mysql_query2($sql) or die ($sql);
+			// $res=$connect->query($sql) or die ($sql);
+			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			// for ($j=0;$j<dbHelp::mysql_numrows2($res);$j++) {
+				// mysql_data_seek($res,$j);
+				// $arr=dbHelp::mysql_fetch_array2($res);
+			// foreach($res as $arr){
+			for ($j=0;$j<dbHelp::mysql_numrows2($res);$j++) {
+				$arr=dbHelp::mysql_fetch_row2($res);
 				if ($j==0) $max =$arr[0];
 				echo "<tr>";
 					if ($j==0)
-						echo "<th rowspan=" . mysql_num_rows($res) . "><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
+						echo "<th rowspan=" . dbHelp::mysql_numrows2($res) . "><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
 					echo "<td>" . $arr[1] . "</td>\n";
 					echo "<td style='height:18px;'><img src=pics/scale.gif height=18px width=". $arr[0]/$max*250 . "px'</td>\n";
 				echo "</tr>\n";

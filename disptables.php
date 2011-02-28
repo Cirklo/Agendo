@@ -5,10 +5,10 @@ require_once("classSearch.php");
 //display tables or views
 function tables($table, $type, $i){
       
-    mysql_select_db('information_schema');
+    dbHelp::mysql_select_db2('information_schema');
     $sql = "SELECT * FROM TABLES WHERE TABLE_NAME = '".$table."' AND TABLE_TYPE = 'view'";
-    $res = mysql_query($sql);
-    $nview = mysql_num_rows($res);
+    $res = dbHelp::mysql_query2($sql);
+    $nview = dbHelp::mysql_numrows2($res);
     if($type == 'tables'){//tables
         if($nview == 0){
 	    showtables($table, $type, $i);
@@ -24,21 +24,21 @@ function tables($table, $type, $i){
 
 //display tables associated with stored procedures
 function procedures($param, $nrows, $order, $user_id, $show, $db){
-    mysql_select_db($db);
+    dbHelp::mysql_select_db2($db);
     $proc = "SELECT * FROM proc";
-    $resproc = mysql_query($proc) or die(mysql_error());
-    $procrows = mysql_num_rows($resproc);
-    while($rowpr = mysql_fetch_array($resproc)) {
+    $resproc = dbHelp::mysql_query2($proc) or die($sql); //mysql_error());
+    $procrows = dbHelp::mysql_numrows2($resproc);
+    while($rowpr = dbHelp::mysql_fetch_row2($resproc)) {
         //Finds parameters for each procedures
         $proc_param = "SELECT * FROM param WHERE param_proc = '".$rowpr[0]."'";
-        $res_param = mysql_query($proc_param);
+        $res_param = dbHelp::mysql_query2($proc_param);
         //Displays a form for each procedures
 	echo '<form action="admin.php" method="post">';
         echo "<tr><td valign=top align=center><input type='submit' name='show' style='width:150px' value='" . strtoupper(substr($rowpr[0],5,strlen($rowpr[0])-5)) ."'></td>";
         //Form
         echo "<td valign=top>Results per page <input type=text value=20 id=nrows name=nrows size=1></td></tr>";
         echo "<tr><td colspan=2 valign=top align=left width=200px>";
-        while ($plist = mysql_fetch_array($res_param)) {
+        while ($plist = dbHelp::mysql_fetch_row2($res_param)) {
             echo $plist[2]." ";
             make_form($plist[3], $plist[2].$rowpr[0]);
         }
@@ -55,10 +55,10 @@ function procedures($param, $nrows, $order, $user_id, $show, $db){
     }
     if ($show == 'show') {
 	$proc_param = "SELECT * FROM param WHERE param_proc = '".$param."'";
-	$res_param = mysql_query($proc_param);
+	$res_param = dbHelp::mysql_query2($proc_param);
 	//Creation of the parameters array
 	$j = 0;
-	while ($plist = mysql_fetch_array($res_param)) {
+	while ($plist = dbHelp::mysql_fetch_row2($res_param)) {
 		$params[$j] = $_POST[$plist[2].$param];
 		$j++;
 	}
@@ -72,7 +72,7 @@ function procedures($param, $nrows, $order, $user_id, $show, $db){
 		//Calls the procedure
 		
 		$call_query = 'CALL ' . $param . '(' . $args . ')';
-		$call_proc = mysql_query($call_query);
+		$call_proc = dbHelp::mysql_query2($call_query);
 		//Displays the result
 		echo '<meta http-equiv="refresh" content=";URL=\'manager.php?table=' . substr($param, 5, strlen($param) - 5) . '&nrows=' . $nrows . '&order=' . $order . '&userid=' . $user_id . '\'>';
 	}
@@ -85,14 +85,14 @@ function procedures($param, $nrows, $order, $user_id, $show, $db){
 }
 
 function showtables($table, $type,$i){
-   $db = database(1);
+   $db = dbHelp::database2(1);
    $search = new quickSearch;
    try{
    echo "<form name=nrows".$table. " id=nrows".$table. ">";
    echo "<tr><td align=center><input type='button' style='width:150px' onclick=\"postvars(1,'".$table."',$i)\" value='".strtoupper($table)."'></td>";
    echo "<td width=150px>Results per page <input type=text value=20 id=nrows$i name=nrows$i size=1></td></form>";
    echo "<td width=200px>";
-   mysql_select_db($db);
+   dbHelp::mysql_select_db2($db);
    $search->checkSearch($table,$i);
    echo "</td></tr>";
    if($type == 'tables'){
@@ -133,12 +133,12 @@ function filled($array, $size){
 }
 
 function get_comment($table){
-    mysql_select_db("information_schema");
-    $db = database(1);
+    dbHelp::mysql_select_db2("information_schema");
+    $db = dbHelp::database2(1);
     $sql = "SELECT TABLE_COMMENT FROM TABLES WHERE TABLE_NAME = '".$table."' AND TABLE_SCHEMA = '".$db."'";
-    $res = mysql_query($sql) or die (mysql_error().$sql);
-    $row = mysql_fetch_row($res);
-    mysql_select_db($db);
+    $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+    $row = dbHelp::mysql_fetch_row2($res);
+    dbHelp::mysql_select_db2($db);
     return $row[0];
 }
 

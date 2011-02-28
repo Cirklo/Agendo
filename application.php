@@ -41,7 +41,8 @@ function checktrain(id){
 
 <?php
 
-require_once(".htconnect.php");
+// require_once(".htconnect.php");
+require_once("__dbHelp.php");
 require_once("errorHandler.php");
 
 $error = new errorHandler;
@@ -56,8 +57,8 @@ echo "<tr><td>Last name</td><td><input type=text name='Last name' id='Last name'
 echo "<tr><td>Department</td><td><select name='Department' id='Department' onchange=\"javascript:getValue(this.id,'Institute');\">";
 echo "<option value='0'>--- Select / Other ---</option>";
 $sql = "SELECT department_id, department_name FROM department ORDER BY department_name";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-while($row = mysql_fetch_array($res)){
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+while($row = dbHelp::mysql_fetch_row2($res)){
     echo "<option value='".$row[0]."'>".$row[1]."</option>";
 }
 echo "</select>";
@@ -79,8 +80,8 @@ echo "<tr><td width=100px>Resource Type</td><td>";
 echo "<select name=Type id=Type onChange=\"ajaxEquiDD(this,'Resource')\">";
 $sql = "SELECT type_id, type_name FROM type";
 echo "<option id=0>Select Resource...</option>";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-while($row = mysql_fetch_array($res)){
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+while($row = dbHelp::mysql_fetch_row2($res)){
     echo "<option value='".$row[0]."'>".$row[1]."</option>";
 }
 echo "</select></td></tr>";
@@ -96,14 +97,14 @@ echo "<tr><td colspan=4><br></td></tr>";
 echo "<tr><td colspan=2><br></td><td align=center></td><td align=center>Require training?</td></tr>";
 
 $sql = "SELECT type_id, type_name FROM type";
-$res = mysql_query($sql) or die ($error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
-while ($row = mysql_fetch_array($res)){
+$res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
+while ($row = dbHelp::mysql_fetch_array2($res)){
     $newsql = "SELECT resource_name, resource_id FROM resource, type WHERE resource_type = type_id AND resource_type = ".$row[0];
-    $newres = mysql_query($newsql) or die ($error->sqlError(mysql_error(), mysql_errno(), $newsql, '', ''));
-    if(mysql_num_rows($newres) == 0) {} //do nothing
+    $newres = dbHelp::mysql_query2($newsql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $newsql, '', ''));
+    if(dbHelp::mysql_numrows2($newres) == 0) {} //do nothing
     else{
         echo "<tr><td colspan=4><strong><font size=2px>".$row[1]."</font></strong></td></tr>";
-        while($line = mysql_fetch_array($newres)){
+        while($line = dbHelp::mysql_fetch_array2($newres)){
             echo "<tr><td></td><td>".$line[0]."</td><td align=center><input type=checkbox name='__".$line[0]."' id='__".$line[0]."' ></td><td align=center><input type=checkbox name='__".$line[0]."_train' id='__".$line[0]."_train' onchange=\"javascript:checktrain(this.id);\"></td></tr>";
         }
     }

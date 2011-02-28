@@ -40,22 +40,22 @@ function dispInput($val,$name,$len,$flag,$type,$j){
 function autoComplete ($table,$selection,$name, $flag, $user_id, $j)
 {
     $sql = "show fields from ".$table;
-    $res = mysql_query($sql);
+    $res = dbHelp::mysql_query2($sql);
     $data1 = mysql_data_seek($res, 0);
-    $field1 = mysql_fetch_array($res);
+    $field1 = dbHelp::mysql_fetch_row2($res);
     $data2 = mysql_data_seek($res, 1);
-    $field2 = mysql_fetch_array($res);
+    $field2 = dbHelp::mysql_fetch_row2($res);
 
     $sql = "SELECT ".$field2[0]." FROM ".$table;
-    $res = mysql_query($sql);
-    $nrows = mysql_num_rows($res);
+    $res = dbHelp::mysql_query2($sql);
+    $nrows = dbHelp::mysql_numrows2($res);
     $sql = "SELECT ".$field2[0]." FROM ".$table." WHERE ".$field1[0]."=".$selection;
-    $res = mysql_query($sql);
+    $res = dbHelp::mysql_query2($sql);
  
 
     if($nrows > 15)
     {
-		$sel = mysql_fetch_array($res);
+		$sel = dbHelp::mysql_fetch_row2($res);
 		$str = $sel[0];
 		
 		echo "<input type=text class=ek name=$name id=$name onkeypress=autoFill(this,'".$table."',event,$user_id) value='$str' lang='__extkey$flag' onchange=\"javascript:selectRow('tableman$j');\">";
@@ -71,11 +71,11 @@ function fillCombos ($table,$selection,$name,$extra='',$extraecho='', $user_id,$
     echo "<select class=$name id=$name name=$name $extra onchange=\"javascript:selectRow('tableman$j');\">";
     echo $extraecho;
     $sql = "select distinct * from $table order by '" . $table . "_id'";
-    $res=mysql_query ($sql) or die ($sql);
+    $res=dbHelp::mysql_query2 ($sql) or die ($sql);
     //echo $sql;
-    for ($k=0;$k< mysql_num_rows($res);$k++) {
-	mysql_data_seek($res,$k);
-	$arr= mysql_fetch_row($res);
+    for ($k=0;$k< dbHelp::mysql_numrows2($res);$k++) {
+	// mysql_data_seek($res,$k);
+	$arr= dbHelp::mysql_fetch_row2($res);
 	if ($arr[0]==$selection) {
             $sel='Selected';
 	} else {
@@ -97,32 +97,36 @@ function clean_input($input)
     }
     //Remove ALL HTML tags to prevent XSS and abuse of the system.
     $input = strip_tags($input);
+	
     //Escape the string for insertion into a MySQL query, and return it.
-    return mysql_real_escape_string($input);
+    // return mysql_real_escape_string($input);
+	
+	// Changed from the above because PDO is being used and the prepare function is supposed to avoid the escape thing
+    return $input;
 }
 
 function restrict_access($table, $user_id){
-    $db = database(1);
+    $db = dbHelp::database2(1);
     $sql = "SELECT resaccess_column, resaccess_value, resaccess_table FROM resaccess WHERE resaccess_user = $user_id";
-    $res = mysql_query($sql) or die (mysql_error().$sql);
-    $nres = mysql_num_rows($res);
+    $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
+    $nres = dbHelp::mysql_numrows2($res);
     
     if($nres != 0){ //user has restriction for this table
-	    while($row = mysql_fetch_array($res)){
+	    while($row = dbHelp::mysql_fetch_row2($res)){
 		    if($table == $row[2]){
 			    $row[1] = str_replace(",","','",$row[1]);
 			    $having .= $row[0]." IN ('".$row[1]."') AND ";
 		    } else {
-			    mysql_select_db("information_schema");
-			    $sql = "SELECT table_name, column_name FROM KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '".$db."' AND REFERENCED_TABLE_NAME = '".$row[2]."'";
-			    $res2 = mysql_query($sql) or die(mysql_error().$sql);
-			    while ($fkrow = mysql_fetch_array($res2)){
+			    dbHelp::mysql_select_db2("information_schema");
+			    $sql = "SELECT table_name, column_name FROM KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = '".$db."' AND REFERENCED_TABLE_NAME = '".$row[2]."'";
+			    $res2 = dbHelp::mysql_query2($sql) or die($sql); //mysql_error().$sql);
+			    while ($fkrow = dbHelp::mysql_fetch_row2($res2)){
 				    if($table == $fkrow[0]){
 					    $row[1] = str_replace(",","','",$row[1]);
 					    $having .= $fkrow[1]." IN ('".$row[1]."') AND ";
 				    } else {} //do nothing
 			    }
-			    mysql_select_db($db);
+			    dbHelp::mysql_select_db2($db);
 		    }
 	    }
 	    $having = substr($having, 0, strlen($having)-4);
