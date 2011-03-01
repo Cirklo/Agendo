@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.0.2
 -- Dumped by pg_dump version 9.0.2
--- Started on 2011-02-28 10:46:55
+-- Started on 2011-03-01 14:11:27
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 1607 (class 1259 OID 18043)
+-- TOC entry 1609 (class 1259 OID 18043)
 -- Dependencies: 7
 -- Name: access; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -44,7 +44,7 @@ CREATE TABLE access (
 ALTER TABLE dbtest.access OWNER TO postgres;
 
 --
--- TOC entry 1644 (class 1259 OID 18442)
+-- TOC entry 1646 (class 1259 OID 18442)
 -- Dependencies: 7
 -- Name: seq_admin_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -60,8 +60,8 @@ CREATE SEQUENCE seq_admin_id
 ALTER TABLE dbtest.seq_admin_id OWNER TO postgres;
 
 --
--- TOC entry 2169 (class 0 OID 0)
--- Dependencies: 1644
+-- TOC entry 2176 (class 0 OID 0)
+-- Dependencies: 1646
 -- Name: seq_admin_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -69,8 +69,8 @@ SELECT pg_catalog.setval('seq_admin_id', 1, false);
 
 
 --
--- TOC entry 1608 (class 1259 OID 18046)
--- Dependencies: 1951 7
+-- TOC entry 1610 (class 1259 OID 18046)
+-- Dependencies: 1954 7
 -- Name: admin; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -85,8 +85,8 @@ CREATE TABLE admin (
 ALTER TABLE dbtest.admin OWNER TO postgres;
 
 --
--- TOC entry 2170 (class 0 OID 0)
--- Dependencies: 1608
+-- TOC entry 2177 (class 0 OID 0)
+-- Dependencies: 1610
 -- Name: COLUMN admin.admin_table; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -94,8 +94,8 @@ COMMENT ON COLUMN admin.admin_table IS 'Available tables<br /><br />admin<br />b
 
 
 --
--- TOC entry 2171 (class 0 OID 0)
--- Dependencies: 1608
+-- TOC entry 2178 (class 0 OID 0)
+-- Dependencies: 1610
 -- Name: COLUMN admin.admin_permission; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -103,7 +103,7 @@ COMMENT ON COLUMN admin.admin_permission IS '0 - View<br />1 - Update<br />2 - D
 
 
 --
--- TOC entry 1649 (class 1259 OID 19268)
+-- TOC entry 1651 (class 1259 OID 19268)
 -- Dependencies: 7
 -- Name: seq_announcement_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -119,8 +119,8 @@ CREATE SEQUENCE seq_announcement_id
 ALTER TABLE dbtest.seq_announcement_id OWNER TO postgres;
 
 --
--- TOC entry 2172 (class 0 OID 0)
--- Dependencies: 1649
+-- TOC entry 2179 (class 0 OID 0)
+-- Dependencies: 1651
 -- Name: seq_announcement_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -128,8 +128,8 @@ SELECT pg_catalog.setval('seq_announcement_id', 1, false);
 
 
 --
--- TOC entry 1609 (class 1259 OID 18049)
--- Dependencies: 1952 7
+-- TOC entry 1611 (class 1259 OID 18049)
+-- Dependencies: 1955 7
 -- Name: announcement; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -146,8 +146,8 @@ CREATE TABLE announcement (
 ALTER TABLE dbtest.announcement OWNER TO postgres;
 
 --
--- TOC entry 2173 (class 0 OID 0)
--- Dependencies: 1609
+-- TOC entry 2180 (class 0 OID 0)
+-- Dependencies: 1611
 -- Name: COLUMN announcement.announcement_object; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -155,8 +155,8 @@ COMMENT ON COLUMN announcement.announcement_object IS 'Main object of the announ
 
 
 --
--- TOC entry 2174 (class 0 OID 0)
--- Dependencies: 1609
+-- TOC entry 2181 (class 0 OID 0)
+-- Dependencies: 1611
 -- Name: COLUMN announcement.announcement_date; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -164,8 +164,8 @@ COMMENT ON COLUMN announcement.announcement_date IS 'Announcement date.';
 
 
 --
--- TOC entry 2175 (class 0 OID 0)
--- Dependencies: 1609
+-- TOC entry 2182 (class 0 OID 0)
+-- Dependencies: 1611
 -- Name: COLUMN announcement.announcement_end_date; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -173,7 +173,7 @@ COMMENT ON COLUMN announcement.announcement_end_date IS 'The announcement will n
 
 
 --
--- TOC entry 1650 (class 1259 OID 19270)
+-- TOC entry 1652 (class 1259 OID 19270)
 -- Dependencies: 7
 -- Name: seq_board_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -189,8 +189,8 @@ CREATE SEQUENCE seq_board_id
 ALTER TABLE dbtest.seq_board_id OWNER TO postgres;
 
 --
--- TOC entry 2176 (class 0 OID 0)
--- Dependencies: 1650
+-- TOC entry 2183 (class 0 OID 0)
+-- Dependencies: 1652
 -- Name: seq_board_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -198,8 +198,8 @@ SELECT pg_catalog.setval('seq_board_id', 1, false);
 
 
 --
--- TOC entry 1610 (class 1259 OID 18052)
--- Dependencies: 1953 7
+-- TOC entry 1612 (class 1259 OID 18052)
+-- Dependencies: 1956 7
 -- Name: board; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -213,8 +213,8 @@ CREATE TABLE board (
 ALTER TABLE dbtest.board OWNER TO postgres;
 
 --
--- TOC entry 2177 (class 0 OID 0)
--- Dependencies: 1610
+-- TOC entry 2184 (class 0 OID 0)
+-- Dependencies: 1612
 -- Name: COLUMN board.board_id; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -222,7 +222,7 @@ COMMENT ON COLUMN board.board_id IS 'Table used with monitoring system only';
 
 
 --
--- TOC entry 1611 (class 1259 OID 18055)
+-- TOC entry 1613 (class 1259 OID 18055)
 -- Dependencies: 7
 -- Name: bool; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -236,7 +236,22 @@ CREATE TABLE bool (
 ALTER TABLE dbtest.bool OWNER TO postgres;
 
 --
--- TOC entry 1612 (class 1259 OID 18058)
+-- TOC entry 1676 (class 1259 OID 19345)
+-- Dependencies: 7
+-- Name: color; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE color (
+    color_id integer NOT NULL,
+    color_name character(50),
+    color_code character(6)
+);
+
+
+ALTER TABLE dbtest.color OWNER TO postgres;
+
+--
+-- TOC entry 1614 (class 1259 OID 18058)
 -- Dependencies: 7
 -- Name: confidentiality; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -250,7 +265,7 @@ CREATE TABLE confidentiality (
 ALTER TABLE dbtest.confidentiality OWNER TO postgres;
 
 --
--- TOC entry 1673 (class 1259 OID 19340)
+-- TOC entry 1675 (class 1259 OID 19340)
 -- Dependencies: 7
 -- Name: seq_country_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -266,8 +281,8 @@ CREATE SEQUENCE seq_country_id
 ALTER TABLE dbtest.seq_country_id OWNER TO postgres;
 
 --
--- TOC entry 2178 (class 0 OID 0)
--- Dependencies: 1673
+-- TOC entry 2185 (class 0 OID 0)
+-- Dependencies: 1675
 -- Name: seq_country_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -275,8 +290,8 @@ SELECT pg_catalog.setval('seq_country_id', 1, false);
 
 
 --
--- TOC entry 1613 (class 1259 OID 18061)
--- Dependencies: 1954 7
+-- TOC entry 1615 (class 1259 OID 18061)
+-- Dependencies: 1957 7
 -- Name: country; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -290,7 +305,7 @@ CREATE TABLE country (
 ALTER TABLE dbtest.country OWNER TO postgres;
 
 --
--- TOC entry 1651 (class 1259 OID 19272)
+-- TOC entry 1653 (class 1259 OID 19272)
 -- Dependencies: 7
 -- Name: seq_department_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -306,8 +321,8 @@ CREATE SEQUENCE seq_department_id
 ALTER TABLE dbtest.seq_department_id OWNER TO postgres;
 
 --
--- TOC entry 2179 (class 0 OID 0)
--- Dependencies: 1651
+-- TOC entry 2186 (class 0 OID 0)
+-- Dependencies: 1653
 -- Name: seq_department_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -315,8 +330,8 @@ SELECT pg_catalog.setval('seq_department_id', 1, false);
 
 
 --
--- TOC entry 1614 (class 1259 OID 18064)
--- Dependencies: 1955 7
+-- TOC entry 1616 (class 1259 OID 18064)
+-- Dependencies: 1958 7
 -- Name: department; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -330,7 +345,7 @@ CREATE TABLE department (
 ALTER TABLE dbtest.department OWNER TO postgres;
 
 --
--- TOC entry 1646 (class 1259 OID 18448)
+-- TOC entry 1648 (class 1259 OID 18448)
 -- Dependencies: 7
 -- Name: seq_entry_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -346,17 +361,17 @@ CREATE SEQUENCE seq_entry_id
 ALTER TABLE dbtest.seq_entry_id OWNER TO postgres;
 
 --
--- TOC entry 2180 (class 0 OID 0)
--- Dependencies: 1646
+-- TOC entry 2187 (class 0 OID 0)
+-- Dependencies: 1648
 -- Name: seq_entry_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
-SELECT pg_catalog.setval('seq_entry_id', 23, true);
+SELECT pg_catalog.setval('seq_entry_id', 32, true);
 
 
 --
--- TOC entry 1615 (class 1259 OID 18067)
--- Dependencies: 1956 1957 7
+-- TOC entry 1617 (class 1259 OID 18067)
+-- Dependencies: 1959 1960 7
 -- Name: entry; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -377,7 +392,7 @@ CREATE TABLE entry (
 ALTER TABLE dbtest.entry OWNER TO postgres;
 
 --
--- TOC entry 1652 (class 1259 OID 19274)
+-- TOC entry 1654 (class 1259 OID 19274)
 -- Dependencies: 7
 -- Name: seq_equip_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -393,8 +408,8 @@ CREATE SEQUENCE seq_equip_id
 ALTER TABLE dbtest.seq_equip_id OWNER TO postgres;
 
 --
--- TOC entry 2181 (class 0 OID 0)
--- Dependencies: 1652
+-- TOC entry 2188 (class 0 OID 0)
+-- Dependencies: 1654
 -- Name: seq_equip_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -402,8 +417,8 @@ SELECT pg_catalog.setval('seq_equip_id', 1, false);
 
 
 --
--- TOC entry 1616 (class 1259 OID 18074)
--- Dependencies: 1958 7
+-- TOC entry 1618 (class 1259 OID 18074)
+-- Dependencies: 1961 7
 -- Name: equip; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -424,8 +439,8 @@ CREATE TABLE equip (
 ALTER TABLE dbtest.equip OWNER TO postgres;
 
 --
--- TOC entry 2182 (class 0 OID 0)
--- Dependencies: 1616
+-- TOC entry 2189 (class 0 OID 0)
+-- Dependencies: 1618
 -- Name: COLUMN equip.equip_id; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -433,8 +448,8 @@ COMMENT ON COLUMN equip.equip_id IS 'Table used with monitoring system only';
 
 
 --
--- TOC entry 2183 (class 0 OID 0)
--- Dependencies: 1616
+-- TOC entry 2190 (class 0 OID 0)
+-- Dependencies: 1618
 -- Name: COLUMN equip.equip_alarm_period; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -442,7 +457,7 @@ COMMENT ON COLUMN equip.equip_alarm_period IS 'minute';
 
 
 --
--- TOC entry 1672 (class 1259 OID 19335)
+-- TOC entry 1674 (class 1259 OID 19335)
 -- Dependencies: 7
 -- Name: seq_help_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -458,8 +473,8 @@ CREATE SEQUENCE seq_help_id
 ALTER TABLE dbtest.seq_help_id OWNER TO postgres;
 
 --
--- TOC entry 2184 (class 0 OID 0)
--- Dependencies: 1672
+-- TOC entry 2191 (class 0 OID 0)
+-- Dependencies: 1674
 -- Name: seq_help_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -467,8 +482,8 @@ SELECT pg_catalog.setval('seq_help_id', 1, false);
 
 
 --
--- TOC entry 1617 (class 1259 OID 18077)
--- Dependencies: 1959 1960 1961 1962 1963 7
+-- TOC entry 1619 (class 1259 OID 18077)
+-- Dependencies: 1962 1963 1964 1965 1966 7
 -- Name: help; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -487,7 +502,7 @@ CREATE TABLE help (
 ALTER TABLE dbtest.help OWNER TO postgres;
 
 --
--- TOC entry 1618 (class 1259 OID 18087)
+-- TOC entry 1620 (class 1259 OID 18087)
 -- Dependencies: 7
 -- Name: hmediaposition; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -501,7 +516,7 @@ CREATE TABLE hmediaposition (
 ALTER TABLE dbtest.hmediaposition OWNER TO postgres;
 
 --
--- TOC entry 1619 (class 1259 OID 18090)
+-- TOC entry 1621 (class 1259 OID 18090)
 -- Dependencies: 7
 -- Name: hmediatype; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -515,7 +530,7 @@ CREATE TABLE hmediatype (
 ALTER TABLE dbtest.hmediatype OWNER TO postgres;
 
 --
--- TOC entry 1653 (class 1259 OID 19276)
+-- TOC entry 1655 (class 1259 OID 19276)
 -- Dependencies: 7
 -- Name: seq_institute_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -531,8 +546,8 @@ CREATE SEQUENCE seq_institute_id
 ALTER TABLE dbtest.seq_institute_id OWNER TO postgres;
 
 --
--- TOC entry 2185 (class 0 OID 0)
--- Dependencies: 1653
+-- TOC entry 2192 (class 0 OID 0)
+-- Dependencies: 1655
 -- Name: seq_institute_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -540,8 +555,8 @@ SELECT pg_catalog.setval('seq_institute_id', 1, false);
 
 
 --
--- TOC entry 1620 (class 1259 OID 18093)
--- Dependencies: 1964 7
+-- TOC entry 1622 (class 1259 OID 18093)
+-- Dependencies: 1967 7
 -- Name: institute; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -558,7 +573,7 @@ CREATE TABLE institute (
 ALTER TABLE dbtest.institute OWNER TO postgres;
 
 --
--- TOC entry 1621 (class 1259 OID 18096)
+-- TOC entry 1623 (class 1259 OID 18096)
 -- Dependencies: 7
 -- Name: level; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -572,7 +587,7 @@ CREATE TABLE level (
 ALTER TABLE dbtest.level OWNER TO postgres;
 
 --
--- TOC entry 1654 (class 1259 OID 19278)
+-- TOC entry 1656 (class 1259 OID 19278)
 -- Dependencies: 7
 -- Name: seq_mainconfig_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -588,8 +603,8 @@ CREATE SEQUENCE seq_mainconfig_id
 ALTER TABLE dbtest.seq_mainconfig_id OWNER TO postgres;
 
 --
--- TOC entry 2186 (class 0 OID 0)
--- Dependencies: 1654
+-- TOC entry 2193 (class 0 OID 0)
+-- Dependencies: 1656
 -- Name: seq_mainconfig_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -597,8 +612,8 @@ SELECT pg_catalog.setval('seq_mainconfig_id', 1, false);
 
 
 --
--- TOC entry 1622 (class 1259 OID 18099)
--- Dependencies: 1965 7
+-- TOC entry 1624 (class 1259 OID 18099)
+-- Dependencies: 1968 7
 -- Name: mainconfig; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -619,7 +634,7 @@ CREATE TABLE mainconfig (
 ALTER TABLE dbtest.mainconfig OWNER TO postgres;
 
 --
--- TOC entry 1655 (class 1259 OID 19280)
+-- TOC entry 1657 (class 1259 OID 19280)
 -- Dependencies: 7
 -- Name: seq_measure_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -635,8 +650,8 @@ CREATE SEQUENCE seq_measure_id
 ALTER TABLE dbtest.seq_measure_id OWNER TO postgres;
 
 --
--- TOC entry 2187 (class 0 OID 0)
--- Dependencies: 1655
+-- TOC entry 2194 (class 0 OID 0)
+-- Dependencies: 1657
 -- Name: seq_measure_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -644,8 +659,8 @@ SELECT pg_catalog.setval('seq_measure_id', 1, false);
 
 
 --
--- TOC entry 1623 (class 1259 OID 18102)
--- Dependencies: 1966 7
+-- TOC entry 1625 (class 1259 OID 18102)
+-- Dependencies: 1969 7
 -- Name: measure; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -660,8 +675,8 @@ CREATE TABLE measure (
 ALTER TABLE dbtest.measure OWNER TO postgres;
 
 --
--- TOC entry 2188 (class 0 OID 0)
--- Dependencies: 1623
+-- TOC entry 2195 (class 0 OID 0)
+-- Dependencies: 1625
 -- Name: COLUMN measure.measure_id; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -669,7 +684,7 @@ COMMENT ON COLUMN measure.measure_id IS 'Table used with monitoring system only'
 
 
 --
--- TOC entry 1656 (class 1259 OID 19282)
+-- TOC entry 1658 (class 1259 OID 19282)
 -- Dependencies: 7
 -- Name: seq_media_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -685,8 +700,8 @@ CREATE SEQUENCE seq_media_id
 ALTER TABLE dbtest.seq_media_id OWNER TO postgres;
 
 --
--- TOC entry 2189 (class 0 OID 0)
--- Dependencies: 1656
+-- TOC entry 2196 (class 0 OID 0)
+-- Dependencies: 1658
 -- Name: seq_media_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -694,8 +709,8 @@ SELECT pg_catalog.setval('seq_media_id', 1, false);
 
 
 --
--- TOC entry 1624 (class 1259 OID 18105)
--- Dependencies: 1967 7
+-- TOC entry 1626 (class 1259 OID 18105)
+-- Dependencies: 1970 7
 -- Name: media; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -710,7 +725,7 @@ CREATE TABLE media (
 ALTER TABLE dbtest.media OWNER TO postgres;
 
 --
--- TOC entry 1657 (class 1259 OID 19284)
+-- TOC entry 1659 (class 1259 OID 19284)
 -- Dependencies: 7
 -- Name: seq_menu_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -726,8 +741,8 @@ CREATE SEQUENCE seq_menu_id
 ALTER TABLE dbtest.seq_menu_id OWNER TO postgres;
 
 --
--- TOC entry 2190 (class 0 OID 0)
--- Dependencies: 1657
+-- TOC entry 2197 (class 0 OID 0)
+-- Dependencies: 1659
 -- Name: seq_menu_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -735,8 +750,8 @@ SELECT pg_catalog.setval('seq_menu_id', 1, false);
 
 
 --
--- TOC entry 1625 (class 1259 OID 18108)
--- Dependencies: 1968 7
+-- TOC entry 1627 (class 1259 OID 18108)
+-- Dependencies: 1971 7
 -- Name: menu; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -752,7 +767,7 @@ CREATE TABLE menu (
 ALTER TABLE dbtest.menu OWNER TO postgres;
 
 --
--- TOC entry 1658 (class 1259 OID 19286)
+-- TOC entry 1660 (class 1259 OID 19286)
 -- Dependencies: 7
 -- Name: seq_param_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -768,8 +783,8 @@ CREATE SEQUENCE seq_param_id
 ALTER TABLE dbtest.seq_param_id OWNER TO postgres;
 
 --
--- TOC entry 2191 (class 0 OID 0)
--- Dependencies: 1658
+-- TOC entry 2198 (class 0 OID 0)
+-- Dependencies: 1660
 -- Name: seq_param_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -777,8 +792,8 @@ SELECT pg_catalog.setval('seq_param_id', 1, false);
 
 
 --
--- TOC entry 1626 (class 1259 OID 18111)
--- Dependencies: 1969 7
+-- TOC entry 1628 (class 1259 OID 18111)
+-- Dependencies: 1972 7
 -- Name: param; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -794,7 +809,7 @@ CREATE TABLE param (
 ALTER TABLE dbtest.param OWNER TO postgres;
 
 --
--- TOC entry 1659 (class 1259 OID 19288)
+-- TOC entry 1661 (class 1259 OID 19288)
 -- Dependencies: 7
 -- Name: seq_parameter_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -810,8 +825,8 @@ CREATE SEQUENCE seq_parameter_id
 ALTER TABLE dbtest.seq_parameter_id OWNER TO postgres;
 
 --
--- TOC entry 2192 (class 0 OID 0)
--- Dependencies: 1659
+-- TOC entry 2199 (class 0 OID 0)
+-- Dependencies: 1661
 -- Name: seq_parameter_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -819,8 +834,8 @@ SELECT pg_catalog.setval('seq_parameter_id', 1, false);
 
 
 --
--- TOC entry 1627 (class 1259 OID 18114)
--- Dependencies: 1970 7
+-- TOC entry 1629 (class 1259 OID 18114)
+-- Dependencies: 1973 7
 -- Name: parameter; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -833,8 +848,8 @@ CREATE TABLE parameter (
 ALTER TABLE dbtest.parameter OWNER TO postgres;
 
 --
--- TOC entry 2193 (class 0 OID 0)
--- Dependencies: 1627
+-- TOC entry 2200 (class 0 OID 0)
+-- Dependencies: 1629
 -- Name: COLUMN parameter.parameter_id; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -842,7 +857,7 @@ COMMENT ON COLUMN parameter.parameter_id IS 'Table used with monitoring system o
 
 
 --
--- TOC entry 1660 (class 1259 OID 19290)
+-- TOC entry 1662 (class 1259 OID 19290)
 -- Dependencies: 7
 -- Name: seq_permissions_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -858,8 +873,8 @@ CREATE SEQUENCE seq_permissions_id
 ALTER TABLE dbtest.seq_permissions_id OWNER TO postgres;
 
 --
--- TOC entry 2194 (class 0 OID 0)
--- Dependencies: 1660
+-- TOC entry 2201 (class 0 OID 0)
+-- Dependencies: 1662
 -- Name: seq_permissions_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -867,8 +882,8 @@ SELECT pg_catalog.setval('seq_permissions_id', 1, false);
 
 
 --
--- TOC entry 1628 (class 1259 OID 18117)
--- Dependencies: 1971 7
+-- TOC entry 1630 (class 1259 OID 18117)
+-- Dependencies: 1974 7
 -- Name: permissions; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -883,7 +898,7 @@ CREATE TABLE permissions (
 ALTER TABLE dbtest.permissions OWNER TO postgres;
 
 --
--- TOC entry 1629 (class 1259 OID 18120)
+-- TOC entry 1631 (class 1259 OID 18120)
 -- Dependencies: 7
 -- Name: permlevel; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -897,7 +912,7 @@ CREATE TABLE permlevel (
 ALTER TABLE dbtest.permlevel OWNER TO postgres;
 
 --
--- TOC entry 1661 (class 1259 OID 19292)
+-- TOC entry 1663 (class 1259 OID 19292)
 -- Dependencies: 7
 -- Name: seq_plugin_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -913,8 +928,8 @@ CREATE SEQUENCE seq_plugin_id
 ALTER TABLE dbtest.seq_plugin_id OWNER TO postgres;
 
 --
--- TOC entry 2195 (class 0 OID 0)
--- Dependencies: 1661
+-- TOC entry 2202 (class 0 OID 0)
+-- Dependencies: 1663
 -- Name: seq_plugin_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -922,8 +937,8 @@ SELECT pg_catalog.setval('seq_plugin_id', 1, false);
 
 
 --
--- TOC entry 1630 (class 1259 OID 18123)
--- Dependencies: 1972 7
+-- TOC entry 1632 (class 1259 OID 18123)
+-- Dependencies: 1975 7
 -- Name: plugin; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -936,7 +951,7 @@ CREATE TABLE plugin (
 ALTER TABLE dbtest.plugin OWNER TO postgres;
 
 --
--- TOC entry 1647 (class 1259 OID 18450)
+-- TOC entry 1649 (class 1259 OID 18450)
 -- Dependencies: 7
 -- Name: seq_repetition_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -952,17 +967,17 @@ CREATE SEQUENCE seq_repetition_id
 ALTER TABLE dbtest.seq_repetition_id OWNER TO postgres;
 
 --
--- TOC entry 2196 (class 0 OID 0)
--- Dependencies: 1647
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 1649
 -- Name: seq_repetition_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
-SELECT pg_catalog.setval('seq_repetition_id', 8, true);
+SELECT pg_catalog.setval('seq_repetition_id', 12, true);
 
 
 --
--- TOC entry 1631 (class 1259 OID 18126)
--- Dependencies: 1973 7
+-- TOC entry 1633 (class 1259 OID 18126)
+-- Dependencies: 1976 7
 -- Name: repetition; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -975,7 +990,7 @@ CREATE TABLE repetition (
 ALTER TABLE dbtest.repetition OWNER TO postgres;
 
 --
--- TOC entry 1662 (class 1259 OID 19294)
+-- TOC entry 1664 (class 1259 OID 19294)
 -- Dependencies: 7
 -- Name: seq_report_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -991,8 +1006,8 @@ CREATE SEQUENCE seq_report_id
 ALTER TABLE dbtest.seq_report_id OWNER TO postgres;
 
 --
--- TOC entry 2197 (class 0 OID 0)
--- Dependencies: 1662
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 1664
 -- Name: seq_report_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1000,8 +1015,8 @@ SELECT pg_catalog.setval('seq_report_id', 1, false);
 
 
 --
--- TOC entry 1632 (class 1259 OID 18129)
--- Dependencies: 1974 7
+-- TOC entry 1634 (class 1259 OID 18129)
+-- Dependencies: 1977 7
 -- Name: report; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1018,7 +1033,7 @@ CREATE TABLE report (
 ALTER TABLE dbtest.report OWNER TO postgres;
 
 --
--- TOC entry 1663 (class 1259 OID 19296)
+-- TOC entry 1665 (class 1259 OID 19296)
 -- Dependencies: 7
 -- Name: seq_resaccess_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1034,8 +1049,8 @@ CREATE SEQUENCE seq_resaccess_id
 ALTER TABLE dbtest.seq_resaccess_id OWNER TO postgres;
 
 --
--- TOC entry 2198 (class 0 OID 0)
--- Dependencies: 1663
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 1665
 -- Name: seq_resaccess_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1043,8 +1058,8 @@ SELECT pg_catalog.setval('seq_resaccess_id', 1, false);
 
 
 --
--- TOC entry 1633 (class 1259 OID 18135)
--- Dependencies: 1975 7
+-- TOC entry 1635 (class 1259 OID 18135)
+-- Dependencies: 1978 7
 -- Name: resaccess; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1060,7 +1075,7 @@ CREATE TABLE resaccess (
 ALTER TABLE dbtest.resaccess OWNER TO postgres;
 
 --
--- TOC entry 1664 (class 1259 OID 19298)
+-- TOC entry 1666 (class 1259 OID 19298)
 -- Dependencies: 7
 -- Name: seq_resource_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1076,8 +1091,8 @@ CREATE SEQUENCE seq_resource_id
 ALTER TABLE dbtest.seq_resource_id OWNER TO postgres;
 
 --
--- TOC entry 2199 (class 0 OID 0)
--- Dependencies: 1664
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 1666
 -- Name: seq_resource_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1085,8 +1100,8 @@ SELECT pg_catalog.setval('seq_resource_id', 1, false);
 
 
 --
--- TOC entry 1634 (class 1259 OID 18138)
--- Dependencies: 1976 1977 7
+-- TOC entry 1636 (class 1259 OID 18138)
+-- Dependencies: 1979 1980 7
 -- Name: resource; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1105,15 +1120,16 @@ CREATE TABLE resource (
     resource_maxslots smallint NOT NULL,
     "resource_confIP" character varying(15) DEFAULT '0.0.0.0'::character varying NOT NULL,
     resource_confirmtol smallint NOT NULL,
-    resource_delhour integer NOT NULL
+    resource_delhour integer NOT NULL,
+    resource_color integer
 );
 
 
 ALTER TABLE dbtest.resource OWNER TO postgres;
 
 --
--- TOC entry 2200 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_maxdays; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1121,8 +1137,8 @@ COMMENT ON COLUMN resource.resource_maxdays IS 'In days, sets the maximum number
 
 
 --
--- TOC entry 2201 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_starttime; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1130,8 +1146,8 @@ COMMENT ON COLUMN resource.resource_starttime IS 'Hour, Starting time of day for
 
 
 --
--- TOC entry 2202 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_stoptime; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1139,8 +1155,8 @@ COMMENT ON COLUMN resource.resource_stoptime IS 'Hour, Above this time reservati
 
 
 --
--- TOC entry 2203 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_resolution; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1148,8 +1164,8 @@ COMMENT ON COLUMN resource.resource_resolution IS 'In minutes, sets the time dur
 
 
 --
--- TOC entry 2204 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_maxslots; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1157,8 +1173,8 @@ COMMENT ON COLUMN resource.resource_maxslots IS 'In slots, Maximum time of usage
 
 
 --
--- TOC entry 2205 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource."resource_confIP"; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1166,8 +1182,8 @@ COMMENT ON COLUMN resource."resource_confIP" IS 'IP address of computer to be us
 
 
 --
--- TOC entry 2206 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_confirmtol; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1175,8 +1191,8 @@ COMMENT ON COLUMN resource.resource_confirmtol IS 'In slots, Number of time slot
 
 
 --
--- TOC entry 2207 (class 0 OID 0)
--- Dependencies: 1634
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 1636
 -- Name: COLUMN resource.resource_delhour; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1184,7 +1200,7 @@ COMMENT ON COLUMN resource.resource_delhour IS 'In hours, minimum time before an
 
 
 --
--- TOC entry 1635 (class 1259 OID 18145)
+-- TOC entry 1637 (class 1259 OID 18145)
 -- Dependencies: 7
 -- Name: resstatus; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -1198,7 +1214,7 @@ CREATE TABLE resstatus (
 ALTER TABLE dbtest.resstatus OWNER TO postgres;
 
 --
--- TOC entry 1665 (class 1259 OID 19300)
+-- TOC entry 1667 (class 1259 OID 19300)
 -- Dependencies: 7
 -- Name: seq_restree_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1214,8 +1230,8 @@ CREATE SEQUENCE seq_restree_id
 ALTER TABLE dbtest.seq_restree_id OWNER TO postgres;
 
 --
--- TOC entry 2208 (class 0 OID 0)
--- Dependencies: 1665
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 1667
 -- Name: seq_restree_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1223,8 +1239,8 @@ SELECT pg_catalog.setval('seq_restree_id', 1, false);
 
 
 --
--- TOC entry 1636 (class 1259 OID 18148)
--- Dependencies: 1978 7
+-- TOC entry 1638 (class 1259 OID 18148)
+-- Dependencies: 1981 7
 -- Name: restree; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1239,7 +1255,7 @@ CREATE TABLE restree (
 ALTER TABLE dbtest.restree OWNER TO postgres;
 
 --
--- TOC entry 1666 (class 1259 OID 19302)
+-- TOC entry 1668 (class 1259 OID 19302)
 -- Dependencies: 7
 -- Name: seq_resxfields_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1255,8 +1271,8 @@ CREATE SEQUENCE seq_resxfields_id
 ALTER TABLE dbtest.seq_resxfields_id OWNER TO postgres;
 
 --
--- TOC entry 2209 (class 0 OID 0)
--- Dependencies: 1666
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 1668
 -- Name: seq_resxfields_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1264,8 +1280,8 @@ SELECT pg_catalog.setval('seq_resxfields_id', 1, false);
 
 
 --
--- TOC entry 1637 (class 1259 OID 18151)
--- Dependencies: 1979 7
+-- TOC entry 1639 (class 1259 OID 18151)
+-- Dependencies: 1982 7
 -- Name: resxfields; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1279,7 +1295,7 @@ CREATE TABLE resxfields (
 ALTER TABLE dbtest.resxfields OWNER TO postgres;
 
 --
--- TOC entry 1667 (class 1259 OID 19304)
+-- TOC entry 1669 (class 1259 OID 19304)
 -- Dependencies: 7
 -- Name: seq_search_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1295,8 +1311,8 @@ CREATE SEQUENCE seq_search_id
 ALTER TABLE dbtest.seq_search_id OWNER TO postgres;
 
 --
--- TOC entry 2210 (class 0 OID 0)
--- Dependencies: 1667
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 1669
 -- Name: seq_search_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1304,8 +1320,8 @@ SELECT pg_catalog.setval('seq_search_id', 1, false);
 
 
 --
--- TOC entry 1638 (class 1259 OID 18154)
--- Dependencies: 1980 7
+-- TOC entry 1640 (class 1259 OID 18154)
+-- Dependencies: 1983 7
 -- Name: search; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1319,7 +1335,7 @@ CREATE TABLE search (
 ALTER TABLE dbtest.search OWNER TO postgres;
 
 --
--- TOC entry 1668 (class 1259 OID 19306)
+-- TOC entry 1670 (class 1259 OID 19306)
 -- Dependencies: 7
 -- Name: seq_treeview_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1335,8 +1351,8 @@ CREATE SEQUENCE seq_treeview_id
 ALTER TABLE dbtest.seq_treeview_id OWNER TO postgres;
 
 --
--- TOC entry 2211 (class 0 OID 0)
--- Dependencies: 1668
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 1670
 -- Name: seq_treeview_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1344,7 +1360,7 @@ SELECT pg_catalog.setval('seq_treeview_id', 1, false);
 
 
 --
--- TOC entry 1669 (class 1259 OID 19308)
+-- TOC entry 1671 (class 1259 OID 19308)
 -- Dependencies: 7
 -- Name: seq_type_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1360,8 +1376,8 @@ CREATE SEQUENCE seq_type_id
 ALTER TABLE dbtest.seq_type_id OWNER TO postgres;
 
 --
--- TOC entry 2212 (class 0 OID 0)
--- Dependencies: 1669
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 1671
 -- Name: seq_type_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1369,7 +1385,7 @@ SELECT pg_catalog.setval('seq_type_id', 1, false);
 
 
 --
--- TOC entry 1670 (class 1259 OID 19310)
+-- TOC entry 1672 (class 1259 OID 19310)
 -- Dependencies: 7
 -- Name: seq_user_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1385,8 +1401,8 @@ CREATE SEQUENCE seq_user_id
 ALTER TABLE dbtest.seq_user_id OWNER TO postgres;
 
 --
--- TOC entry 2213 (class 0 OID 0)
--- Dependencies: 1670
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 1672
 -- Name: seq_user_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1394,7 +1410,7 @@ SELECT pg_catalog.setval('seq_user_id', 1, false);
 
 
 --
--- TOC entry 1671 (class 1259 OID 19312)
+-- TOC entry 1673 (class 1259 OID 19312)
 -- Dependencies: 7
 -- Name: seq_xfields_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1410,8 +1426,8 @@ CREATE SEQUENCE seq_xfields_id
 ALTER TABLE dbtest.seq_xfields_id OWNER TO postgres;
 
 --
--- TOC entry 2214 (class 0 OID 0)
--- Dependencies: 1671
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 1673
 -- Name: seq_xfields_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1419,7 +1435,7 @@ SELECT pg_catalog.setval('seq_xfields_id', 1, false);
 
 
 --
--- TOC entry 1648 (class 1259 OID 18452)
+-- TOC entry 1650 (class 1259 OID 18452)
 -- Dependencies: 7
 -- Name: seq_xfieldsval_id; Type: SEQUENCE; Schema: dbtest; Owner: postgres
 --
@@ -1435,8 +1451,8 @@ CREATE SEQUENCE seq_xfieldsval_id
 ALTER TABLE dbtest.seq_xfieldsval_id OWNER TO postgres;
 
 --
--- TOC entry 2215 (class 0 OID 0)
--- Dependencies: 1648
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 1650
 -- Name: seq_xfieldsval_id; Type: SEQUENCE SET; Schema: dbtest; Owner: postgres
 --
 
@@ -1444,7 +1460,7 @@ SELECT pg_catalog.setval('seq_xfieldsval_id', 1, false);
 
 
 --
--- TOC entry 1639 (class 1259 OID 18160)
+-- TOC entry 1641 (class 1259 OID 18160)
 -- Dependencies: 7
 -- Name: status; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
@@ -1458,8 +1474,8 @@ CREATE TABLE status (
 ALTER TABLE dbtest.status OWNER TO postgres;
 
 --
--- TOC entry 1640 (class 1259 OID 18163)
--- Dependencies: 1981 7
+-- TOC entry 1642 (class 1259 OID 18163)
+-- Dependencies: 1984 7
 -- Name: treeview; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1476,8 +1492,8 @@ CREATE TABLE treeview (
 ALTER TABLE dbtest.treeview OWNER TO postgres;
 
 --
--- TOC entry 1641 (class 1259 OID 18166)
--- Dependencies: 1982 7
+-- TOC entry 1643 (class 1259 OID 18166)
+-- Dependencies: 1985 7
 -- Name: type; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1490,8 +1506,8 @@ CREATE TABLE type (
 ALTER TABLE dbtest.type OWNER TO postgres;
 
 --
--- TOC entry 1645 (class 1259 OID 18444)
--- Dependencies: 1985 1986 7
+-- TOC entry 1647 (class 1259 OID 18444)
+-- Dependencies: 1988 1989 7
 -- Name: user; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1514,8 +1530,8 @@ CREATE TABLE "user" (
 ALTER TABLE dbtest."user" OWNER TO postgres;
 
 --
--- TOC entry 2216 (class 0 OID 0)
--- Dependencies: 1645
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 1647
 -- Name: COLUMN "user".user_passwd; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1523,8 +1539,8 @@ COMMENT ON COLUMN "user".user_passwd IS 'pwd';
 
 
 --
--- TOC entry 2217 (class 0 OID 0)
--- Dependencies: 1645
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 1647
 -- Name: COLUMN "user".user_alert; Type: COMMENT; Schema: dbtest; Owner: postgres
 --
 
@@ -1532,8 +1548,8 @@ COMMENT ON COLUMN "user".user_alert IS '1 - Alert by email<br />2 - Alert by SMS
 
 
 --
--- TOC entry 1642 (class 1259 OID 18172)
--- Dependencies: 1983 7
+-- TOC entry 1644 (class 1259 OID 18172)
+-- Dependencies: 1986 7
 -- Name: xfields; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1547,8 +1563,8 @@ CREATE TABLE xfields (
 ALTER TABLE dbtest.xfields OWNER TO postgres;
 
 --
--- TOC entry 1643 (class 1259 OID 18175)
--- Dependencies: 1984 7
+-- TOC entry 1645 (class 1259 OID 18175)
+-- Dependencies: 1987 7
 -- Name: xfieldsval; Type: TABLE; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -1563,8 +1579,8 @@ CREATE TABLE xfieldsval (
 ALTER TABLE dbtest.xfieldsval OWNER TO postgres;
 
 --
--- TOC entry 2129 (class 0 OID 18043)
--- Dependencies: 1607
+-- TOC entry 2135 (class 0 OID 18043)
+-- Dependencies: 1609
 -- Data for Name: access; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1579,8 +1595,8 @@ INSERT INTO access (access_id, access_permission) VALUES (7, 'Add, Update, Delet
 
 
 --
--- TOC entry 2130 (class 0 OID 18046)
--- Dependencies: 1608
+-- TOC entry 2136 (class 0 OID 18046)
+-- Dependencies: 1610
 -- Data for Name: admin; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1597,24 +1613,24 @@ INSERT INTO admin (admin_id, admin_user, admin_table, admin_permission) VALUES (
 
 
 --
--- TOC entry 2131 (class 0 OID 18049)
--- Dependencies: 1609
+-- TOC entry 2137 (class 0 OID 18049)
+-- Dependencies: 1611
 -- Data for Name: announcement; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2132 (class 0 OID 18052)
--- Dependencies: 1610
+-- TOC entry 2138 (class 0 OID 18052)
+-- Dependencies: 1612
 -- Data for Name: board; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2133 (class 0 OID 18055)
--- Dependencies: 1611
+-- TOC entry 2139 (class 0 OID 18055)
+-- Dependencies: 1613
 -- Data for Name: bool; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1623,8 +1639,570 @@ INSERT INTO bool (bool_id, bool_type) VALUES (1, 'TRUE');
 
 
 --
--- TOC entry 2134 (class 0 OID 18058)
--- Dependencies: 1612
+-- TOC entry 2173 (class 0 OID 19345)
+-- Dependencies: 1676
+-- Data for Name: color; Type: TABLE DATA; Schema: dbtest; Owner: postgres
+--
+
+INSERT INTO color (color_id, color_name, color_code) VALUES (0, 'indian red                                        ', 'B0171F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (1, 'crimson                                           ', 'DC143C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (2, 'lightpink                                         ', 'FFB6C1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (3, 'lightpink 1                                       ', 'FFAEB9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (4, 'lightpink 2                                       ', 'EEA2AD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (5, 'lightpink 3                                       ', 'CD8C95');
+INSERT INTO color (color_id, color_name, color_code) VALUES (6, 'lightpink 4                                       ', '8B5F65');
+INSERT INTO color (color_id, color_name, color_code) VALUES (7, 'pink                                              ', 'FFC0CB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (8, 'pink 1                                            ', 'FFB5C5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (9, 'pink 2                                            ', 'EEA9B8');
+INSERT INTO color (color_id, color_name, color_code) VALUES (10, 'pink 3                                            ', 'CD919E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (11, 'pink 4                                            ', '8B636C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (12, 'palevioletred                                     ', 'DB7093');
+INSERT INTO color (color_id, color_name, color_code) VALUES (13, 'palevioletred 1                                   ', 'FF82AB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (14, 'palevioletred 2                                   ', 'EE799F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (15, 'palevioletred 3                                   ', 'CD6889');
+INSERT INTO color (color_id, color_name, color_code) VALUES (16, 'palevioletred 4                                   ', '8B475D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (17, 'lavenderblush 1 (lavenderblush)                   ', 'FFF0F5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (18, 'lavenderblush 2                                   ', 'EEE0E5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (19, 'lavenderblush 3                                   ', 'CDC1C5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (20, 'lavenderblush 4                                   ', '8B8386');
+INSERT INTO color (color_id, color_name, color_code) VALUES (21, 'violetred 1                                       ', 'FF3E96');
+INSERT INTO color (color_id, color_name, color_code) VALUES (22, 'violetred 2                                       ', 'EE3A8C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (23, 'violetred 3                                       ', 'CD3278');
+INSERT INTO color (color_id, color_name, color_code) VALUES (24, 'violetred 4                                       ', '8B2252');
+INSERT INTO color (color_id, color_name, color_code) VALUES (25, 'hotpink                                           ', 'FF69B4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (26, 'hotpink 1                                         ', 'FF6EB4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (27, 'hotpink 2                                         ', 'EE6AA7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (28, 'hotpink 3                                         ', 'CD6090');
+INSERT INTO color (color_id, color_name, color_code) VALUES (29, 'hotpink 4                                         ', '8B3A62');
+INSERT INTO color (color_id, color_name, color_code) VALUES (30, 'raspberry                                         ', '872657');
+INSERT INTO color (color_id, color_name, color_code) VALUES (31, 'deeppink 1 (deeppink)                             ', 'FF1493');
+INSERT INTO color (color_id, color_name, color_code) VALUES (32, 'deeppink 2                                        ', 'EE1289');
+INSERT INTO color (color_id, color_name, color_code) VALUES (33, 'deeppink 3                                        ', 'CD1076');
+INSERT INTO color (color_id, color_name, color_code) VALUES (34, 'deeppink 4                                        ', '8B0A50');
+INSERT INTO color (color_id, color_name, color_code) VALUES (35, 'maroon 1                                          ', 'FF34B3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (36, 'maroon 2                                          ', 'EE30A7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (37, 'maroon 3                                          ', 'CD2990');
+INSERT INTO color (color_id, color_name, color_code) VALUES (38, 'maroon 4                                          ', '8B1C62');
+INSERT INTO color (color_id, color_name, color_code) VALUES (39, 'mediumvioletred                                   ', 'C71585');
+INSERT INTO color (color_id, color_name, color_code) VALUES (40, 'violetred                                         ', 'D02090');
+INSERT INTO color (color_id, color_name, color_code) VALUES (41, 'orchid                                            ', 'DA70D6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (42, 'orchid 1                                          ', 'FF83FA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (43, 'orchid 2                                          ', 'EE7AE9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (44, 'orchid 3                                          ', 'CD69C9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (45, 'orchid 4                                          ', '8B4789');
+INSERT INTO color (color_id, color_name, color_code) VALUES (46, 'thistle                                           ', 'D8BFD8');
+INSERT INTO color (color_id, color_name, color_code) VALUES (47, 'thistle 1                                         ', 'FFE1FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (48, 'thistle 2                                         ', 'EED2EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (49, 'thistle 3                                         ', 'CDB5CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (50, 'thistle 4                                         ', '8B7B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (51, 'plum 1                                            ', 'FFBBFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (52, 'plum 2                                            ', 'EEAEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (53, 'plum 3                                            ', 'CD96CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (54, 'plum 4                                            ', '8B668B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (55, 'plum                                              ', 'DDA0DD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (56, 'violet                                            ', 'EE82EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (57, 'magenta (fuchsia*)                                ', 'FF00FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (58, 'magenta 2                                         ', 'EE00EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (59, 'magenta 3                                         ', 'CD00CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (60, 'magenta 4 (darkmagenta)                           ', '8B008B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (61, 'purple*                                           ', '800080');
+INSERT INTO color (color_id, color_name, color_code) VALUES (62, 'mediumorchid                                      ', 'BA55D3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (63, 'mediumorchid 1                                    ', 'E066FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (64, 'mediumorchid 2                                    ', 'D15FEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (65, 'mediumorchid 3                                    ', 'B452CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (66, 'mediumorchid 4                                    ', '7A378B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (67, 'darkviolet                                        ', '9400D3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (68, 'darkorchid                                        ', '9932CC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (69, 'darkorchid 1                                      ', 'BF3EFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (70, 'darkorchid 2                                      ', 'B23AEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (71, 'darkorchid 3                                      ', '9A32CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (72, 'darkorchid 4                                      ', '68228B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (73, 'indigo                                            ', '4B0082');
+INSERT INTO color (color_id, color_name, color_code) VALUES (74, 'blueviolet                                        ', '8A2BE2');
+INSERT INTO color (color_id, color_name, color_code) VALUES (75, 'purple 1                                          ', '9B30FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (76, 'purple 2                                          ', '912CEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (77, 'purple 3                                          ', '7D26CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (78, 'purple 4                                          ', '551A8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (79, 'mediumpurple                                      ', '9370DB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (80, 'mediumpurple 1                                    ', 'AB82FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (81, 'mediumpurple 2                                    ', '9F79EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (82, 'mediumpurple 3                                    ', '8968CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (83, 'mediumpurple 4                                    ', '5D478B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (84, 'darkslateblue                                     ', '483D8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (85, 'lightslateblue                                    ', '8470FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (86, 'mediumslateblue                                   ', '7B68EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (87, 'slateblue                                         ', '6A5ACD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (88, 'slateblue 1                                       ', '836FFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (89, 'slateblue 2                                       ', '7A67EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (90, 'slateblue 3                                       ', '6959CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (91, 'slateblue 4                                       ', '473C8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (92, 'ghostwhite                                        ', 'F8F8FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (93, 'lavender                                          ', 'E6E6FA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (94, 'blue*                                             ', '0000FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (95, 'blue 2                                            ', '0000EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (96, 'blue 3 (mediumblue)                               ', '0000CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (97, 'blue 4 (darkblue)                                 ', '00008B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (98, 'navy*                                             ', '80    ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (99, 'midnightblue                                      ', '191970');
+INSERT INTO color (color_id, color_name, color_code) VALUES (100, 'cobalt                                            ', '3D59AB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (101, 'royalblue                                         ', '41690 ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (102, 'royalblue 1                                       ', '4876FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (103, 'royalblue 2                                       ', '436EEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (104, 'royalblue 3                                       ', '3A5FCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (105, 'royalblue 4                                       ', '27408B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (106, 'cornflowerblue                                    ', '6495ED');
+INSERT INTO color (color_id, color_name, color_code) VALUES (107, 'lightsteelblue                                    ', 'B0C4DE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (108, 'lightsteelblue 1                                  ', 'CAE1FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (109, 'lightsteelblue 2                                  ', 'BCD2EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (110, 'lightsteelblue 3                                  ', 'A2B5CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (111, 'lightsteelblue 4                                  ', '6E7B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (112, 'lightslategray                                    ', '778899');
+INSERT INTO color (color_id, color_name, color_code) VALUES (113, 'slategray                                         ', '708090');
+INSERT INTO color (color_id, color_name, color_code) VALUES (114, 'slategray 1                                       ', 'C6E2FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (115, 'slategray 2                                       ', 'B9D3EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (116, 'slategray 3                                       ', '9FB6CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (117, 'slategray 4                                       ', '6C7B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (118, 'dodgerblue 1 (dodgerblue)                         ', '1E90FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (119, 'dodgerblue 2                                      ', '1C86EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (120, 'dodgerblue 3                                      ', '1874CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (121, 'dodgerblue 4                                      ', '104E8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (122, 'aliceblue                                         ', 'F0F8FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (123, 'steelblue                                         ', '4682B4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (124, 'steelblue 1                                       ', '63B8FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (125, 'steelblue 2                                       ', '5CACEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (126, 'steelblue 3                                       ', '4F94CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (127, 'steelblue 4                                       ', '36648B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (128, 'lightskyblue                                      ', '87CEFA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (129, 'lightskyblue 1                                    ', 'B0E2FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (130, 'lightskyblue 2                                    ', 'A4D3EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (131, 'lightskyblue 3                                    ', '8DB6CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (132, 'lightskyblue 4                                    ', '607B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (133, 'skyblue 1                                         ', '87CEFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (134, 'skyblue 2                                         ', '7EC0EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (135, 'skyblue 3                                         ', '6CA6CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (136, 'skyblue 4                                         ', '4A708B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (137, 'skyblue                                           ', '87CEEB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (138, 'deepskyblue 1 (deepskyblue)                       ', '00BFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (139, 'deepskyblue 2                                     ', '00B2EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (140, 'deepskyblue 3                                     ', '009ACD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (141, 'deepskyblue 4                                     ', '00688B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (142, 'peacock                                           ', '33A1C9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (143, 'lightblue                                         ', 'ADD8E6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (144, 'lightblue 1                                       ', 'BFEFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (145, 'lightblue 2                                       ', 'B2DFEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (146, 'lightblue 3                                       ', '9AC0CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (147, 'lightblue 4                                       ', '68838B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (148, 'powderblue                                        ', 'B0E0E6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (149, 'cadetblue 1                                       ', '98F5FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (150, 'cadetblue 2                                       ', '8EE5EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (151, 'cadetblue 3                                       ', '7AC5CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (152, 'cadetblue 4                                       ', '53868B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (153, 'turquoise 1                                       ', '00F5FF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (154, 'turquoise 2                                       ', '00E5EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (155, 'turquoise 3                                       ', '00C5CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (156, 'turquoise 4                                       ', '00868B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (157, 'cadetblue                                         ', '5F9EA0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (158, 'darkturquoise                                     ', '00CED1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (159, 'azure 1 (azure)                                   ', 'F0FFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (160, 'azure 2                                           ', 'E0EEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (161, 'azure 3                                           ', 'C1CDCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (162, 'azure 4                                           ', '838B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (163, 'lightcyan 1 (lightcyan)                           ', 'E0FFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (164, 'lightcyan 2                                       ', 'D1EEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (165, 'lightcyan 3                                       ', 'B4CDCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (166, 'lightcyan 4                                       ', '7A8B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (167, 'paleturquoise 1                                   ', 'BBFFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (168, 'paleturquoise 2 (paleturquoise)                   ', 'AEEEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (169, 'paleturquoise 3                                   ', '96CDCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (170, 'paleturquoise 4                                   ', '668B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (171, 'darkslategray                                     ', '2F4F4F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (172, 'darkslategray 1                                   ', '97FFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (173, 'darkslategray 2                                   ', '8DEEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (174, 'darkslategray 3                                   ', '79CDCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (175, 'darkslategray 4                                   ', '528B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (176, 'cyan / aqua*                                      ', '00FFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (177, 'cyan 2                                            ', '00EEEE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (178, 'cyan 3                                            ', '00CDCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (179, 'cyan 4 (darkcyan)                                 ', '008B8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (180, 'teal*                                             ', '8080  ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (181, 'mediumturquoise                                   ', '48D1CC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (182, 'lightseagreen                                     ', '20B2AA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (183, 'manganeseblue                                     ', '03A89E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (184, 'turquoise                                         ', '40E0D0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (185, 'coldgrey                                          ', '808A87');
+INSERT INTO color (color_id, color_name, color_code) VALUES (186, 'turquoiseblue                                     ', '00C78C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (187, 'aquamarine 1 (aquamarine)                         ', '7FFFD4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (188, 'aquamarine 2                                      ', '76EEC6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (189, 'aquamarine 3 (mediumaquamarine)                   ', '66CDAA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (190, 'aquamarine 4                                      ', '458B74');
+INSERT INTO color (color_id, color_name, color_code) VALUES (191, 'mediumspringgreen                                 ', '00FA9A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (192, 'mintcream                                         ', 'F5FFFA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (193, 'springgreen                                       ', '00FF7F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (194, 'springgreen 1                                     ', '00EE76');
+INSERT INTO color (color_id, color_name, color_code) VALUES (195, 'springgreen 2                                     ', '00CD66');
+INSERT INTO color (color_id, color_name, color_code) VALUES (196, 'springgreen 3                                     ', '008B45');
+INSERT INTO color (color_id, color_name, color_code) VALUES (197, 'mediumseagreen                                    ', '3CB371');
+INSERT INTO color (color_id, color_name, color_code) VALUES (198, 'seagreen 1                                        ', '54FF9F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (199, 'seagreen 2                                        ', '4EEE94');
+INSERT INTO color (color_id, color_name, color_code) VALUES (200, 'seagreen 3                                        ', '43CD80');
+INSERT INTO color (color_id, color_name, color_code) VALUES (201, 'seagreen 4 (seagreen)                             ', '2E8B57');
+INSERT INTO color (color_id, color_name, color_code) VALUES (202, 'emeraldgreen                                      ', '00C957');
+INSERT INTO color (color_id, color_name, color_code) VALUES (203, 'mint                                              ', 'BDFCC9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (204, 'cobaltgreen                                       ', '3D9140');
+INSERT INTO color (color_id, color_name, color_code) VALUES (205, 'honeydew 1 (honeydew)                             ', 'F0FFF0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (206, 'honeydew 2                                        ', 'E0EEE0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (207, 'honeydew 3                                        ', 'C1CDC1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (208, 'honeydew 4                                        ', '838B83');
+INSERT INTO color (color_id, color_name, color_code) VALUES (209, 'darkseagreen                                      ', '8FBC8F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (210, 'darkseagreen 1                                    ', 'C1FFC1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (211, 'darkseagreen 2                                    ', 'B4EEB4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (212, 'darkseagreen 3                                    ', '9BCD9B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (213, 'darkseagreen 4                                    ', '698B69');
+INSERT INTO color (color_id, color_name, color_code) VALUES (214, 'palegreen                                         ', '98FB98');
+INSERT INTO color (color_id, color_name, color_code) VALUES (215, 'palegreen 1                                       ', '9AFF9A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (216, 'palegreen 2 (lightgreen)                          ', '90EE90');
+INSERT INTO color (color_id, color_name, color_code) VALUES (217, 'palegreen 3                                       ', '7CCD7C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (218, 'palegreen 4                                       ', '548B54');
+INSERT INTO color (color_id, color_name, color_code) VALUES (219, 'limegreen                                         ', '32CD32');
+INSERT INTO color (color_id, color_name, color_code) VALUES (220, 'forestgreen                                       ', '228B22');
+INSERT INTO color (color_id, color_name, color_code) VALUES (221, 'green 1 (lime*)                                   ', '00FF00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (222, 'green 2                                           ', '00EE00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (223, 'green 3                                           ', '00CD00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (224, 'green 4                                           ', '008B00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (225, 'green*                                            ', '8000  ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (226, 'darkgreen                                         ', '6400  ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (227, 'sapgreen                                          ', '308014');
+INSERT INTO color (color_id, color_name, color_code) VALUES (228, 'lawngreen                                         ', '7CFC00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (229, 'chartreuse 1 (chartreuse)                         ', '7FFF00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (230, 'chartreuse 2                                      ', '76EE00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (231, 'chartreuse 3                                      ', '66CD00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (232, 'chartreuse 4                                      ', '458B00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (233, 'greenyellow                                       ', 'ADFF2F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (234, 'darkolivegreen 1                                  ', 'CAFF70');
+INSERT INTO color (color_id, color_name, color_code) VALUES (235, 'darkolivegreen 2                                  ', 'BCEE68');
+INSERT INTO color (color_id, color_name, color_code) VALUES (236, 'darkolivegreen 3                                  ', 'A2CD5A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (237, 'darkolivegreen 4                                  ', '6E8B3D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (238, 'darkolivegreen                                    ', '556B2F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (239, 'olivedrab                                         ', '6B8E23');
+INSERT INTO color (color_id, color_name, color_code) VALUES (240, 'olivedrab 1                                       ', 'C0FF3E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (241, 'olivedrab 2                                       ', 'B3EE3A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (242, 'olivedrab 3 (yellowgreen)                         ', '9ACD32');
+INSERT INTO color (color_id, color_name, color_code) VALUES (243, 'olivedrab 4                                       ', '698B22');
+INSERT INTO color (color_id, color_name, color_code) VALUES (244, 'ivory 1 (ivory)                                   ', 'FFFFF0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (245, 'ivory 2                                           ', 'EEEEE0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (246, 'ivory 3                                           ', 'CDCDC1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (247, 'ivory 4                                           ', '8B8B83');
+INSERT INTO color (color_id, color_name, color_code) VALUES (248, 'beige                                             ', 'F5F5DC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (249, 'lightyellow 1 (lightyellow)                       ', 'FFFFE0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (250, 'lightyellow 2                                     ', 'EEEED1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (251, 'lightyellow 3                                     ', 'CDCDB4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (252, 'lightyellow 4                                     ', '8B8B7A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (253, 'lightgoldenrodyellow                              ', 'FAFAD2');
+INSERT INTO color (color_id, color_name, color_code) VALUES (254, 'yellow 1 (yellow*)                                ', 'FFFF00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (255, 'yellow 2                                          ', 'EEEE00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (256, 'yellow 3                                          ', 'CDCD00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (257, 'yellow 4                                          ', '8B8B00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (258, 'warmgrey                                          ', '808069');
+INSERT INTO color (color_id, color_name, color_code) VALUES (259, 'olive*                                            ', '808000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (260, 'darkkhaki                                         ', 'BDB76B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (261, 'khaki 1                                           ', 'FFF68F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (262, 'khaki 2                                           ', 'EEE685');
+INSERT INTO color (color_id, color_name, color_code) VALUES (263, 'khaki 3                                           ', 'CDC673');
+INSERT INTO color (color_id, color_name, color_code) VALUES (264, 'khaki 4                                           ', '8B864E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (265, 'khaki                                             ', 'F0E68C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (266, 'palegoldenrod                                     ', 'EEE8AA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (267, 'lemonchiffon 1 (lemonchiffon)                     ', 'FFFACD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (268, 'lemonchiffon 2                                    ', 'EEE9BF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (269, 'lemonchiffon 3                                    ', 'CDC9A5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (270, 'lemonchiffon 4                                    ', '8B8970');
+INSERT INTO color (color_id, color_name, color_code) VALUES (271, 'lightgoldenrod 1                                  ', 'FFEC8B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (272, 'lightgoldenrod 2                                  ', 'EEDC82');
+INSERT INTO color (color_id, color_name, color_code) VALUES (273, 'lightgoldenrod 3                                  ', 'CDBE70');
+INSERT INTO color (color_id, color_name, color_code) VALUES (274, 'lightgoldenrod 4                                  ', '8B814C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (275, 'banana                                            ', 'E3CF57');
+INSERT INTO color (color_id, color_name, color_code) VALUES (276, 'gold 1 (gold)                                     ', 'FFD700');
+INSERT INTO color (color_id, color_name, color_code) VALUES (277, 'gold 2                                            ', 'EEC900');
+INSERT INTO color (color_id, color_name, color_code) VALUES (278, 'gold 3                                            ', 'CDAD00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (279, 'gold 4                                            ', '8B7500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (280, 'cornsilk 1 (cornsilk)                             ', 'FFF8DC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (281, 'cornsilk 2                                        ', 'EEE8CD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (282, 'cornsilk 3                                        ', 'CDC8B1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (283, 'cornsilk 4                                        ', '8B8878');
+INSERT INTO color (color_id, color_name, color_code) VALUES (284, 'goldenrod                                         ', 'DAA520');
+INSERT INTO color (color_id, color_name, color_code) VALUES (285, 'goldenrod 1                                       ', 'FFC125');
+INSERT INTO color (color_id, color_name, color_code) VALUES (286, 'goldenrod 2                                       ', 'EEB422');
+INSERT INTO color (color_id, color_name, color_code) VALUES (287, 'goldenrod 3                                       ', 'CD9B1D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (288, 'goldenrod 4                                       ', '8B6914');
+INSERT INTO color (color_id, color_name, color_code) VALUES (289, 'darkgoldenrod                                     ', 'B8860B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (290, 'darkgoldenrod 1                                   ', 'FFB90F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (291, 'darkgoldenrod 2                                   ', 'EEAD0E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (292, 'darkgoldenrod 3                                   ', 'CD950C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (293, 'darkgoldenrod 4                                   ', '8B6508');
+INSERT INTO color (color_id, color_name, color_code) VALUES (294, 'orange 1 (orange)                                 ', 'FFA500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (295, 'orange 2                                          ', 'EE9A00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (296, 'orange 3                                          ', 'CD8500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (297, 'orange 4                                          ', '8B5A00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (298, 'floralwhite                                       ', 'FFFAF0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (299, 'oldlace                                           ', 'FDF5E6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (300, 'wheat                                             ', 'F5DEB3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (301, 'wheat 1                                           ', 'FFE7BA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (302, 'wheat 2                                           ', 'EED8AE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (303, 'wheat 3                                           ', 'CDBA96');
+INSERT INTO color (color_id, color_name, color_code) VALUES (304, 'wheat 4                                           ', '8B7E66');
+INSERT INTO color (color_id, color_name, color_code) VALUES (305, 'moccasin                                          ', 'FFE4B5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (306, 'papayawhip                                        ', 'FFEFD5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (307, 'blanchedalmond                                    ', 'FFEBCD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (308, 'navajowhite 1 (navajowhite)                       ', 'FFDEAD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (309, 'navajowhite 2                                     ', 'EECFA1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (310, 'navajowhite 3                                     ', 'CDB38B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (311, 'navajowhite 4                                     ', '8B795E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (312, 'eggshell                                          ', 'FCE6C9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (313, 'tan                                               ', 'D2B48C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (314, 'brick                                             ', '9C661F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (315, 'cadmiumyellow                                     ', 'FF9912');
+INSERT INTO color (color_id, color_name, color_code) VALUES (316, 'antiquewhite                                      ', 'FAEBD7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (317, 'antiquewhite 1                                    ', 'FFEFDB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (318, 'antiquewhite 2                                    ', 'EEDFCC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (319, 'antiquewhite 3                                    ', 'CDC0B0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (320, 'antiquewhite 4                                    ', '8B8378');
+INSERT INTO color (color_id, color_name, color_code) VALUES (321, 'burlywood                                         ', 'DEB887');
+INSERT INTO color (color_id, color_name, color_code) VALUES (322, 'burlywood 1                                       ', 'FFD39B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (323, 'burlywood 2                                       ', 'EEC591');
+INSERT INTO color (color_id, color_name, color_code) VALUES (324, 'burlywood 3                                       ', 'CDAA7D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (325, 'burlywood 4                                       ', '8B7355');
+INSERT INTO color (color_id, color_name, color_code) VALUES (326, 'bisque 1 (bisque)                                 ', 'FFE4C4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (327, 'bisque 2                                          ', 'EED5B7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (328, 'bisque 3                                          ', 'CDB79E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (329, 'bisque 4                                          ', '8B7D6B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (330, 'melon                                             ', 'E3A869');
+INSERT INTO color (color_id, color_name, color_code) VALUES (331, 'carrot                                            ', 'ED9121');
+INSERT INTO color (color_id, color_name, color_code) VALUES (332, 'darkorange                                        ', 'FF8C00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (333, 'darkorange 1                                      ', 'FF7F00');
+INSERT INTO color (color_id, color_name, color_code) VALUES (334, 'darkorange 2                                      ', 'EE7600');
+INSERT INTO color (color_id, color_name, color_code) VALUES (335, 'darkorange 3                                      ', 'CD6600');
+INSERT INTO color (color_id, color_name, color_code) VALUES (336, 'darkorange 4                                      ', '8B4500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (337, 'orange                                            ', 'FF8000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (338, 'tan 1                                             ', 'FFA54F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (339, 'tan 2                                             ', 'EE9A49');
+INSERT INTO color (color_id, color_name, color_code) VALUES (340, 'tan 3 (peru)                                      ', 'CD853F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (341, 'tan 4                                             ', '8B5A2B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (342, 'linen                                             ', 'FAF0E6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (343, 'peachpuff 1 (peachpuff)                           ', 'FFDAB9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (344, 'peachpuff 2                                       ', 'EECBAD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (345, 'peachpuff 3                                       ', 'CDAF95');
+INSERT INTO color (color_id, color_name, color_code) VALUES (346, 'peachpuff 4                                       ', '8B7765');
+INSERT INTO color (color_id, color_name, color_code) VALUES (347, 'seashell 1 (seashell)                             ', 'FFF5EE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (348, 'seashell 2                                        ', 'EEE5DE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (349, 'seashell 3                                        ', 'CDC5BF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (350, 'seashell 4                                        ', '8B8682');
+INSERT INTO color (color_id, color_name, color_code) VALUES (351, 'sandybrown                                        ', 'F4A460');
+INSERT INTO color (color_id, color_name, color_code) VALUES (352, 'rawsienna                                         ', 'C76114');
+INSERT INTO color (color_id, color_name, color_code) VALUES (353, 'chocolate                                         ', 'D2691E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (354, 'chocolate 1                                       ', 'FF7F24');
+INSERT INTO color (color_id, color_name, color_code) VALUES (355, 'chocolate 2                                       ', 'EE7621');
+INSERT INTO color (color_id, color_name, color_code) VALUES (356, 'chocolate 3                                       ', 'CD661D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (357, 'chocolate 4 (saddlebrown)                         ', '8B4513');
+INSERT INTO color (color_id, color_name, color_code) VALUES (358, 'ivoryblack                                        ', '292421');
+INSERT INTO color (color_id, color_name, color_code) VALUES (359, 'flesh                                             ', 'FF7D40');
+INSERT INTO color (color_id, color_name, color_code) VALUES (360, 'cadmiumorange                                     ', 'FF6103');
+INSERT INTO color (color_id, color_name, color_code) VALUES (361, 'burntsienna                                       ', '8A360F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (362, 'sienna                                            ', 'A0522D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (363, 'sienna 1                                          ', 'FF8247');
+INSERT INTO color (color_id, color_name, color_code) VALUES (364, 'sienna 2                                          ', 'EE7942');
+INSERT INTO color (color_id, color_name, color_code) VALUES (365, 'sienna 3                                          ', 'CD6839');
+INSERT INTO color (color_id, color_name, color_code) VALUES (366, 'sienna 4                                          ', '8B4726');
+INSERT INTO color (color_id, color_name, color_code) VALUES (367, 'lightsalmon 1 (lightsalmon)                       ', 'FFA07A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (368, 'lightsalmon 2                                     ', 'EE9572');
+INSERT INTO color (color_id, color_name, color_code) VALUES (369, 'lightsalmon 3                                     ', 'CD8162');
+INSERT INTO color (color_id, color_name, color_code) VALUES (370, 'lightsalmon 4                                     ', '8B5742');
+INSERT INTO color (color_id, color_name, color_code) VALUES (371, 'coral                                             ', 'FF7F50');
+INSERT INTO color (color_id, color_name, color_code) VALUES (372, 'orangered 1 (orangered)                           ', 'FF4500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (373, 'orangered 2                                       ', 'EE4000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (374, 'orangered 3                                       ', 'CD3700');
+INSERT INTO color (color_id, color_name, color_code) VALUES (375, 'orangered 4                                       ', '8B2500');
+INSERT INTO color (color_id, color_name, color_code) VALUES (376, 'sepia                                             ', '5E2612');
+INSERT INTO color (color_id, color_name, color_code) VALUES (377, 'darksalmon                                        ', 'E9967A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (378, 'salmon 1                                          ', 'FF8C69');
+INSERT INTO color (color_id, color_name, color_code) VALUES (379, 'salmon 2                                          ', 'EE8262');
+INSERT INTO color (color_id, color_name, color_code) VALUES (380, 'salmon 3                                          ', 'CD7054');
+INSERT INTO color (color_id, color_name, color_code) VALUES (381, 'salmon 4                                          ', '8B4C39');
+INSERT INTO color (color_id, color_name, color_code) VALUES (382, 'coral 1                                           ', 'FF7256');
+INSERT INTO color (color_id, color_name, color_code) VALUES (383, 'coral 2                                           ', 'EE6A50');
+INSERT INTO color (color_id, color_name, color_code) VALUES (384, 'coral 3                                           ', 'CD5B45');
+INSERT INTO color (color_id, color_name, color_code) VALUES (385, 'coral 4                                           ', '8B3E2F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (386, 'burntumber                                        ', '8A3324');
+INSERT INTO color (color_id, color_name, color_code) VALUES (387, 'tomato 1 (tomato)                                 ', 'FF6347');
+INSERT INTO color (color_id, color_name, color_code) VALUES (388, 'tomato 2                                          ', 'EE5C42');
+INSERT INTO color (color_id, color_name, color_code) VALUES (389, 'tomato 3                                          ', 'CD4F39');
+INSERT INTO color (color_id, color_name, color_code) VALUES (390, 'tomato 4                                          ', '8B3626');
+INSERT INTO color (color_id, color_name, color_code) VALUES (391, 'salmon                                            ', 'FA8072');
+INSERT INTO color (color_id, color_name, color_code) VALUES (392, 'mistyrose 1 (mistyrose)                           ', 'FFE4E1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (393, 'mistyrose 2                                       ', 'EED5D2');
+INSERT INTO color (color_id, color_name, color_code) VALUES (394, 'mistyrose 3                                       ', 'CDB7B5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (395, 'mistyrose 4                                       ', '8B7D7B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (396, 'snow 1 (snow)                                     ', 'FFFAFA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (397, 'snow 2                                            ', 'EEE9E9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (398, 'snow 3                                            ', 'CDC9C9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (399, 'snow 4                                            ', '8B8989');
+INSERT INTO color (color_id, color_name, color_code) VALUES (400, 'rosybrown                                         ', 'BC8F8F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (401, 'rosybrown 1                                       ', 'FFC1C1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (402, 'rosybrown 2                                       ', 'EEB4B4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (403, 'rosybrown 3                                       ', 'CD9B9B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (404, 'rosybrown 4                                       ', '8B6969');
+INSERT INTO color (color_id, color_name, color_code) VALUES (405, 'lightcoral                                        ', 'F08080');
+INSERT INTO color (color_id, color_name, color_code) VALUES (406, 'indianred                                         ', 'CD5C5C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (407, 'indianred 1                                       ', 'FF6A6A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (408, 'indianred 2                                       ', 'EE6363');
+INSERT INTO color (color_id, color_name, color_code) VALUES (409, 'indianred 4                                       ', '8B3A3A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (410, 'indianred 3                                       ', 'CD5555');
+INSERT INTO color (color_id, color_name, color_code) VALUES (411, 'brown                                             ', 'A52A2A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (412, 'brown 1                                           ', 'FF4040');
+INSERT INTO color (color_id, color_name, color_code) VALUES (413, 'brown 2                                           ', 'EE3B3B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (414, 'brown 3                                           ', 'CD3333');
+INSERT INTO color (color_id, color_name, color_code) VALUES (415, 'brown 4                                           ', '8B2323');
+INSERT INTO color (color_id, color_name, color_code) VALUES (416, 'firebrick                                         ', 'B22222');
+INSERT INTO color (color_id, color_name, color_code) VALUES (417, 'firebrick 1                                       ', 'FF3030');
+INSERT INTO color (color_id, color_name, color_code) VALUES (418, 'firebrick 2                                       ', 'EE2C2C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (419, 'firebrick 3                                       ', 'CD2626');
+INSERT INTO color (color_id, color_name, color_code) VALUES (420, 'firebrick 4                                       ', '8B1A1A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (421, 'red 1 (red*)                                      ', 'FF0000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (422, 'red 2                                             ', 'EE0000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (423, 'red 3                                             ', 'CD0000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (424, 'red 4 (darkred)                                   ', '8B0000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (425, 'maroon*                                           ', '800000');
+INSERT INTO color (color_id, color_name, color_code) VALUES (426, 'sgi beet                                          ', '8E388E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (427, 'sgi slateblue                                     ', '7171C6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (428, 'sgi lightblue                                     ', '7D9EC0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (429, 'sgi teal                                          ', '388E8E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (430, 'sgi chartreuse                                    ', '71C671');
+INSERT INTO color (color_id, color_name, color_code) VALUES (431, 'sgi olivedrab                                     ', '8E8E38');
+INSERT INTO color (color_id, color_name, color_code) VALUES (432, 'sgi brightgray                                    ', 'C5C1AA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (433, 'sgi salmon                                        ', 'C67171');
+INSERT INTO color (color_id, color_name, color_code) VALUES (434, 'sgi darkgray                                      ', '555555');
+INSERT INTO color (color_id, color_name, color_code) VALUES (435, 'sgi gray 12                                       ', '1E1E1E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (436, 'sgi gray 16                                       ', '282828');
+INSERT INTO color (color_id, color_name, color_code) VALUES (437, 'sgi gray 32                                       ', '515151');
+INSERT INTO color (color_id, color_name, color_code) VALUES (438, 'sgi gray 36                                       ', '5B5B5B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (439, 'sgi gray 52                                       ', '848484');
+INSERT INTO color (color_id, color_name, color_code) VALUES (440, 'sgi gray 56                                       ', '8E8E8E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (441, 'sgi lightgray                                     ', 'AAAAAA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (442, 'sgi gray 72                                       ', 'B7B7B7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (443, 'sgi gray 76                                       ', 'C1C1C1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (444, 'sgi gray 92                                       ', 'EAEAEA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (445, 'sgi gray 96                                       ', 'F4F4F4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (446, 'white*                                            ', 'FFFFFF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (447, 'white smoke (gray 96)                             ', 'F5F5F5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (448, 'gainsboro                                         ', 'DCDCDC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (449, 'lightgrey                                         ', 'D3D3D3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (450, 'silver*                                           ', 'C0C0C0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (451, 'darkgray                                          ', 'A9A9A9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (452, 'gray*                                             ', '808080');
+INSERT INTO color (color_id, color_name, color_code) VALUES (453, 'dimgray (gray 42)                                 ', '696969');
+INSERT INTO color (color_id, color_name, color_code) VALUES (454, 'black*                                            ', '0     ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (455, 'gray 99                                           ', 'FCFCFC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (456, 'gray 98                                           ', 'FAFAFA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (457, 'gray 97                                           ', 'F7F7F7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (458, 'white smoke (gray 96)                             ', 'F5F5F5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (459, 'gray 95                                           ', 'F2F2F2');
+INSERT INTO color (color_id, color_name, color_code) VALUES (460, 'gray 94                                           ', 'F0F0F0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (461, 'gray 93                                           ', 'EDEDED');
+INSERT INTO color (color_id, color_name, color_code) VALUES (462, 'gray 92                                           ', 'EBEBEB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (463, 'gray 91                                           ', 'E8E8E8');
+INSERT INTO color (color_id, color_name, color_code) VALUES (464, 'gray 90                                           ', 'E5E5E5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (465, 'gray 89                                           ', 'E3E3E3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (466, 'gray 88                                           ', 'E0E0E0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (467, 'gray 87                                           ', 'DEDEDE');
+INSERT INTO color (color_id, color_name, color_code) VALUES (468, 'gray 86                                           ', 'DBDBDB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (469, 'gray 85                                           ', 'D9D9D9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (470, 'gray 84                                           ', 'D6D6D6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (471, 'gray 83                                           ', 'D4D4D4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (472, 'gray 82                                           ', 'D1D1D1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (473, 'gray 81                                           ', 'CFCFCF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (474, 'gray 80                                           ', 'CCCCCC');
+INSERT INTO color (color_id, color_name, color_code) VALUES (475, 'gray 79                                           ', 'C9C9C9');
+INSERT INTO color (color_id, color_name, color_code) VALUES (476, 'gray 78                                           ', 'C7C7C7');
+INSERT INTO color (color_id, color_name, color_code) VALUES (477, 'gray 77                                           ', 'C4C4C4');
+INSERT INTO color (color_id, color_name, color_code) VALUES (478, 'gray 76                                           ', 'C2C2C2');
+INSERT INTO color (color_id, color_name, color_code) VALUES (479, 'gray 75                                           ', 'BFBFBF');
+INSERT INTO color (color_id, color_name, color_code) VALUES (480, 'gray 74                                           ', 'BDBDBD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (481, 'gray 73                                           ', 'BABABA');
+INSERT INTO color (color_id, color_name, color_code) VALUES (482, 'gray 72                                           ', 'B8B8B8');
+INSERT INTO color (color_id, color_name, color_code) VALUES (483, 'gray 71                                           ', 'B5B5B5');
+INSERT INTO color (color_id, color_name, color_code) VALUES (484, 'gray 70                                           ', 'B3B3B3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (485, 'gray 69                                           ', 'B0B0B0');
+INSERT INTO color (color_id, color_name, color_code) VALUES (486, 'gray 68                                           ', 'ADADAD');
+INSERT INTO color (color_id, color_name, color_code) VALUES (487, 'gray 67                                           ', 'ABABAB');
+INSERT INTO color (color_id, color_name, color_code) VALUES (488, 'gray 66                                           ', 'A8A8A8');
+INSERT INTO color (color_id, color_name, color_code) VALUES (489, 'gray 65                                           ', 'A6A6A6');
+INSERT INTO color (color_id, color_name, color_code) VALUES (490, 'gray 64                                           ', 'A3A3A3');
+INSERT INTO color (color_id, color_name, color_code) VALUES (491, 'gray 63                                           ', 'A1A1A1');
+INSERT INTO color (color_id, color_name, color_code) VALUES (492, 'gray 62                                           ', '9E9E9E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (493, 'gray 61                                           ', '9C9C9C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (494, 'gray 60                                           ', '999999');
+INSERT INTO color (color_id, color_name, color_code) VALUES (495, 'gray 59                                           ', '969696');
+INSERT INTO color (color_id, color_name, color_code) VALUES (496, 'gray 58                                           ', '949494');
+INSERT INTO color (color_id, color_name, color_code) VALUES (497, 'gray 57                                           ', '919191');
+INSERT INTO color (color_id, color_name, color_code) VALUES (498, 'gray 56                                           ', '8F8F8F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (499, 'gray 55                                           ', '8C8C8C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (500, 'gray 54                                           ', '8A8A8A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (501, 'gray 53                                           ', '878787');
+INSERT INTO color (color_id, color_name, color_code) VALUES (502, 'gray 52                                           ', '858585');
+INSERT INTO color (color_id, color_name, color_code) VALUES (503, 'gray 51                                           ', '828282');
+INSERT INTO color (color_id, color_name, color_code) VALUES (504, 'gray 50                                           ', '7F7F7F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (505, 'gray 49                                           ', '7D7D7D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (506, 'gray 48                                           ', '7A7A7A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (507, 'gray 47                                           ', '787878');
+INSERT INTO color (color_id, color_name, color_code) VALUES (508, 'gray 46                                           ', '757575');
+INSERT INTO color (color_id, color_name, color_code) VALUES (509, 'gray 45                                           ', '737373');
+INSERT INTO color (color_id, color_name, color_code) VALUES (510, 'gray 44                                           ', '707070');
+INSERT INTO color (color_id, color_name, color_code) VALUES (511, 'gray 43                                           ', '6E6E6E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (512, 'gray 42                                           ', '6B6B6B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (513, 'dimgray (gray 42)                                 ', '696969');
+INSERT INTO color (color_id, color_name, color_code) VALUES (514, 'gray 40                                           ', '666666');
+INSERT INTO color (color_id, color_name, color_code) VALUES (515, 'gray 39                                           ', '636363');
+INSERT INTO color (color_id, color_name, color_code) VALUES (516, 'gray 38                                           ', '616161');
+INSERT INTO color (color_id, color_name, color_code) VALUES (517, 'gray 37                                           ', '5E5E5E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (518, 'gray 36                                           ', '5C5C5C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (519, 'gray 35                                           ', '595959');
+INSERT INTO color (color_id, color_name, color_code) VALUES (520, 'gray 34                                           ', '575757');
+INSERT INTO color (color_id, color_name, color_code) VALUES (521, 'gray 33                                           ', '545454');
+INSERT INTO color (color_id, color_name, color_code) VALUES (522, 'gray 32                                           ', '525252');
+INSERT INTO color (color_id, color_name, color_code) VALUES (523, 'gray 31                                           ', '4F4F4F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (524, 'gray 30                                           ', '4D4D4D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (525, 'gray 29                                           ', '4A4A4A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (526, 'gray 28                                           ', '474747');
+INSERT INTO color (color_id, color_name, color_code) VALUES (527, 'gray 27                                           ', '454545');
+INSERT INTO color (color_id, color_name, color_code) VALUES (528, 'gray 26                                           ', '424242');
+INSERT INTO color (color_id, color_name, color_code) VALUES (529, 'gray 25                                           ', '404040');
+INSERT INTO color (color_id, color_name, color_code) VALUES (530, 'gray 24                                           ', '3D3D3D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (531, 'gray 23                                           ', '3B3B3B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (532, 'gray 22                                           ', '383838');
+INSERT INTO color (color_id, color_name, color_code) VALUES (533, 'gray 21                                           ', '363636');
+INSERT INTO color (color_id, color_name, color_code) VALUES (534, 'gray 20                                           ', '333333');
+INSERT INTO color (color_id, color_name, color_code) VALUES (535, 'gray 19                                           ', '303030');
+INSERT INTO color (color_id, color_name, color_code) VALUES (536, 'gray 18                                           ', '2E2E2E');
+INSERT INTO color (color_id, color_name, color_code) VALUES (537, 'gray 17                                           ', '2B2B2B');
+INSERT INTO color (color_id, color_name, color_code) VALUES (538, 'gray 16                                           ', '292929');
+INSERT INTO color (color_id, color_name, color_code) VALUES (539, 'gray 15                                           ', '262626');
+INSERT INTO color (color_id, color_name, color_code) VALUES (540, 'gray 14                                           ', '242424');
+INSERT INTO color (color_id, color_name, color_code) VALUES (541, 'gray 13                                           ', '212121');
+INSERT INTO color (color_id, color_name, color_code) VALUES (542, 'gray 12                                           ', '1F1F1F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (543, 'gray 11                                           ', '1C1C1C');
+INSERT INTO color (color_id, color_name, color_code) VALUES (544, 'gray 10                                           ', '1A1A1A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (545, 'gray 9                                            ', '171717');
+INSERT INTO color (color_id, color_name, color_code) VALUES (546, 'gray 8                                            ', '141414');
+INSERT INTO color (color_id, color_name, color_code) VALUES (547, 'gray 7                                            ', '121212');
+INSERT INTO color (color_id, color_name, color_code) VALUES (548, 'gray 6                                            ', '0F0F0F');
+INSERT INTO color (color_id, color_name, color_code) VALUES (549, 'gray 5                                            ', '0D0D0D');
+INSERT INTO color (color_id, color_name, color_code) VALUES (550, 'gray 4                                            ', '0A0A0A');
+INSERT INTO color (color_id, color_name, color_code) VALUES (551, 'gray 3                                            ', '80808 ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (552, 'gray 2                                            ', '50505 ');
+INSERT INTO color (color_id, color_name, color_code) VALUES (553, 'gray 1                                            ', '30303 ');
+
+
+--
+-- TOC entry 2140 (class 0 OID 18058)
+-- Dependencies: 1614
 -- Data for Name: confidentiality; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1634,8 +2212,8 @@ INSERT INTO confidentiality (confidentiality_id, confidentiality_name) VALUES (3
 
 
 --
--- TOC entry 2135 (class 0 OID 18061)
--- Dependencies: 1613
+-- TOC entry 2141 (class 0 OID 18061)
+-- Dependencies: 1615
 -- Data for Name: country; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1881,8 +2459,8 @@ INSERT INTO country (country_id, country_name, country_tel_id) VALUES (239, 'Zim
 
 
 --
--- TOC entry 2136 (class 0 OID 18064)
--- Dependencies: 1614
+-- TOC entry 2142 (class 0 OID 18064)
+-- Dependencies: 1616
 -- Data for Name: department; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1890,8 +2468,8 @@ INSERT INTO department (department_id, department_name, department_inst) VALUES 
 
 
 --
--- TOC entry 2137 (class 0 OID 18067)
--- Dependencies: 1615
+-- TOC entry 2143 (class 0 OID 18067)
+-- Dependencies: 1617
 -- Data for Name: entry; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1914,19 +2492,28 @@ INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assi
 INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (21, 1, '2011-02-23 11:30:00', 4, 0, 8, 1, 1, '2011-02-25 16:35:44', NULL);
 INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (22, 1, '2011-02-26 17:00:00', 3, 0, 8, 1, 1, '2011-02-25 16:35:44', NULL);
 INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (23, 1, '2011-02-26 15:30:00', 1, 0, 8, 1, 1, '2011-02-25 16:35:44', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (24, 1, '2011-03-04 11:30:00', 4, 0, 9, 3, 1, '2011-02-28 11:38:35', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (25, 1, '2011-03-03 10:00:00', 1, 0, 10, 1, 1, '2011-02-28 13:48:14', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (27, 1, '2011-03-05 12:30:00', 1, 0, 10, 1, 1, '2011-02-28 13:48:15', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (28, 1, '2011-03-04 12:00:00', 2, 0, 10, 1, 1, '2011-02-28 13:48:15', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (30, 1, '2011-03-05 07:30:00', 2, 0, 12, 1, 1, '2011-02-28 13:48:34', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (31, 1, '2011-03-03 09:00:00', 2, 0, 12, 1, 1, '2011-02-28 13:48:34', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (32, 1, '2011-03-04 08:00:00', 3, 0, 12, 1, 1, '2011-02-28 13:48:34', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (29, 1, '2011-03-05 10:00:00', 3, 0, 11, 3, 1, '2011-02-28 13:48:22', NULL);
+INSERT INTO entry (entry_id, entry_user, entry_datetime, entry_slots, entry_assistance, entry_repeat, entry_status, entry_resource, entry_action, entry_comments) VALUES (26, 1, '2011-03-03 11:30:00', 1, 0, 10, 3, 1, '2011-02-28 13:48:15', NULL);
 
 
 --
--- TOC entry 2138 (class 0 OID 18074)
--- Dependencies: 1616
+-- TOC entry 2144 (class 0 OID 18074)
+-- Dependencies: 1618
 -- Data for Name: equip; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2139 (class 0 OID 18077)
--- Dependencies: 1617
+-- TOC entry 2145 (class 0 OID 18077)
+-- Dependencies: 1619
 -- Data for Name: help; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1976,8 +2563,8 @@ INSERT INTO help (help_id, help_name, help_text, help_parentid, help_showorder, 
 
 
 --
--- TOC entry 2140 (class 0 OID 18087)
--- Dependencies: 1618
+-- TOC entry 2146 (class 0 OID 18087)
+-- Dependencies: 1620
 -- Data for Name: hmediaposition; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1988,8 +2575,8 @@ INSERT INTO hmediaposition (hmediaposition_id, hmediaposition_name) VALUES (4, '
 
 
 --
--- TOC entry 2141 (class 0 OID 18090)
--- Dependencies: 1619
+-- TOC entry 2147 (class 0 OID 18090)
+-- Dependencies: 1621
 -- Data for Name: hmediatype; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -1999,8 +2586,8 @@ INSERT INTO hmediatype (hmediatype_id, hmediatype_name) VALUES (3, 'Audio');
 
 
 --
--- TOC entry 2142 (class 0 OID 18093)
--- Dependencies: 1620
+-- TOC entry 2148 (class 0 OID 18093)
+-- Dependencies: 1622
 -- Data for Name: institute; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2008,8 +2595,8 @@ INSERT INTO institute (institute_id, institute_name, institute_address, institut
 
 
 --
--- TOC entry 2143 (class 0 OID 18096)
--- Dependencies: 1621
+-- TOC entry 2149 (class 0 OID 18096)
+-- Dependencies: 1623
 -- Data for Name: level; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2019,8 +2606,8 @@ INSERT INTO level (level_id, level_name) VALUES (2, 'Regular User');
 
 
 --
--- TOC entry 2144 (class 0 OID 18099)
--- Dependencies: 1622
+-- TOC entry 2150 (class 0 OID 18099)
+-- Dependencies: 1624
 -- Data for Name: mainconfig; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2028,16 +2615,16 @@ INSERT INTO mainconfig (mainconfig_id, mainconfig_institute, mainconfig_shortnam
 
 
 --
--- TOC entry 2145 (class 0 OID 18102)
--- Dependencies: 1623
+-- TOC entry 2151 (class 0 OID 18102)
+-- Dependencies: 1625
 -- Data for Name: measure; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2146 (class 0 OID 18105)
--- Dependencies: 1624
+-- TOC entry 2152 (class 0 OID 18105)
+-- Dependencies: 1626
 -- Data for Name: media; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2049,32 +2636,32 @@ INSERT INTO media (media_id, media_name, media_description, media_link) VALUES (
 
 
 --
--- TOC entry 2147 (class 0 OID 18108)
--- Dependencies: 1625
+-- TOC entry 2153 (class 0 OID 18108)
+-- Dependencies: 1627
 -- Data for Name: menu; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2148 (class 0 OID 18111)
--- Dependencies: 1626
+-- TOC entry 2154 (class 0 OID 18111)
+-- Dependencies: 1628
 -- Data for Name: param; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2149 (class 0 OID 18114)
--- Dependencies: 1627
+-- TOC entry 2155 (class 0 OID 18114)
+-- Dependencies: 1629
 -- Data for Name: parameter; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2150 (class 0 OID 18117)
--- Dependencies: 1628
+-- TOC entry 2156 (class 0 OID 18117)
+-- Dependencies: 1630
 -- Data for Name: permissions; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2083,8 +2670,8 @@ INSERT INTO permissions (permissions_id, permissions_user, permissions_resource,
 
 
 --
--- TOC entry 2151 (class 0 OID 18120)
--- Dependencies: 1629
+-- TOC entry 2157 (class 0 OID 18120)
+-- Dependencies: 1631
 -- Data for Name: permlevel; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2097,16 +2684,16 @@ INSERT INTO permlevel (permlevel_id, permlevel_desc) VALUES (9, 'Extra reservati
 
 
 --
--- TOC entry 2152 (class 0 OID 18123)
--- Dependencies: 1630
+-- TOC entry 2158 (class 0 OID 18123)
+-- Dependencies: 1632
 -- Data for Name: plugin; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2153 (class 0 OID 18126)
--- Dependencies: 1631
+-- TOC entry 2159 (class 0 OID 18126)
+-- Dependencies: 1633
 -- Data for Name: repetition; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2824,39 +3411,43 @@ INSERT INTO repetition (repetition_id, repetition_code) VALUES (5, '0.4868916132
 INSERT INTO repetition (repetition_id, repetition_code) VALUES (6, '0.8597541122312323');
 INSERT INTO repetition (repetition_id, repetition_code) VALUES (7, '0.6932184569621107');
 INSERT INTO repetition (repetition_id, repetition_code) VALUES (8, '0.9665311028549729');
+INSERT INTO repetition (repetition_id, repetition_code) VALUES (9, '0.426893816340601');
+INSERT INTO repetition (repetition_id, repetition_code) VALUES (10, '0.2542001070397204');
+INSERT INTO repetition (repetition_id, repetition_code) VALUES (11, '0.6653570132608447');
+INSERT INTO repetition (repetition_id, repetition_code) VALUES (12, '0.5950321003498802');
 
 
 --
--- TOC entry 2154 (class 0 OID 18129)
--- Dependencies: 1632
+-- TOC entry 2160 (class 0 OID 18129)
+-- Dependencies: 1634
 -- Data for Name: report; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2155 (class 0 OID 18135)
--- Dependencies: 1633
+-- TOC entry 2161 (class 0 OID 18135)
+-- Dependencies: 1635
 -- Data for Name: resaccess; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2156 (class 0 OID 18138)
--- Dependencies: 1634
+-- TOC entry 2162 (class 0 OID 18138)
+-- Dependencies: 1636
 -- Data for Name: resource; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
-INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour) VALUES (1, 'Demo Resource', 1, 1, 7, 7, 22, 1, '', 1, 30, 8, '0.0.0.0', 2, 2);
-INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour) VALUES (2, 'Technician operated resource', 3, 4, 7, 5, 22, 1, '', 30, 60, 4, '0.0.0.0', 2, 2);
-INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour) VALUES (3, 'FACSARIAII', 3, 3, 4, 2, 5, 1, '', 20, 30, 4, '0.0.0.0', 1, 0);
-INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour) VALUES (4, 'Influx', 3, 4, 7, 9, 18, 1, '', 70, 60, 8, '0.0.0.0', 1, 18);
+INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour, resource_color) VALUES (3, 'FACSARIAII', 3, 3, 4, 2, 5, 1, '', 20, 30, 4, '0.0.0.0', 1, 0, 0);
+INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour, resource_color) VALUES (1, 'Demo Resource', 1, 1, 7, 7, 22, 1, '', 1, 30, 8, '0.0.0.0', 2, 2, 0);
+INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour, resource_color) VALUES (2, 'Technician operated resource', 3, 4, 7, 5, 22, 1, '', 30, 60, 4, '0.0.0.0', 2, 2, 0);
+INSERT INTO resource (resource_id, resource_name, resource_type, resource_status, resource_maxdays, resource_starttime, resource_stoptime, resource_resp, resource_wikilink, resource_price, resource_resolution, resource_maxslots, "resource_confIP", resource_confirmtol, resource_delhour, resource_color) VALUES (4, 'Influx', 3, 4, 7, 9, 18, 1, '', 70, 60, 8, '0.0.0.0', 1, 18, 0);
 
 
 --
--- TOC entry 2157 (class 0 OID 18145)
--- Dependencies: 1635
+-- TOC entry 2163 (class 0 OID 18145)
+-- Dependencies: 1637
 -- Data for Name: resstatus; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2868,8 +3459,8 @@ INSERT INTO resstatus (resstatus_id, resstatus_name) VALUES (4, 'Pre-reservation
 
 
 --
--- TOC entry 2158 (class 0 OID 18148)
--- Dependencies: 1636
+-- TOC entry 2164 (class 0 OID 18148)
+-- Dependencies: 1638
 -- Data for Name: restree; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2877,24 +3468,24 @@ INSERT INTO restree (restree_id, restree_user, restree_name, restree_access) VAL
 
 
 --
--- TOC entry 2159 (class 0 OID 18151)
--- Dependencies: 1637
+-- TOC entry 2165 (class 0 OID 18151)
+-- Dependencies: 1639
 -- Data for Name: resxfields; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2160 (class 0 OID 18154)
--- Dependencies: 1638
+-- TOC entry 2166 (class 0 OID 18154)
+-- Dependencies: 1640
 -- Data for Name: search; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2161 (class 0 OID 18160)
--- Dependencies: 1639
+-- TOC entry 2167 (class 0 OID 18160)
+-- Dependencies: 1641
 -- Data for Name: status; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2905,8 +3496,8 @@ INSERT INTO status (status_id, status_name) VALUES (4, 'Monitor');
 
 
 --
--- TOC entry 2162 (class 0 OID 18163)
--- Dependencies: 1640
+-- TOC entry 2168 (class 0 OID 18163)
+-- Dependencies: 1642
 -- Data for Name: treeview; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2914,8 +3505,8 @@ INSERT INTO treeview (treeview_id, treeview_name, treeview_description, treeview
 
 
 --
--- TOC entry 2163 (class 0 OID 18166)
--- Dependencies: 1641
+-- TOC entry 2169 (class 0 OID 18166)
+-- Dependencies: 1643
 -- Data for Name: type; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2932,8 +3523,8 @@ INSERT INTO type (type_id, type_name) VALUES (10, 'Environment Control');
 
 
 --
--- TOC entry 2166 (class 0 OID 18444)
--- Dependencies: 1645
+-- TOC entry 2172 (class 0 OID 18444)
+-- Dependencies: 1647
 -- Data for Name: user; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
@@ -2941,24 +3532,24 @@ INSERT INTO "user" (user_id, user_login, user_passwd, user_firstname, user_lastn
 
 
 --
--- TOC entry 2164 (class 0 OID 18172)
--- Dependencies: 1642
+-- TOC entry 2170 (class 0 OID 18172)
+-- Dependencies: 1644
 -- Data for Name: xfields; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2165 (class 0 OID 18175)
--- Dependencies: 1643
+-- TOC entry 2171 (class 0 OID 18175)
+-- Dependencies: 1645
 -- Data for Name: xfieldsval; Type: TABLE DATA; Schema: dbtest; Owner: postgres
 --
 
 
 
 --
--- TOC entry 1988 (class 2606 OID 18179)
--- Dependencies: 1607 1607
+-- TOC entry 1991 (class 2606 OID 18179)
+-- Dependencies: 1609 1609
 -- Name: access_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -2967,8 +3558,8 @@ ALTER TABLE ONLY access
 
 
 --
--- TOC entry 1991 (class 2606 OID 18181)
--- Dependencies: 1608 1608
+-- TOC entry 1994 (class 2606 OID 18181)
+-- Dependencies: 1610 1610
 -- Name: admin_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -2977,8 +3568,8 @@ ALTER TABLE ONLY admin
 
 
 --
--- TOC entry 1995 (class 2606 OID 18183)
--- Dependencies: 1609 1609
+-- TOC entry 1998 (class 2606 OID 18183)
+-- Dependencies: 1611 1611
 -- Name: announcement_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -2987,8 +3578,8 @@ ALTER TABLE ONLY announcement
 
 
 --
--- TOC entry 1997 (class 2606 OID 18185)
--- Dependencies: 1610 1610
+-- TOC entry 2000 (class 2606 OID 18185)
+-- Dependencies: 1612 1612
 -- Name: board_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -2997,8 +3588,8 @@ ALTER TABLE ONLY board
 
 
 --
--- TOC entry 1999 (class 2606 OID 18187)
--- Dependencies: 1611 1611
+-- TOC entry 2002 (class 2606 OID 18187)
+-- Dependencies: 1613 1613
 -- Name: bool_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3007,8 +3598,18 @@ ALTER TABLE ONLY bool
 
 
 --
--- TOC entry 2001 (class 2606 OID 18189)
--- Dependencies: 1612 1612
+-- TOC entry 2108 (class 2606 OID 19349)
+-- Dependencies: 1676 1676
+-- Name: color_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY color
+    ADD CONSTRAINT color_pkey PRIMARY KEY (color_id);
+
+
+--
+-- TOC entry 2004 (class 2606 OID 18189)
+-- Dependencies: 1614 1614
 -- Name: confidentiality_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3017,8 +3618,8 @@ ALTER TABLE ONLY confidentiality
 
 
 --
--- TOC entry 2003 (class 2606 OID 18191)
--- Dependencies: 1613 1613
+-- TOC entry 2006 (class 2606 OID 18191)
+-- Dependencies: 1615 1615
 -- Name: country_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3027,8 +3628,8 @@ ALTER TABLE ONLY country
 
 
 --
--- TOC entry 2006 (class 2606 OID 18193)
--- Dependencies: 1614 1614
+-- TOC entry 2009 (class 2606 OID 18193)
+-- Dependencies: 1616 1616
 -- Name: department_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3037,8 +3638,8 @@ ALTER TABLE ONLY department
 
 
 --
--- TOC entry 2008 (class 2606 OID 18195)
--- Dependencies: 1615 1615
+-- TOC entry 2011 (class 2606 OID 18195)
+-- Dependencies: 1617 1617
 -- Name: entry_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3047,8 +3648,8 @@ ALTER TABLE ONLY entry
 
 
 --
--- TOC entry 2016 (class 2606 OID 18197)
--- Dependencies: 1616 1616
+-- TOC entry 2019 (class 2606 OID 18197)
+-- Dependencies: 1618 1618
 -- Name: equip_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3057,8 +3658,8 @@ ALTER TABLE ONLY equip
 
 
 --
--- TOC entry 2022 (class 2606 OID 18199)
--- Dependencies: 1617 1617
+-- TOC entry 2025 (class 2606 OID 18199)
+-- Dependencies: 1619 1619
 -- Name: help_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3067,8 +3668,8 @@ ALTER TABLE ONLY help
 
 
 --
--- TOC entry 2024 (class 2606 OID 18201)
--- Dependencies: 1618 1618
+-- TOC entry 2027 (class 2606 OID 18201)
+-- Dependencies: 1620 1620
 -- Name: hmediaposition_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3077,8 +3678,8 @@ ALTER TABLE ONLY hmediaposition
 
 
 --
--- TOC entry 2026 (class 2606 OID 18203)
--- Dependencies: 1619 1619
+-- TOC entry 2029 (class 2606 OID 18203)
+-- Dependencies: 1621 1621
 -- Name: hmediatype_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3087,8 +3688,8 @@ ALTER TABLE ONLY hmediatype
 
 
 --
--- TOC entry 2030 (class 2606 OID 18205)
--- Dependencies: 1620 1620
+-- TOC entry 2033 (class 2606 OID 18205)
+-- Dependencies: 1622 1622
 -- Name: institute_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3097,8 +3698,8 @@ ALTER TABLE ONLY institute
 
 
 --
--- TOC entry 2032 (class 2606 OID 18207)
--- Dependencies: 1621 1621
+-- TOC entry 2035 (class 2606 OID 18207)
+-- Dependencies: 1623 1623
 -- Name: level_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3107,8 +3708,8 @@ ALTER TABLE ONLY level
 
 
 --
--- TOC entry 2034 (class 2606 OID 18209)
--- Dependencies: 1622 1622
+-- TOC entry 2037 (class 2606 OID 18209)
+-- Dependencies: 1624 1624
 -- Name: mainconfig_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3117,8 +3718,8 @@ ALTER TABLE ONLY mainconfig
 
 
 --
--- TOC entry 2037 (class 2606 OID 18211)
--- Dependencies: 1623 1623
+-- TOC entry 2040 (class 2606 OID 18211)
+-- Dependencies: 1625 1625
 -- Name: measure_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3127,8 +3728,8 @@ ALTER TABLE ONLY measure
 
 
 --
--- TOC entry 2039 (class 2606 OID 18215)
--- Dependencies: 1624 1624 1624 1624
+-- TOC entry 2042 (class 2606 OID 18215)
+-- Dependencies: 1626 1626 1626 1626
 -- Name: media_name; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3137,8 +3738,8 @@ ALTER TABLE ONLY media
 
 
 --
--- TOC entry 2041 (class 2606 OID 18213)
--- Dependencies: 1624 1624
+-- TOC entry 2044 (class 2606 OID 18213)
+-- Dependencies: 1626 1626
 -- Name: media_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3147,8 +3748,8 @@ ALTER TABLE ONLY media
 
 
 --
--- TOC entry 2043 (class 2606 OID 18217)
--- Dependencies: 1625 1625
+-- TOC entry 2046 (class 2606 OID 18217)
+-- Dependencies: 1627 1627
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3157,8 +3758,8 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2046 (class 2606 OID 18219)
--- Dependencies: 1626 1626
+-- TOC entry 2049 (class 2606 OID 18219)
+-- Dependencies: 1628 1628
 -- Name: param_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3167,8 +3768,8 @@ ALTER TABLE ONLY param
 
 
 --
--- TOC entry 2049 (class 2606 OID 18221)
--- Dependencies: 1627 1627
+-- TOC entry 2052 (class 2606 OID 18221)
+-- Dependencies: 1629 1629
 -- Name: parameter_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3177,8 +3778,8 @@ ALTER TABLE ONLY parameter
 
 
 --
--- TOC entry 2052 (class 2606 OID 18223)
--- Dependencies: 1628 1628
+-- TOC entry 2055 (class 2606 OID 18223)
+-- Dependencies: 1630 1630
 -- Name: permissions_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3187,8 +3788,8 @@ ALTER TABLE ONLY permissions
 
 
 --
--- TOC entry 2056 (class 2606 OID 18225)
--- Dependencies: 1629 1629
+-- TOC entry 2059 (class 2606 OID 18225)
+-- Dependencies: 1631 1631
 -- Name: permlevel_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3197,8 +3798,8 @@ ALTER TABLE ONLY permlevel
 
 
 --
--- TOC entry 2058 (class 2606 OID 18227)
--- Dependencies: 1630 1630
+-- TOC entry 2061 (class 2606 OID 18227)
+-- Dependencies: 1632 1632
 -- Name: plugin_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3207,8 +3808,8 @@ ALTER TABLE ONLY plugin
 
 
 --
--- TOC entry 2062 (class 2606 OID 18229)
--- Dependencies: 1632 1632
+-- TOC entry 2065 (class 2606 OID 18229)
+-- Dependencies: 1634 1634
 -- Name: report_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3217,8 +3818,8 @@ ALTER TABLE ONLY report
 
 
 --
--- TOC entry 2065 (class 2606 OID 18231)
--- Dependencies: 1633 1633
+-- TOC entry 2068 (class 2606 OID 18231)
+-- Dependencies: 1635 1635
 -- Name: resaccess_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3227,8 +3828,8 @@ ALTER TABLE ONLY resaccess
 
 
 --
--- TOC entry 2069 (class 2606 OID 18233)
--- Dependencies: 1634 1634
+-- TOC entry 2072 (class 2606 OID 18233)
+-- Dependencies: 1636 1636
 -- Name: resource_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3237,8 +3838,8 @@ ALTER TABLE ONLY resource
 
 
 --
--- TOC entry 2074 (class 2606 OID 18237)
--- Dependencies: 1635 1635
+-- TOC entry 2077 (class 2606 OID 18237)
+-- Dependencies: 1637 1637
 -- Name: resstatus_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3247,8 +3848,8 @@ ALTER TABLE ONLY resstatus
 
 
 --
--- TOC entry 2078 (class 2606 OID 18239)
--- Dependencies: 1636 1636
+-- TOC entry 2081 (class 2606 OID 18239)
+-- Dependencies: 1638 1638
 -- Name: restree_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3257,8 +3858,8 @@ ALTER TABLE ONLY restree
 
 
 --
--- TOC entry 2083 (class 2606 OID 18241)
--- Dependencies: 1638 1638
+-- TOC entry 2086 (class 2606 OID 18241)
+-- Dependencies: 1640 1640
 -- Name: search_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3267,8 +3868,8 @@ ALTER TABLE ONLY search
 
 
 --
--- TOC entry 2086 (class 2606 OID 18243)
--- Dependencies: 1639 1639
+-- TOC entry 2089 (class 2606 OID 18243)
+-- Dependencies: 1641 1641
 -- Name: status_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3277,8 +3878,8 @@ ALTER TABLE ONLY status
 
 
 --
--- TOC entry 2088 (class 2606 OID 18245)
--- Dependencies: 1640 1640
+-- TOC entry 2091 (class 2606 OID 18245)
+-- Dependencies: 1642 1642
 -- Name: treeview_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3287,8 +3888,8 @@ ALTER TABLE ONLY treeview
 
 
 --
--- TOC entry 2090 (class 2606 OID 18247)
--- Dependencies: 1641 1641
+-- TOC entry 2093 (class 2606 OID 18247)
+-- Dependencies: 1643 1643
 -- Name: type_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3297,8 +3898,8 @@ ALTER TABLE ONLY type
 
 
 --
--- TOC entry 2092 (class 2606 OID 18253)
--- Dependencies: 1642 1642
+-- TOC entry 2095 (class 2606 OID 18253)
+-- Dependencies: 1644 1644
 -- Name: xfields_name; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3307,8 +3908,8 @@ ALTER TABLE ONLY xfields
 
 
 --
--- TOC entry 2094 (class 2606 OID 18251)
--- Dependencies: 1642 1642
+-- TOC entry 2097 (class 2606 OID 18251)
+-- Dependencies: 1644 1644
 -- Name: xfields_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3317,8 +3918,8 @@ ALTER TABLE ONLY xfields
 
 
 --
--- TOC entry 2100 (class 2606 OID 18255)
--- Dependencies: 1643 1643
+-- TOC entry 2103 (class 2606 OID 18255)
+-- Dependencies: 1645 1645
 -- Name: xfieldsval_pkey; Type: CONSTRAINT; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3327,8 +3928,8 @@ ALTER TABLE ONLY xfieldsval
 
 
 --
--- TOC entry 1989 (class 1259 OID 18392)
--- Dependencies: 1608
+-- TOC entry 1992 (class 1259 OID 18392)
+-- Dependencies: 1610
 -- Name: admin_permission; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3336,8 +3937,8 @@ CREATE INDEX admin_permission ON admin USING btree (admin_permission);
 
 
 --
--- TOC entry 1992 (class 1259 OID 18391)
--- Dependencies: 1608
+-- TOC entry 1995 (class 1259 OID 18391)
+-- Dependencies: 1610
 -- Name: admin_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3345,8 +3946,8 @@ CREATE INDEX admin_user ON admin USING btree (admin_user);
 
 
 --
--- TOC entry 1993 (class 1259 OID 18393)
--- Dependencies: 1609
+-- TOC entry 1996 (class 1259 OID 18393)
+-- Dependencies: 1611
 -- Name: announcement_object; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3354,8 +3955,8 @@ CREATE INDEX announcement_object ON announcement USING btree (announcement_objec
 
 
 --
--- TOC entry 2004 (class 1259 OID 18394)
--- Dependencies: 1614
+-- TOC entry 2007 (class 1259 OID 18394)
+-- Dependencies: 1616
 -- Name: department_inst; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3363,8 +3964,8 @@ CREATE INDEX department_inst ON department USING btree (department_inst);
 
 
 --
--- TOC entry 2009 (class 1259 OID 18397)
--- Dependencies: 1615
+-- TOC entry 2012 (class 1259 OID 18397)
+-- Dependencies: 1617
 -- Name: entry_repeat; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3372,8 +3973,8 @@ CREATE INDEX entry_repeat ON entry USING btree (entry_repeat);
 
 
 --
--- TOC entry 2010 (class 1259 OID 18396)
--- Dependencies: 1615
+-- TOC entry 2013 (class 1259 OID 18396)
+-- Dependencies: 1617
 -- Name: entry_resource; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3381,8 +3982,8 @@ CREATE INDEX entry_resource ON entry USING btree (entry_resource);
 
 
 --
--- TOC entry 2011 (class 1259 OID 18398)
--- Dependencies: 1615
+-- TOC entry 2014 (class 1259 OID 18398)
+-- Dependencies: 1617
 -- Name: entry_status; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3390,8 +3991,8 @@ CREATE INDEX entry_status ON entry USING btree (entry_status);
 
 
 --
--- TOC entry 2012 (class 1259 OID 18395)
--- Dependencies: 1615
+-- TOC entry 2015 (class 1259 OID 18395)
+-- Dependencies: 1617
 -- Name: entry_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3399,8 +4000,8 @@ CREATE INDEX entry_user ON entry USING btree (entry_user);
 
 
 --
--- TOC entry 2013 (class 1259 OID 18399)
--- Dependencies: 1616
+-- TOC entry 2016 (class 1259 OID 18399)
+-- Dependencies: 1618
 -- Name: equip_boardID; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3408,8 +4009,8 @@ CREATE INDEX "equip_boardID" ON equip USING btree ("equip_boardID");
 
 
 --
--- TOC entry 2014 (class 1259 OID 18400)
--- Dependencies: 1616
+-- TOC entry 2017 (class 1259 OID 18400)
+-- Dependencies: 1618
 -- Name: equip_para; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3417,8 +4018,8 @@ CREATE INDEX equip_para ON equip USING btree (equip_para);
 
 
 --
--- TOC entry 2017 (class 1259 OID 18401)
--- Dependencies: 1616
+-- TOC entry 2020 (class 1259 OID 18401)
+-- Dependencies: 1618
 -- Name: equip_resourceid; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3426,8 +4027,8 @@ CREATE INDEX equip_resourceid ON equip USING btree (equip_resourceid);
 
 
 --
--- TOC entry 2018 (class 1259 OID 18402)
--- Dependencies: 1616
+-- TOC entry 2021 (class 1259 OID 18402)
+-- Dependencies: 1618
 -- Name: equip_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3435,8 +4036,8 @@ CREATE INDEX equip_user ON equip USING btree (equip_user);
 
 
 --
--- TOC entry 2019 (class 1259 OID 18403)
--- Dependencies: 1617
+-- TOC entry 2022 (class 1259 OID 18403)
+-- Dependencies: 1619
 -- Name: help_mediaposition; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3444,8 +4045,8 @@ CREATE INDEX help_mediaposition ON help USING btree (help_mediaposition);
 
 
 --
--- TOC entry 2020 (class 1259 OID 18404)
--- Dependencies: 1617
+-- TOC entry 2023 (class 1259 OID 18404)
+-- Dependencies: 1619
 -- Name: help_mediatype; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3453,8 +4054,8 @@ CREATE INDEX help_mediatype ON help USING btree (help_mediatype);
 
 
 --
--- TOC entry 2027 (class 1259 OID 18405)
--- Dependencies: 1620
+-- TOC entry 2030 (class 1259 OID 18405)
+-- Dependencies: 1622
 -- Name: institute_country; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3462,8 +4063,8 @@ CREATE INDEX institute_country ON institute USING btree (institute_country);
 
 
 --
--- TOC entry 2028 (class 1259 OID 18406)
--- Dependencies: 1620
+-- TOC entry 2031 (class 1259 OID 18406)
+-- Dependencies: 1622
 -- Name: institute_country_2; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3471,8 +4072,8 @@ CREATE INDEX institute_country_2 ON institute USING btree (institute_country);
 
 
 --
--- TOC entry 2035 (class 1259 OID 18407)
--- Dependencies: 1623
+-- TOC entry 2038 (class 1259 OID 18407)
+-- Dependencies: 1625
 -- Name: measure_equip; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3480,8 +4081,8 @@ CREATE INDEX measure_equip ON measure USING btree (measure_equip);
 
 
 --
--- TOC entry 2044 (class 1259 OID 18408)
--- Dependencies: 1625
+-- TOC entry 2047 (class 1259 OID 18408)
+-- Dependencies: 1627
 -- Name: menu_plugin; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3489,8 +4090,8 @@ CREATE INDEX menu_plugin ON menu USING btree (menu_plugin);
 
 
 --
--- TOC entry 2047 (class 1259 OID 18409)
--- Dependencies: 1626
+-- TOC entry 2050 (class 1259 OID 18409)
+-- Dependencies: 1628
 -- Name: param_report; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3498,8 +4099,8 @@ CREATE INDEX param_report ON param USING btree (param_report);
 
 
 --
--- TOC entry 2050 (class 1259 OID 18412)
--- Dependencies: 1628
+-- TOC entry 2053 (class 1259 OID 18412)
+-- Dependencies: 1630
 -- Name: permissions_level; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3507,8 +4108,8 @@ CREATE INDEX permissions_level ON permissions USING btree (permissions_level);
 
 
 --
--- TOC entry 2053 (class 1259 OID 18411)
--- Dependencies: 1628
+-- TOC entry 2056 (class 1259 OID 18411)
+-- Dependencies: 1630
 -- Name: permissions_resource; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3516,8 +4117,8 @@ CREATE INDEX permissions_resource ON permissions USING btree (permissions_resour
 
 
 --
--- TOC entry 2054 (class 1259 OID 18410)
--- Dependencies: 1628
+-- TOC entry 2057 (class 1259 OID 18410)
+-- Dependencies: 1630
 -- Name: permissions_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3525,8 +4126,8 @@ CREATE INDEX permissions_user ON permissions USING btree (permissions_user);
 
 
 --
--- TOC entry 2059 (class 1259 OID 18413)
--- Dependencies: 1631
+-- TOC entry 2062 (class 1259 OID 18413)
+-- Dependencies: 1633
 -- Name: repetition_id; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3534,8 +4135,8 @@ CREATE INDEX repetition_id ON repetition USING btree (repetition_id);
 
 
 --
--- TOC entry 2060 (class 1259 OID 18415)
--- Dependencies: 1632
+-- TOC entry 2063 (class 1259 OID 18415)
+-- Dependencies: 1634
 -- Name: report_conf; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3543,8 +4144,8 @@ CREATE INDEX report_conf ON report USING btree (report_conf);
 
 
 --
--- TOC entry 2063 (class 1259 OID 18414)
--- Dependencies: 1632
+-- TOC entry 2066 (class 1259 OID 18414)
+-- Dependencies: 1634
 -- Name: report_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3552,8 +4153,8 @@ CREATE INDEX report_user ON report USING btree (report_user);
 
 
 --
--- TOC entry 2066 (class 1259 OID 18416)
--- Dependencies: 1633
+-- TOC entry 2069 (class 1259 OID 18416)
+-- Dependencies: 1635
 -- Name: resaccess_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3561,8 +4162,8 @@ CREATE INDEX resaccess_user ON resaccess USING btree (resaccess_user);
 
 
 --
--- TOC entry 2067 (class 1259 OID 18419)
--- Dependencies: 1634
+-- TOC entry 2070 (class 1259 OID 18419)
+-- Dependencies: 1636
 -- Name: resource_id; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3570,8 +4171,8 @@ CREATE INDEX resource_id ON resource USING btree (resource_id);
 
 
 --
--- TOC entry 2070 (class 1259 OID 18420)
--- Dependencies: 1634
+-- TOC entry 2073 (class 1259 OID 18420)
+-- Dependencies: 1636
 -- Name: resource_resp; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3579,8 +4180,8 @@ CREATE INDEX resource_resp ON resource USING btree (resource_resp);
 
 
 --
--- TOC entry 2071 (class 1259 OID 18418)
--- Dependencies: 1634
+-- TOC entry 2074 (class 1259 OID 18418)
+-- Dependencies: 1636
 -- Name: resource_status; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3588,8 +4189,8 @@ CREATE INDEX resource_status ON resource USING btree (resource_status);
 
 
 --
--- TOC entry 2072 (class 1259 OID 18417)
--- Dependencies: 1634
+-- TOC entry 2075 (class 1259 OID 18417)
+-- Dependencies: 1636
 -- Name: resource_type; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3597,8 +4198,8 @@ CREATE INDEX resource_type ON resource USING btree (resource_type);
 
 
 --
--- TOC entry 2075 (class 1259 OID 18425)
--- Dependencies: 1636
+-- TOC entry 2078 (class 1259 OID 18425)
+-- Dependencies: 1638
 -- Name: restree_access; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3606,8 +4207,8 @@ CREATE INDEX restree_access ON restree USING btree (restree_access);
 
 
 --
--- TOC entry 2076 (class 1259 OID 18424)
--- Dependencies: 1636
+-- TOC entry 2079 (class 1259 OID 18424)
+-- Dependencies: 1638
 -- Name: restree_name; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3615,8 +4216,8 @@ CREATE INDEX restree_name ON restree USING btree (restree_name);
 
 
 --
--- TOC entry 2079 (class 1259 OID 18423)
--- Dependencies: 1636
+-- TOC entry 2082 (class 1259 OID 18423)
+-- Dependencies: 1638
 -- Name: restree_user; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3624,8 +4225,8 @@ CREATE INDEX restree_user ON restree USING btree (restree_user);
 
 
 --
--- TOC entry 2080 (class 1259 OID 18426)
--- Dependencies: 1637
+-- TOC entry 2083 (class 1259 OID 18426)
+-- Dependencies: 1639
 -- Name: resxfields_id; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3633,8 +4234,8 @@ CREATE INDEX resxfields_id ON resxfields USING btree (resxfields_field);
 
 
 --
--- TOC entry 2081 (class 1259 OID 18427)
--- Dependencies: 1637
+-- TOC entry 2084 (class 1259 OID 18427)
+-- Dependencies: 1639
 -- Name: resxfields_resource; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3642,8 +4243,8 @@ CREATE INDEX resxfields_resource ON resxfields USING btree (resxfields_resource)
 
 
 --
--- TOC entry 2084 (class 1259 OID 18428)
--- Dependencies: 1639
+-- TOC entry 2087 (class 1259 OID 18428)
+-- Dependencies: 1641
 -- Name: status_id; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3651,8 +4252,8 @@ CREATE INDEX status_id ON status USING btree (status_id);
 
 
 --
--- TOC entry 2095 (class 1259 OID 18435)
--- Dependencies: 1643
+-- TOC entry 2098 (class 1259 OID 18435)
+-- Dependencies: 1645
 -- Name: xfieldsval_entry; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3660,8 +4261,8 @@ CREATE INDEX xfieldsval_entry ON xfieldsval USING btree (xfieldsval_entry);
 
 
 --
--- TOC entry 2096 (class 1259 OID 18437)
--- Dependencies: 1643
+-- TOC entry 2099 (class 1259 OID 18437)
+-- Dependencies: 1645
 -- Name: xfieldsval_field; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3669,8 +4270,8 @@ CREATE INDEX xfieldsval_field ON xfieldsval USING btree (xfieldsval_field);
 
 
 --
--- TOC entry 2097 (class 1259 OID 18433)
--- Dependencies: 1643
+-- TOC entry 2100 (class 1259 OID 18433)
+-- Dependencies: 1645
 -- Name: xfieldsval_id; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3678,8 +4279,8 @@ CREATE INDEX xfieldsval_id ON xfieldsval USING btree (xfieldsval_id);
 
 
 --
--- TOC entry 2098 (class 1259 OID 18434)
--- Dependencies: 1643
+-- TOC entry 2101 (class 1259 OID 18434)
+-- Dependencies: 1645
 -- Name: xfieldsval_id_2; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3687,8 +4288,8 @@ CREATE INDEX xfieldsval_id_2 ON xfieldsval USING btree (xfieldsval_id);
 
 
 --
--- TOC entry 2101 (class 1259 OID 18431)
--- Dependencies: 1643 1643 1643
+-- TOC entry 2104 (class 1259 OID 18431)
+-- Dependencies: 1645 1645 1645
 -- Name: xfieldval_entry; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3696,8 +4297,8 @@ CREATE INDEX xfieldval_entry ON xfieldsval USING btree (xfieldsval_entry, xfield
 
 
 --
--- TOC entry 2102 (class 1259 OID 18432)
--- Dependencies: 1643
+-- TOC entry 2105 (class 1259 OID 18432)
+-- Dependencies: 1645
 -- Name: xfieldval_fieldid; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3705,8 +4306,8 @@ CREATE INDEX xfieldval_fieldid ON xfieldsval USING btree (xfieldsval_field);
 
 
 --
--- TOC entry 2103 (class 1259 OID 18436)
--- Dependencies: 1643
+-- TOC entry 2106 (class 1259 OID 18436)
+-- Dependencies: 1645
 -- Name: xfieldvals_field; Type: INDEX; Schema: dbtest; Owner: postgres; Tablespace: 
 --
 
@@ -3714,8 +4315,8 @@ CREATE INDEX xfieldvals_field ON xfieldsval USING btree (xfieldsval_field);
 
 
 --
--- TOC entry 2104 (class 2606 OID 18256)
--- Dependencies: 1987 1608 1607
+-- TOC entry 2109 (class 2606 OID 18256)
+-- Dependencies: 1610 1609 1990
 -- Name: admin_ibfk_4; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3724,8 +4325,8 @@ ALTER TABLE ONLY admin
 
 
 --
--- TOC entry 2105 (class 2606 OID 18261)
--- Dependencies: 1634 2068 1609
+-- TOC entry 2110 (class 2606 OID 18261)
+-- Dependencies: 1636 1611 2071
 -- Name: announcement_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3734,8 +4335,8 @@ ALTER TABLE ONLY announcement
 
 
 --
--- TOC entry 2106 (class 2606 OID 18266)
--- Dependencies: 1614 1620 2029
+-- TOC entry 2111 (class 2606 OID 18266)
+-- Dependencies: 1622 2032 1616
 -- Name: department_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3744,8 +4345,8 @@ ALTER TABLE ONLY department
 
 
 --
--- TOC entry 2108 (class 2606 OID 18276)
--- Dependencies: 1615 2085 1639
+-- TOC entry 2113 (class 2606 OID 18276)
+-- Dependencies: 1641 2088 1617
 -- Name: entry_ibfk_12; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3754,8 +4355,8 @@ ALTER TABLE ONLY entry
 
 
 --
--- TOC entry 2107 (class 2606 OID 18271)
--- Dependencies: 1634 2068 1615
+-- TOC entry 2112 (class 2606 OID 18271)
+-- Dependencies: 1636 1617 2071
 -- Name: entry_ibfk_13; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3764,8 +4365,8 @@ ALTER TABLE ONLY entry
 
 
 --
--- TOC entry 2109 (class 2606 OID 18281)
--- Dependencies: 2068 1634 1616
+-- TOC entry 2114 (class 2606 OID 18281)
+-- Dependencies: 2071 1636 1618
 -- Name: equip_ibfk_14; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3774,8 +4375,8 @@ ALTER TABLE ONLY equip
 
 
 --
--- TOC entry 2110 (class 2606 OID 18286)
--- Dependencies: 1616 1996 1610
+-- TOC entry 2115 (class 2606 OID 18286)
+-- Dependencies: 1999 1612 1618
 -- Name: equip_ibfk_15; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3784,8 +4385,8 @@ ALTER TABLE ONLY equip
 
 
 --
--- TOC entry 2111 (class 2606 OID 18291)
--- Dependencies: 2048 1627 1616
+-- TOC entry 2116 (class 2606 OID 18291)
+-- Dependencies: 2051 1629 1618
 -- Name: equip_ibfk_16; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3794,8 +4395,8 @@ ALTER TABLE ONLY equip
 
 
 --
--- TOC entry 2112 (class 2606 OID 18296)
--- Dependencies: 1617 2023 1618
+-- TOC entry 2117 (class 2606 OID 18296)
+-- Dependencies: 1619 2026 1620
 -- Name: help_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3804,8 +4405,8 @@ ALTER TABLE ONLY help
 
 
 --
--- TOC entry 2113 (class 2606 OID 18301)
--- Dependencies: 2025 1619 1617
+-- TOC entry 2118 (class 2606 OID 18301)
+-- Dependencies: 2028 1621 1619
 -- Name: help_ibfk_2; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3814,8 +4415,8 @@ ALTER TABLE ONLY help
 
 
 --
--- TOC entry 2114 (class 2606 OID 18306)
--- Dependencies: 2002 1613 1620
+-- TOC entry 2119 (class 2606 OID 18306)
+-- Dependencies: 2005 1615 1622
 -- Name: institute_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3824,8 +4425,8 @@ ALTER TABLE ONLY institute
 
 
 --
--- TOC entry 2115 (class 2606 OID 18311)
--- Dependencies: 2015 1616 1623
+-- TOC entry 2120 (class 2606 OID 18311)
+-- Dependencies: 2018 1618 1625
 -- Name: measure_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3834,8 +4435,8 @@ ALTER TABLE ONLY measure
 
 
 --
--- TOC entry 2116 (class 2606 OID 18316)
--- Dependencies: 2057 1630 1625
+-- TOC entry 2121 (class 2606 OID 18316)
+-- Dependencies: 2060 1632 1627
 -- Name: menu_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3844,8 +4445,8 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2117 (class 2606 OID 18321)
--- Dependencies: 1626 1632 2061
+-- TOC entry 2122 (class 2606 OID 18321)
+-- Dependencies: 2064 1634 1628
 -- Name: param_ibfk_1; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3854,8 +4455,8 @@ ALTER TABLE ONLY param
 
 
 --
--- TOC entry 2118 (class 2606 OID 18326)
--- Dependencies: 2068 1634 1628
+-- TOC entry 2123 (class 2606 OID 18326)
+-- Dependencies: 2071 1636 1630
 -- Name: permissions_ibfk_5; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3864,8 +4465,8 @@ ALTER TABLE ONLY permissions
 
 
 --
--- TOC entry 2119 (class 2606 OID 18331)
--- Dependencies: 2055 1629 1628
+-- TOC entry 2124 (class 2606 OID 18331)
+-- Dependencies: 2058 1630 1631
 -- Name: permissions_ibfk_6; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3874,8 +4475,8 @@ ALTER TABLE ONLY permissions
 
 
 --
--- TOC entry 2120 (class 2606 OID 18336)
--- Dependencies: 2000 1612 1632
+-- TOC entry 2125 (class 2606 OID 18336)
+-- Dependencies: 1614 2003 1634
 -- Name: report_ibfk_2; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3884,8 +4485,8 @@ ALTER TABLE ONLY report
 
 
 --
--- TOC entry 2121 (class 2606 OID 18341)
--- Dependencies: 1641 2089 1634
+-- TOC entry 2127 (class 2606 OID 18341)
+-- Dependencies: 2092 1636 1643
 -- Name: resource_ibfk_8; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3894,8 +4495,8 @@ ALTER TABLE ONLY resource
 
 
 --
--- TOC entry 2122 (class 2606 OID 18346)
--- Dependencies: 1635 1634 2073
+-- TOC entry 2128 (class 2606 OID 18346)
+-- Dependencies: 1637 2076 1636
 -- Name: resource_ibfk_9; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3904,8 +4505,18 @@ ALTER TABLE ONLY resource
 
 
 --
--- TOC entry 2123 (class 2606 OID 18356)
--- Dependencies: 1640 2087 1636
+-- TOC entry 2126 (class 2606 OID 19350)
+-- Dependencies: 2107 1676 1636
+-- Name: resource_resource_color_fkey; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
+--
+
+ALTER TABLE ONLY resource
+    ADD CONSTRAINT resource_resource_color_fkey FOREIGN KEY (resource_color) REFERENCES color(color_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2129 (class 2606 OID 18356)
+-- Dependencies: 1638 2090 1642
 -- Name: restree_ibfk_2; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3914,8 +4525,8 @@ ALTER TABLE ONLY restree
 
 
 --
--- TOC entry 2124 (class 2606 OID 18361)
--- Dependencies: 1636 1987 1607
+-- TOC entry 2130 (class 2606 OID 18361)
+-- Dependencies: 1990 1638 1609
 -- Name: restree_ibfk_3; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3924,8 +4535,8 @@ ALTER TABLE ONLY restree
 
 
 --
--- TOC entry 2125 (class 2606 OID 18366)
--- Dependencies: 2068 1637 1634
+-- TOC entry 2131 (class 2606 OID 18366)
+-- Dependencies: 1636 1639 2071
 -- Name: resxfields_ibfk_2; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3934,8 +4545,8 @@ ALTER TABLE ONLY resxfields
 
 
 --
--- TOC entry 2126 (class 2606 OID 18371)
--- Dependencies: 1637 2093 1642
+-- TOC entry 2132 (class 2606 OID 18371)
+-- Dependencies: 1639 1644 2096
 -- Name: resxfields_ibfk_3; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3944,8 +4555,8 @@ ALTER TABLE ONLY resxfields
 
 
 --
--- TOC entry 2127 (class 2606 OID 18381)
--- Dependencies: 1643 1642 2093
+-- TOC entry 2133 (class 2606 OID 18381)
+-- Dependencies: 1645 2096 1644
 -- Name: xfieldsval_ibfk_2; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3954,8 +4565,8 @@ ALTER TABLE ONLY xfieldsval
 
 
 --
--- TOC entry 2128 (class 2606 OID 18386)
--- Dependencies: 2007 1643 1615
+-- TOC entry 2134 (class 2606 OID 18386)
+-- Dependencies: 2010 1645 1617
 -- Name: xfieldsval_ibfk_3; Type: FK CONSTRAINT; Schema: dbtest; Owner: postgres
 --
 
@@ -3963,7 +4574,7 @@ ALTER TABLE ONLY xfieldsval
     ADD CONSTRAINT xfieldsval_ibfk_3 FOREIGN KEY (xfieldsval_entry) REFERENCES entry(entry_id) MATCH FULL ON DELETE CASCADE;
 
 
--- Completed on 2011-02-28 10:46:56
+-- Completed on 2011-03-01 14:11:30
 
 --
 -- PostgreSQL database dump complete
