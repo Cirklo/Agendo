@@ -1,0 +1,17 @@
+body{
+	font-family: Verdana;
+	text-align: justify;
+	margin: 0;
+}
+
+.tableText{
+	font-family: Verdana;
+	font-size: 16;
+	color: white;
+}
+
+.link{
+	color: #f2c53d;
+	font-size: 18;
+}
+
