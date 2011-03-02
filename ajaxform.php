@@ -22,7 +22,6 @@ $mail = new PHPMailer;
 if(isset($_GET['val'])){ //new user form -> ajax response
     $id = $_GET['val'];    
     if($id != 0){
-		echo "bla->".$id."<br></br>";
         $sql = "SELECT institute_name FROM institute, department WHERE institute_id = department_inst AND department_id = $id";
         $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
         $row = dbHelp::mysql_fetch_row2($res);
@@ -106,9 +105,8 @@ if(isset($_GET['val'])){ //new user form -> ajax response
     $mail->Subject = "Calendar administration: Permission requested";
     $mail->Body = $msg;
     
-    //$mail->AddAddress($resp, "");
     $mail->AddAddress($resp, "");
-    $mail->AddAddress("rpdias@fc.ul.pt", "");
+    // $mail->AddAddress("rpdias@fc.ul.pt", "");
 
     if(!$mail->Send()) {
         echo "<table border=0>";

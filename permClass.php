@@ -305,11 +305,27 @@ function checkOverlap($datetime,$slots) {
     //$endtime=date("Y-m-d H:i",mktime($hour,$min+$this->Slots*$this->Resolution,0,$month,$day,$year));
 	
     // $sql="select entry_id from entry where entry_datetime< date_add(str_to_date(". $datetime . ",'%Y%m%d%H%i'),interval ". ($this->Resolution* $slots) . " minute) and  str_to_date(". $datetime .",'%Y%m%d%H%i') <date_add(entry_datetime, interval " . $this->Resolution ."*entry_slots minute) and entry_status in (1,2) and entry_resource=". $this->Resource;
-    $sql="select entry_id from entry where entry_datetime < ".dbHelp::date_add(dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i'),$this->Resolution*$slots,'minute')." and ".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i')." < ".dbHelp::date_add('entry_datetime',$this->Resolution*$slots, 'minute')." and entry_status in (1,2) and entry_resource=". $this->Resource;
+    // $sql="select entry_id from entry where entry_datetime < ".dbHelp::date_add(dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i'),$this->Resolution*$slots,'minute')." and ".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i')." < ".dbHelp::date_add('entry_datetime',$this->Resolution*$slots, 'minute')." and entry_status in (1,2) and entry_resource=". $this->Resource;
+    $sql="select entry_id, entry_slots*".$this->Resolution." from entry where entry_datetime < ".dbHelp::date_add(dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i'),$this->Resolution*$slots,'minute')." and entry_status in (1,2) and entry_resource=". $this->Resource;
+    $res=dbHelp::mysql_query2($sql);
+	$bool = false;
+	while($arr = dbHelp::mysql_fetch_row2($res)){
+		$sql="select entry_id from entry where entry_id = ".$arr[0]." and ".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i')." < ".dbHelp::date_add('entry_datetime',$arr[1], 'minute');
+		$resAux=dbHelp::mysql_query2($sql);
+		if(dbHelp::mysql_numrows2($resAux)>0){
+			$bool = true;
+			break;
+		}
+	}
+
+	
    // $sql="select entry_id from entry where str_to_date('$datetime','%Y%m%d%H%i') >= entry_datetime and str_to_date('$datetime','%Y%m%d%H%i') <date_add(entry_datetime, interval ".$this->Resolution."*entry_slots minute) and entry_status in (1,2) and entry_resource=" . $this->Resource;
     //$sql="select entry_id from entry where entry_datetime between str_to_date('" . $datetime . "','%Y%m%d%H%i') and date_add('" . $year . "-" . $month . "-".$day . " ".$hour.":".$min ."', interval " . $this->Resolution."*entry_slots minute) and entry_status in (1,2) and entry_resource=" . $this->Resource;
-    $res=dbHelp::mysql_query2($sql);
-    if (dbHelp::mysql_numrows2($res)>0) {
+	
+	// $res=dbHelp::mysql_query2($sql);
+    // if (dbHelp::mysql_numrows2($res)>0) {
+
+    if ($bool) {
         //$year=substr($endtime,0,4);
         //$month=substr($endtime,4,2);
         //$day=substr($endtime,6,2);

@@ -41,11 +41,9 @@ $mail->AddReplyTo($row[3],"Calendar Admin");
 
 // Sends to all users with admin level
 $sql = "SELECT user_email from ".dbHelp::getSchemaName()."user WHERE user_level = 0";
-echo "->".$sql."<br>";
 $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
 // Used when there was just one responsible
 // $row = dbHelp::mysql_fetch_row2($res);
-echo "bla->";
 	$mail->Subject = "Calendar administration: new user";
 	$mail->Body = $msg;
 	while ($row = dbHelp::mysql_fetch_row2($res)){
