@@ -149,7 +149,7 @@ function del(){
     $seekentry='';
   
     // Gets the all the users, entry_ids and status of the given entry_id date, of a given resource
-    $sql="SELECT entry_user,entry_id,entry_status FROM entry where entry_datetime=(select entry_datetime from entry where entry_id=".$entry.") and entry_resource=".$resource." AND entry_status IN ( 1, 2, 4 ) order by entry_id";
+    $sql="SELECT entry_user,entry_id,entry_status FROM entry where entry_datetime in (select entry_datetime from entry where entry_id=".$entry.") and entry_resource=".$resource." AND entry_status IN ( 1, 2, 4 ) order by entry_id";
     $res=dbHelp::mysql_query2($sql) or die($sql);
     $found=false;
     $perm= new permClass;
@@ -157,10 +157,10 @@ function del(){
         // mysql_data_seek($res,$i);
         $arr=dbHelp::mysql_fetch_row2($res);
 		// Checks if the current user from the $res list is allowed to delete the current entry
-        // if($perm->setPermission($arr[0],$resource,$user_passwd)){
+        if($perm->setPermission($arr[0],$resource,$user_passwd)){
 		// Checks if the given user is allowed to delete the current entry
-        if($perm->setPermission($arr[0],$resource,$user_passwd) && $arr[0]==$user_id){
-            $found=true;
+        // if($perm->setPermission($arr[0],$resource,$user_passwd) && $arr[0]==$user_id){
+           $found=true;
             $seekentry=$arr[1];
 			// Not used anymore
             // $user_id=$arr[0];//it might be the admin logging in
