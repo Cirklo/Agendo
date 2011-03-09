@@ -35,26 +35,24 @@ function checkfield(field) {
 // require_once(".htconnect.php"); $connect = new dbConnection();
 require_once("functions.php");
 
-$extra='';
+$extra = '';
+$class = '';
 // Shows a specific resource
 if (isset($_GET['class'])) {
     $class=clean_input($_GET['class']);
     // $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc";
     $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc";
-
-    if ($class==0) {
-        $sql="select 1,resource_name,resource_id from resource order by resource_name";
-    }
+    if ($class==0){
+        // $sql="select 1,resource_name,resource_id from resource order by resource_name";
+        $sql="select resource_name,type_name, resstatus_name, resource_id from resource, resstatus, type where resource_type = type_id and resource_status = resstatus_id order by resource_name";
+	}
     $extra='resource_type='. $class . ' and';
     $limit='';
     $datefilter='';
 // Shows most used resources filtered by a month of use
 } else {
     $class='';
-    // $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc limit 10";
     $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc limit 10";
-	// To show the same results uncomment this line and comment the one after
-    // $datefilter='';
     // $datefilter=' and entry_datetime between date_sub(now(),interval 1 month) and now()';
     $datefilter=" and entry_datetime between ".dbHelp::date_sub('now()', '1', 'month')." and now()";
 }
@@ -86,8 +84,14 @@ echoUserDiv('index', 0);
 echo "<div class=table>";
 echo "<table class=equilist>";
 	echo "<tr>";
-		echo "<td class=title_>Most Used Resources</td>";
-		echo "<td class=title_>Groups</td><td class=title_ >share</td>";
+		if($class != '0'){
+			echo "<td class=title_>Most Used Resources</td>";
+			echo "<td class=title_>Groups</td><td class=title_ >Share</td>";
+		}
+		else {
+			echo "<td class=title_>All Resources</td>";
+			echo "<td class=title_>Resource Type</td><td class=title_ >Permission Type</td>";
+		}
 	echo "</tr>";
 	
 	// $resResource=$connect->query($sql) or die ($sql);
@@ -99,9 +103,11 @@ echo "<table class=equilist>";
 	for ($i=0;$i<dbHelp::mysql_numrows2($resResource);$i++) {
 		$arrResource=dbHelp::mysql_fetch_row2($resResource);
 		if ($class=='0' ) {
-			echo "<th><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
-			echo "<td></td>\n";
-			echo "<td style='height:18px;'></td>\n";
+			// echo "<th><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
+			 // resource_name,type_name, resstatus_name, resource_id
+			echo "<th><a href=weekview.php?resource=" . $arrResource[3]. ">" . $arrResource[0] .  "</a></th>\n";
+			echo "<td>".$arrResource[1]."</td>\n";
+			echo "<td style='height:18px;'>".$arrResource[2]."</td>\n";
 			echo "</tr>\n";
 		} else {
 			$sql="SELECT sum(entry_slots) e,department_name from entry, resource, department, ".dbHelp::getSchemaName()."user where $extra entry_user=user_id and user_dep=department_id and department_id<>17 and resource_id=entry_resource and entry_status in (1,2) $datefilter and resource_id=" . $arrResource[2] . " group by department_name order by e desc limit 3";
