@@ -81,6 +81,8 @@ obj=document.getElementById('user_idm');
             var str=xmlhttp.responseText;
             // document.getElementById('msg').innerHTML=str;
             // showfade('msg',2000);
+			str = str.replace(/(\r\n|\n|\r)/gm," ");
+			alert(str);
         }
     }
     
@@ -88,5 +90,5 @@ obj=document.getElementById('user_idm');
     url="ajax.php?type=newpwd&value=" + obj.title; // title has user_id info
     xmlhttp.open("GET",url,true);
     xmlhttp.send(null);
-	alert('Your new password was sent.');
+	// alert('Your new password was sent.');
 }
