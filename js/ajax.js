@@ -79,8 +79,8 @@ obj=document.getElementById('user_idm');
     xmlhttp.onreadystatechange=function() {
         if(xmlhttp.readyState==4) {
             var str=xmlhttp.responseText;
-            document.getElementById('msg').innerHTML=str;
-            showfade('msg',2000);
+            // document.getElementById('msg').innerHTML=str;
+            // showfade('msg',2000);
         }
     }
     
@@ -88,4 +88,5 @@ obj=document.getElementById('user_idm');
     url="ajax.php?type=newpwd&value=" + obj.title; // title has user_id info
     xmlhttp.open("GET",url,true);
     xmlhttp.send(null);
+	alert('Your new password was sent.');
 }

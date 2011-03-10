@@ -1,6 +1,7 @@
 <?php
 
 require_once("alert/class.phpmailer.php");
+// require_once("commonCode.php");
 
 /**
   * @author Nuno Moreno
@@ -279,7 +280,8 @@ function recover($user_id){
             $pwd.=$vowels[rand(0,strlen($vowels)-1)];
         }
     }
-    $sql="update user set user_passwd=password('$pwd') where user_id=". $user_id;
+    // $sql="update user set user_passwd = password('$pwd') where user_id=". $user_id;
+    $sql="update user set user_passwd = '".cryptPassword($pwd)."' where user_id=". $user_id;
     $res=dbHelp::mysql_query2($sql) or die('Password not updated');
     switch ($arr['user_alert']) {
     case 2:
