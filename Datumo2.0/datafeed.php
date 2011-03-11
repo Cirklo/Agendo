@@ -12,9 +12,8 @@
  * 	-	Maybe we need to create a separate table to handle this
  */
 
-// require_once ".htconnect.php";
+require_once ".htconnect.php";
 require_once "calFunctions.php";
-require_once "../__dbHelp.php";
 
 /**
  * This method is not used because dynamic insert is disabled 
@@ -79,22 +78,14 @@ function addDetailedCalendar($st, $et, $sub, $ade, $dscr, $loc, $color, $tz){
   return $ret;
 }
 
-function wtf($string, $path = "c:/a.txt", $mode = "w"){
-	if($path == "") $path = "c:/a.txt";
-	if($mode == "") $mode = "w";
-		
-	$fh = fopen($path, $mode) or die("Can't open file!");
-	fwrite($fh, $string."\n");
-	fclose($fh);
-}
-
 function listCalendarByRange($sd, $ed){
 	//get user id so specific query can be built
 	require_once "session.php";
 	$user_id=startSession();
 	
 	//call database class
-	// $conn=new dbConnection();
+	$conn=new dbConnection();
+	
 	//initialize variables
  	$ret = array();
   	$ret['events'] = array();
@@ -103,47 +94,29 @@ function listCalendarByRange($sd, $ed){
   	$ret["end"] = php2JsTime($ed);
   	$ret['error'] = null;
   	try{
-  		// set query to get all database entries for this user    
-  		// we want to display all entries from this user and all entries for this user resources
-	    // $query = "SELECT entry_id, resource_name, entry_datetime, user_login, status_name, entry_comments, DATE_ADD(entry_datetime, INTERVAL entry_slots*resource_resolution MINUTE) as entry_endtime, entry_comments, entry_action, resource_color 
-	    // FROM entry, resource, user, status 
-	    // WHERE resource_id=entry_resource
-	    // AND entry_status=status_id
-	    // AND entry_user=user_id 
-	    // AND entry_datetime BETWEEN '".php2MySqlTime($sd)."' AND '". php2MySqlTime($ed)."'
-	    // AND entry_status IN (1,2,4)
-	    // AND (resource_resp=$user_id OR entry_user=$user_id)";
-	    $query = "SELECT entry_id, resource_name, entry_datetime, user_login, status_name, entry_comments,
-		entry_datetime, entry_slots, resource_resolution, 
-		entry_comments, entry_action, resource_color 
-	    FROM entry, resource, ".dbHelp::getSchemaName()."user, status 
+  		//set query to get all database entries for this user    
+  		//we want to display all entries from this user and all entries for this user resources
+	    $query = "SELECT entry_id, resource_name, entry_datetime, user_login, status_name, entry_comments, DATE_ADD(entry_datetime, INTERVAL entry_slots*resource_resolution MINUTE) as entry_endtime, entry_comments, entry_action, resource_color 
+	    FROM entry, resource, user, status 
 	    WHERE resource_id=entry_resource
 	    AND entry_status=status_id
 	    AND entry_user=user_id 
 	    AND entry_datetime BETWEEN '".php2MySqlTime($sd)."' AND '". php2MySqlTime($ed)."'
 	    AND entry_status IN (1,2,4)
 	    AND (resource_resp=$user_id OR entry_user=$user_id)";
-	    // $sql=$conn->prepare($query);
-	    // $sql->execute();
-
-		$res = dbHelp::mysql_query2($query);
+	    $sql=$conn->prepare($query);
+	    $sql->execute();
 	    //loop through all results
-	    // for($i=0;$row=$sql->fetch();$i++) {
-	    while($row = dbHelp::mysql_fetch_array2($res)) {
+	    for($i=0;$row=$sql->fetch();$i++) {
 	    	//build message to be displayed
 	    	$msg=$row["resource_name"].": <b>".$row["user_login"]."</b><br>";
 	    	$msg.="Entry status: <b>".$row["status_name"]."</b><br><br>";
 	    	$msg.=$row["entry_comments"];
-			$datetimeAux = "'".$row['entry_datetime']."'";
-				$sqlAux = "select ".dbHelp::date_add($datetimeAux, $row['entry_slots']*$row['resource_resolution'], 'MINUTE')." as entry_endtime";
-				$resAux = dbHelp::mysql_query2($sqlAux);
-				$rowAux = dbHelp::mysql_fetch_array2($resAux);
 	      	$ret['events'][] = array(
 	        	$row["entry_id"], //entry identification
 	        	$msg, //message to be displayed in the calendar
 	        	php2JsTime(mySql2PhpTime($row["entry_datetime"])), 	//start time
-	        	// php2JsTime(mySql2PhpTime($row["entry_endtime"])),	//end time
-	        	php2JsTime(mySql2PhpTime($rowAux['entry_endtime'])),	//end time
+	        	php2JsTime(mySql2PhpTime($row["entry_endtime"])),	//end time
 	        	0,	//feature not used
 	        	0, 	//more than one day event
 	        	0,	//Recurring event
