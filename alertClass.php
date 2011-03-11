@@ -296,7 +296,7 @@ function recover($user_id){
         case 1:
             $this->Subject="New password request";
             $this->AddReplyTo($this->UserEmail,$this->UserFullName);
-            $this->Body="You password is now $pwd";
+            $this->Body="Your randomly generated password is now $pwd";
             $address = $arr['user_email'];
             $this->AddAddress($address, "");
             if(!$this->Send()) {
