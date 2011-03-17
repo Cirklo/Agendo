@@ -330,7 +330,6 @@ function monitor(){
     $res=dbHelp::mysql_query2($sql) or die($sql);
     $arrrep=dbHelp::mysql_fetch_row2($res);
 
-	require_once("commonCode.php");
     $sql="select entry.entry_datetime, resource.resource_resp from entry, resource where entry.entry_resource=resource.resource_id and entry_id=".$entry;
     $res=dbHelp::mysql_query2($sql) or die($sql);
 	$currentDate = date('Y-m-d H:i:s',time());

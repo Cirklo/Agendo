@@ -66,22 +66,21 @@ function swapColor(obj,tag,action){
             clear_table(table);
             document.getElementById('addButton').value='All';
             button_visibility(false,false,false,false,false);
-        if (window.XMLHttpRequest){
-            xmlhttp=new XMLHttpRequest();
-        } else {
-            alert("Your browser does not support XMLHTTP!");
-            exit;
-        }
-        url='ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
-        xmlhttp.open('GET', url , true);
-        xmlhttp.send(null);
-        xmlhttp.onreadystatechange = function () {
-            if(xmlhttp.readyState==4) {
-            eval(xmlhttp.responseText);
-            //alert(xmlhttp.responseText);         
-            }
-        }
-            
+			if (window.XMLHttpRequest){
+				xmlhttp=new XMLHttpRequest();
+			} else {
+				alert("Your browser does not support XMLHTTP!");
+				exit;
+			}
+			url='ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
+			xmlhttp.open('GET', url , true);
+			xmlhttp.send(null);
+			xmlhttp.onreadystatechange = function () {
+				if(xmlhttp.readyState==4) {
+				eval(xmlhttp.responseText);
+				//alert(xmlhttp.responseText);         
+				}
+			}
         } else {
             document.getElementById('addButton').value='Add';
                 for (i=1;i<tablesize;i++)

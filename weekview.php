@@ -129,10 +129,18 @@ echo "<div id=calendar class='calendar'> ";
         $sql ="SELECT xfields_name,xfieldsval_value, xfields_label from xfields , resxfields,xfieldsval where xfieldsval_field= xfields_id and xfields_id=resxfields_field and resxfields_resource=" . $calendar->getResource(). " and xfieldsval_entry=".$calendar->getEntry();
 		
         // $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
-		$sqlWeekDay = "select ".dbHelp::getFromDate('entry_datetime','%w')." from entry where entry_id=".$calendar->getEntry();
+		// $sqlWeekDay = "select ".dbHelp::getFromDate('entry_datetime','%w')." from entry where entry_id=".$calendar->getEntry();
+		// $res = dbHelp::mysql_query2($sqlWeekDay);
+		// $arr = dbHelp::mysql_fetch_row2($res);
+        // $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub('entry_datetime',$arr[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
+		
+		$sqlWeekDay = "select ".dbHelp::date_sub(dbHelp::getFromDate('entry_datetime','%Y%m%d'),'1','day')." from entry where entry_id=".$calendar->getEntry();
 		$res = dbHelp::mysql_query2($sqlWeekDay);
-		$arr = dbHelp::mysql_fetch_row2($res);
-        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub('entry_datetime',$arr[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
+		$arr1 = dbHelp::mysql_fetch_row2($res);
+		$sqlWeekNumber = "select ".dbHelp::getFromDate("'".$arr1[0]."'",'%w');
+		$res = dbHelp::mysql_query2($sqlWeekNumber);
+		$arr2 = dbHelp::mysql_fetch_row2($res);
+        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub("'".$arr1[0]."'",$arr2[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
 		
         // $sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
         $rese=dbHelp::mysql_query2($sqle);
@@ -158,11 +166,14 @@ echo "<div id=calendar class='calendar'> ";
         $sql ="SELECT xfields_name,xfieldsval_value, xfields_label from xfields , resxfields,xfieldsval where xfieldsval_field= xfields_id and xfields_id=resxfields_field and resxfields_resource=" . $calendar->getResource(). " and xfieldsval_entry=".$calendar->getEntry();
 		
         // $sqle="select entry_user, entry_repeat, @d:= date_format(date_sub(entry_datetime,interval 1 day),'%Y%m%d'),  @wd:=date_format(@d,'%w'), date_format(date_sub(@d, interval @wd day),'%Y%m%d') as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
-		$sqlWeekDay = "select ".dbHelp::getFromDate('entry_datetime','%w')." from entry where entry_id=".$calendar->getEntry();
+		$sqlWeekDay = "select ".dbHelp::date_sub(dbHelp::getFromDate('entry_datetime','%Y%m%d'),'1','day')." from entry where entry_id=".$calendar->getEntry();
 		$res = dbHelp::mysql_query2($sqlWeekDay);
-		$arr = dbHelp::mysql_fetch_row2($res);
-        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub('entry_datetime',$arr[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
-        //$sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
+		$arr1 = dbHelp::mysql_fetch_row2($res);
+		$sqlWeekNumber = "select ".dbHelp::getFromDate("'".$arr1[0]."'",'%w');
+		$res = dbHelp::mysql_query2($sqlWeekNumber);
+		$arr2 = dbHelp::mysql_fetch_row2($res);
+        $sqle="select entry_user, entry_repeat, ".dbHelp::getFromDate(dbHelp::date_sub("'".$arr1[0]."'",$arr2[0],'day'),'%Y%m%d')." as date, ".dbHelp::getFromDate('entry_datetime','%h')." as dateHour, ".dbHelp::getFromDate('entry_datetime','%i')." as dateMinutes, entry_slots from entry where entry_id=".$calendar->getEntry();
+        // $sqle="select entry_user, entry_repeat, @d:= date_format(entry_datetime,'%Y%m%d') -1,  @d- date_format(@d,'%w')  as date, date_format(entry_datetime,'%h') + date_format(entry_datetime,'%i')/60 as starttime, entry_slots from entry where entry_id=".$calendar->getEntry();
         $rese=dbHelp::mysql_query2($sqle);
         $arre= dbHelp::mysql_fetch_array2($rese);
         $calendar->setStartDate($arre['date']);
@@ -172,7 +183,6 @@ echo "<div id=calendar class='calendar'> ";
         // $entrystart=$arre['starttime'];
         $entrystart=$arre['starttime'];
 		$entrystart= $arre['dateHour'] + $arre['dateMinutes']/60;
-
     } else {
             $calendar->setEntry(0);
             $entrystart=0;
