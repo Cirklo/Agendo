@@ -83,9 +83,12 @@ function swapColor(obj,tag,action){
 			}
         } else {
             document.getElementById('addButton').value='Add';
-                for (i=1;i<tablesize;i++)
-                    for (j=1;j<table.rows[i].cells.length;j++) if (table.rows[i].cells[j].innerHTML!='') table.rows[i].cells[j].style.backgroundColor=table.rows[i].cells[j].lang;
-                if (document.getElementById('update').value==0) button_visibility(false,true,true,true,true);
+			for (i=1;i<tablesize;i++)
+				for (j=1;j<table.rows[i].cells.length;j++)
+					if (table.rows[i].cells[j].innerHTML!='')
+						table.rows[i].cells[j].style.backgroundColor=table.rows[i].cells[j].lang;
+			if (document.getElementById('update').value==0)
+				button_visibility(false,true,true,true,true);
         }
         objStyle.backgroundColor='#aaaaaa';
         bgcolor1=objStyle.backgroundColor;
@@ -473,7 +476,9 @@ function init(s,m){
     document.getElementById('enddate').value=formatDate(curDate,"yyyy-M-dd");
     if (document.getElementById('entry').value!='0') {
         if (document.getElementById('update').value!='0') {
-            document.getElementById('updateButton').value='Change';
+			table=document.getElementById('caltable');
+			clear_table(table);
+			document.getElementById('updateButton').value='Change';
             document.getElementById('confirmButton').value='Cancel';
             button_visibility(true,true,true,false,false);
         } else {
