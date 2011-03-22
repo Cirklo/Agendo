@@ -23,7 +23,6 @@
 
 <?php
 error_reporting(1);
-require_once("commonCode.php");
 require_once("calClass.php");
 // require_once(".htconnect.php");
 require_once("functions.php");
