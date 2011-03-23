@@ -65,6 +65,7 @@ echo "<div id='logo' class=logo>";
 			echo "</td>";
 			//echo "<br><font color=#f4c337>circlo.org</td>";
 			echo "<td width=100% rowspan=3 align=right>";
+				echo "<a href=http://www.mozilla-europe.org style='text-decoration:none'><font color=#FFFFFF size=1.5px>Optimized for Mozilla Firefox v3.6</font></a>";
 				echo "<br><br><br><br><br>";
 				echoUserVideosResourceHelpLinks('index', 0);
 			echo "</td>";
