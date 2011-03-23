@@ -189,6 +189,8 @@ function confirmEntry($entry){
     $res=dbHelp::mysql_query2($sql);
     $arrEntry=dbHelp::mysql_fetch_row2($res);
     
+	// confirms that is using an equipment
+	// select entry_id, entry_datetime from entry where date_format(entry_datetime, '%Y%m%d')='20110323' and date_format(entry_datetime, '%H%i')>'1500' and entry_resource=5 and entry_status not in (2,3)
     $sql="select entry_id, entry_datetime from entry where ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='" . substr($arrEntry[0],0,8) ."' and ".dbHelp::getFromDate('entry_datetime','%H%i').">'". substr($arrEntry[0],8,4) . "' and entry_resource=". $this->Resource ." and entry_status not in (2,3)" ;
     $res=dbHelp::mysql_query2($sql) or die ($sql);
     //echo $sql;
@@ -207,7 +209,7 @@ function confirmEntry($entry){
         //if ($arrStatus['user_id']==$this->User ) break;
         if (isset($_COOKIE["resource_ip"])) $cookie=$_COOKIE["resource_ip"];
         // if response is not the same or
-        if (($arrStatus['resource_confIP']!=$_SERVER['REMOTE_ADDR']) && (!strstr($cookie,$arrStatus['resource_confIP']))) {
+        if (($arrStatus['resource_confIP']!=$_SERVER['REMOTE_ADDR']) && (!strstr($cookie,$arrStatus['resource_confIP'])) && !$this->WasAdmin) {
             $this->warning='Confirmation only possible on equipment computer.' ;
             //$this->warning=trim($arrStatus['resource_confIP']) . '-' . $cookie;
             return false;    
@@ -231,7 +233,7 @@ function confirmEntry($entry){
         
         //echo $utc1;
         //echo $utc2;
-        if ((mktime()<$utc1) || (mktime()>$utc2)){
+        if (!$this->WasAdmin && ((mktime()<$utc1) || (mktime()>$utc2))){
             $this->warning="You can only confirm from " . date("H:i, d M" ,$utc1) . " to " . date("H:i, d M",$utc2);
             return false;
         }

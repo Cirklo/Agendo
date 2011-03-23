@@ -388,34 +388,35 @@ function confirm(){
     $resource=clean_input($_GET['resource']);
     $entry=clean_input($_GET['entry']);
 
-    $wasAdmin;
-    $perm= new permClass;
+    $perm = new permClass;
     if (!$perm->setPermission($user_id,$resource,$user_passwd)) {
-	$wasAdmin = $perm->getWasAdmin();
-	echo $perm->getWarning();return;}
+		echo $perm->getWarning();
+		return;
+	}
 
-    
-    if ($perm->getResourceStatus()==4 && $wasAdmin) {
-    
+    if ($perm->getResourceStatus()==4 && $perm->getWasAdmin()) {
         $notify=new alert($resource);
         $notify->setEntry($entry);
         $notify->fromAdmin('confirm');
-        
     } elseif (!$perm->confirmEntry($entry)) {
         echo $perm->getWarning();
         exit;
     }
-    echo $perm->getResourceStatus(),$perm->getWasAdmin();
-    
+    // echo $perm->getResourceStatus(),$perm->getWasAdmin();
+
     $sql="update entry set entry_status=1 where entry_id=" . $entry;
     $resPDO = dbHelp::mysql_query2($sql) or die($sql);
     // if (mysql_affected_rows()!=0)  echo $perm->getWarning();
-    if (dbHelp::mysql_numrows2($resPDO)==0) echo $perm->getWarning();
+    if (dbHelp::mysql_numrows2($resPDO)!=0) echo $perm->getWarning();
     
     // $sql="select @dt:=entry_datetime from entry where entry_id=" . $entry;
     // dbHelp::mysql_query2($sql) or die($sql);
     // $sql="delete from entry where entry_datetime=@dt and entry_status in (1,2,4) and entry_id<>". $entry . " and entry_resource=" . $resource;
-    $sql="delete from entry where entry_datetime in (select entry_datetime from entry where entry_id=".$entry.") and entry_status in (1,2,4) and entry_id<>". $entry . " and entry_resource=" . $resource;
+
+    $sql="select entry_datetime from entry where entry_id=" . $entry;
+    $res = dbHelp::mysql_query2($sql) or die($sql);
+	$arr = dbHelp::mysql_fetch_row2($res);
+    $sql="delete from entry where entry_datetime='".$arr[0]."' and entry_status in (1,2,4) and entry_id<>".$entry." and entry_resource=" . $resource;
     dbHelp::mysql_query2($sql) or die($sql);
     
 }

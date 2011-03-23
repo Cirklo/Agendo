@@ -214,7 +214,7 @@ END:VCALENDAR";
     switch ($type) {
         case 'newentry':
             $this->AddStringAttachment($att,'agendo.ics');
-            $msg="New entry on ". $this->ResourceName . " at ". $hour . ":". $min ." on the " . "$year-$month-$day from ".dbHelp::getSchemaName()."user " . $this->UserFullName;
+            $msg="New entry on ". $this->ResourceName . " at ". $hour . ":". $min ." on the " . "$year-$month-$day from user " . $this->UserFullName;
             break;
         case 'comment':
             $msg="Comment added  on ". $this->ResourceName . ":" . $comment;
@@ -374,7 +374,7 @@ function fromAdmin($type,$extra=''){
             $msg="Entry on " . $this->ResourceName . " updated by resource administrator. New entry time " . $arr['t'] . " on the ". $arr['d'] . ". Visit calendar for further details";
             break;
         case 'confirm':
-             $msg="Entry on " . $this->ResourceName  . " at ". $arr['t'] . " on the ". $arr['d'] . " cofirmed by administrator. Visit calendar for further details";
+             $msg="Entry on " . $this->ResourceName  . " at ". $arr['t'] . " on the ". $arr['d'] . " confirmed by administrator. Visit calendar for further details";
             break;    
         case 'delete':
             $msg="Your/some entry(ies) on  " . $this->ResourceName  . " was/were deleted by administrator";
