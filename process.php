@@ -254,13 +254,13 @@ function update(){
     $sql="update entry set entry_user=".$user_id.", entry_datetime=".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i').",entry_slots=".$slots." where entry_id=". $entry;
     $resPDO = dbHelp::mysql_query2($sql . $extra) or die("User not updated!");
     
-    // if (mysql_affected_rows()==0) {
+   // if (mysql_affected_rows()==0) {
     if (dbHelp::mysql_numrows2($resPDO)==0) {
         echo "User not updated. ";
     } else {
         //notification for waiting list
         // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
-        $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime=".$arrdt[0]." and entry_resource=".$arrdt[1]." order by entry_id";
+        $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime='".$arrdt[0]."' and entry_resource=".$arrdt[1]." order by entry_id";
         $res=dbHelp::mysql_query2($sql);
         $arrStatus=dbHelp::mysql_fetch_row2($res);
         if (dbHelp::mysql_numrows2($res)>0) {

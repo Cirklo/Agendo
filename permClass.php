@@ -46,14 +46,6 @@ function setPermission($user,$resource,$passwd) {
     $this->Resource=$resource;
     //require_once('.htconnect.php');
 	
-	// Gets the permission level, .., etc, of the given resource and user
-    // $sql="select lpad(bin(permissions_level),4,'0'),resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
-    $sql="select permissions_level,resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
-    $res=dbHelp::mysql_query2($sql) or die ($sql);
-    $arr=dbHelp::mysql_fetch_row2($res);
-	// instead of lpad(bin...)
-	$arr[0] = decbin($arr[0]);
-	$arr[0] = str_pad($arr[0], 4, "0", STR_PAD_LEFT);
 	// Encrypts the given password
     // $sql="select password('". $passwd ."')";
     // $res=dbHelp::mysql_query2($sql);
@@ -69,6 +61,14 @@ function setPermission($user,$resource,$passwd) {
     $res=dbHelp::mysql_query2($sql);
     $arrpwdadmin=dbHelp::mysql_fetch_row2($res);
     
+	// Gets the permission level, .., etc, of the given resource and user
+    // $sql="select lpad(bin(permissions_level),4,'0'),resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
+    $sql="select permissions_level,resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
+    $res=dbHelp::mysql_query2($sql) or die ($sql);
+    $arr=dbHelp::mysql_fetch_row2($res);
+	// instead of lpad(bin...)
+	$arr[0] = decbin($arr[0]);
+	$arr[0] = str_pad($arr[0], 4, "0", STR_PAD_LEFT);
 	// echo $arrpwdadmin[0]."-".$passwd."-";
 	// Checks if the responsible's password matches the given one
     if ($arrpwdadmin[0]==$passwd){

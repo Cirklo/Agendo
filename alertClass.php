@@ -225,23 +225,24 @@ END:VCALENDAR";
             break;
         case 'update':
             $this->AddStringAttachment($att,'agendo.ics');
-            $msg="Update on ". $this->ResourceName . " at ". $hour . ":". $min ." on " . "$year-$month-$day from ".dbHelp::getSchemaName()."user " . $this->UserFullName;
+            $msg="Update on ". $this->ResourceName . " at ". $hour . ":". $min ." on " . "$year-$month-$day from user " . $this->UserFullName;
             break;
           case 'delete':
             $this->AddStringAttachment($att,'agendo.ics');
-            $msg="Delete on ". $this->ResourceName  . " at ". $hour . ":". $min ." on " . "$year-$month-$day from ".dbHelp::getSchemaName()."user " . $this->UserFullName;
+            $msg="Delete on ". $this->ResourceName  . " at ". $hour . ":". $min ." on " . "$year-$month-$day from user " . $this->UserFullName;
             break;
     }
 
     switch ($this->RespAlert) {
-    case 2:
-        try {
-            $url="http://192.168.52.35:8888/send?phone=". $this->RespMobile . "&msg=" . str_replace(' ','%20',$msg);
-                $handle = fopen($url, "r");
-            } catch (HttpException $ex) {
-                echo $ex;
-            }
-        break;
+		case 2:
+			try {
+				$url="http://192.168.52.35:8888/send?phone=". $this->RespMobile . "&msg=" . str_replace(' ','%20',$msg);
+					$handle = fopen($url, "r");
+				} catch (HttpException $ex) {
+					echo $ex;
+				}
+			break;
+			
         case 1:
             $this->Subject=strtoupper($type)." on " . $this->ResourceName ;
             $this->AddReplyTo($this->UserEmail,$this->UserFullName);
@@ -254,7 +255,8 @@ END:VCALENDAR";
                 //echo "Message sent!";
             }
             break;
-            case 0:
+			
+		case 0:
             break;
         }
 }
