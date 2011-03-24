@@ -37,10 +37,10 @@ $mail->SetFrom($row[3], "Calendar Admin");
 $mail->AddReplyTo($row[3],"Calendar Admin");
 
 // Would only send an email to the person responsible for the equipment
-// $sql = "SELECT user_email from ".dbHelp::getSchemaName()."user, resource WHERE user_id = resource_resp AND resource_name LIKE '$resource'";
+$sql = "SELECT user_email from ".dbHelp::getSchemaName()."user, resource WHERE user_id = resource_resp AND resource_name LIKE '$resource'";
 
-// Sends to all users with admin level
-$sql = "SELECT user_email from ".dbHelp::getSchemaName()."user WHERE user_level = 0";
+// Sends to all users with admin level (Bugworkers)
+// $sql = "SELECT user_email from ".dbHelp::getSchemaName()."user WHERE user_level = 0";
 $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
 // Used when there was just one responsible
 // $row = dbHelp::mysql_fetch_row2($res);
