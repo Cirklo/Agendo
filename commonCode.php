@@ -18,8 +18,9 @@
 		require_once("permClass.php");
         $maxNoActivity = 10*60; // Seconds of session duration of no activity
 		$difference = (time() - $_SESSION['activeTime']);
-		if($difference > $maxNoActivity && isset($_SESSION['activeTime']))
+		if($difference > $maxNoActivity && isset($_SESSION['activeTime'])){
 			logOff();
+		}
 		else
 			$_SESSION['activeTime'] = time();
 			

@@ -45,15 +45,6 @@ function initSession($user_id){
 	$_SESSION['user_id'] = $user_id;	
 }
 
-	function wtf($string, $path = "c:/a.txt", $mode = "w"){
-		if($path == "") $path = "c:/a.txt";
-		if($mode == "") $mode = "w";
-			
-		$fh = fopen($path, $mode) or die("Can't open file!");
-		fwrite($fh, $string."\n");
-		fclose($fh);
-	}
-	
 
 function startSession(){
 	session_start();
@@ -62,7 +53,8 @@ function startSession(){
 	if(isset($_POST['user_idm'])){
 		$genObj = new genObjClass();
 		$_SESSION['user_id'] = $_POST['user_idm'];
-		$_SESSION['user_pass'] = $genObj->cryptPass($_POST['user_passwd']);
+		if(!isset($_SESSION['user_pass']))
+			$_SESSION['user_pass'] = $genObj->cryptPass($_POST['user_passwd']);
 	}
 
 	if(isset($_SESSION['user_id'])){
