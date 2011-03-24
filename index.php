@@ -6,7 +6,7 @@
 ?>
 
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
 <link href="css/intro.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="js/ajax.js"></script>
 <script type="text/javascript" src="js/commonCode.js"></script>
