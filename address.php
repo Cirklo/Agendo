@@ -2,9 +2,9 @@
 
 $value = $_GET['amt'];
 
-$dbConn = mysql_connect("localhost", "root", "equip!admin") or die ('Error connecting to mysql');
+$dbConn = mysql_connect("localhost", "root", "luigi336") or die ('Error connecting to mysql');
 
-dbHelp::mysql_select_db2('labcal') or die ($sql); //mysql_error());
+mysql_select_db('labcal') or die ($sql); //mysql_error());
 
 if($value != '0')
 {
