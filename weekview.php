@@ -8,7 +8,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /> 
 <title>IGC Reservations</title> 
 <META HTTP-EQUIV="REFRESH" CONTENT="180">
 <meta name="keywords" content="" />
