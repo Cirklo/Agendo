@@ -51,6 +51,18 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 -- --------------------------------------------------------
 
+-- 
+-- Table structure for table `alert`
+-- 
+
+CREATE TABLE `alert` (
+  `alert_id` int(11) NOT NULL auto_increment,
+  `alert_name` varchar(45) NOT NULL,
+  PRIMARY KEY  (`alert_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `announcement`
 --
@@ -726,6 +738,14 @@ CREATE TABLE IF NOT EXISTS `xfieldsval` (
 -- *****************************************************************************************************************************************
 -- Inserts *********************************************************************************************************************************
 -- *****************************************************************************************************************************************
+
+-- 
+-- Dumping data for table `alert`
+-- 
+
+INSERT INTO `alert` (`alert_id`, `alert_name`) VALUES 
+(1, 'alert by email'),
+(2, 'alert by sms');
 
 --
 -- Dumping data for table `level`
@@ -1600,7 +1620,7 @@ INSERT INTO `permlevel` (`permlevel_id`, `permlevel_desc`) VALUES
 (1, 'Regular reservation'),
 (3, 'Add ahead'),
 (5, 'Add Back'),
-(7, 'Add Back+Ahead'),
+(7, 'Add Back and Ahead'),
 (9, 'Extra reservation');
 
 --
@@ -1684,78 +1704,20 @@ INSERT INTO `type` (`type_id`, `type_name`) VALUES
 INSERT INTO `user` (`user_id`, `user_login`, `user_passwd`, `user_firstname`, `user_lastname`, `user_dep`, `user_phone`, `user_phonext`, `user_mobile`, `user_email`, `user_alert`, `user_level`) VALUES
 (1, 'admin', '2127f97535023818d7add4a3c2428e06d382160daab440a9183690f18e285010', 'The', 'Admin', 1, '123456789', '123', '987654321', 'admin@mail.com', 1, 0);
 
+--
+-- Dumping data for table `mainconfig`
+--
 
---
--- Constraints for dumped tables
---
+INSERT INTO `mainconfig` (`mainconfig_id`, `mainconfig_institute`, `mainconfig_shortname`, `mainconfig_url`, `mainconfig_email`, `mainconfig_password`, `mainconfig_host`, `mainconfig_port`, `mainconfig_smtpsecure`, `mainconfig_smtpauth`) VALUES
+(1, 'Instituto Gulbenkian de Ciência', 'IGC', 'www.igc.gulbenkian.pt', 'uicweb@igc.gulbenkian.pt', 'uicweb!2010', 'mail.igc.gulbenkian.pt', 25, 'none', 0);
 
---
--- Constraints for table `admin`
---
-ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_3` FOREIGN KEY (`admin_user`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `admin_ibfk_4` FOREIGN KEY (`admin_permission`) REFERENCES `access` (`access_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `announcement`
---
-ALTER TABLE `announcement`
-  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`announcement_object`) REFERENCES `resource` (`resource_id`);
-
--- 
--- Constraints for table `board`
--- 
-ALTER TABLE `board`
-  ADD CONSTRAINT `board_ibfk_1` FOREIGN KEY (`board_parent`) REFERENCES `board` (`board_id`);
-
---
--- Constraints for table `department`
---
-ALTER TABLE `department`
-  ADD CONSTRAINT `department_ibfk_1` FOREIGN KEY (`department_inst`) REFERENCES `institute` (`institute_id`);
-
---
--- Constraints for table `entry`
---
-ALTER TABLE `entry`
-  ADD CONSTRAINT `entry_ibfk_10` FOREIGN KEY (`entry_user`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `entry_ibfk_11` FOREIGN KEY (`entry_repeat`) REFERENCES `repetition` (`repetition_id`),
-  ADD CONSTRAINT `entry_ibfk_12` FOREIGN KEY (`entry_status`) REFERENCES `status` (`status_id`),
-  ADD CONSTRAINT `entry_ibfk_13` FOREIGN KEY (`entry_resource`) REFERENCES `resource` (`resource_id`);
-
---
--- Constraints for table `equip`
---
-ALTER TABLE `equip`
-  ADD CONSTRAINT `equip_ibfk_14` FOREIGN KEY (`equip_resourceid`) REFERENCES `resource` (`resource_id`),
-  ADD CONSTRAINT `equip_ibfk_15` FOREIGN KEY (`equip_boardID`) REFERENCES `board` (`board_id`),
-  ADD CONSTRAINT `equip_ibfk_16` FOREIGN KEY (`equip_para`) REFERENCES `parameter` (`parameter_id`),
-  ADD CONSTRAINT `equip_ibfk_17` FOREIGN KEY (`equip_user`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `help`
---
-ALTER TABLE `help`
-  ADD CONSTRAINT `help_ibfk_1` FOREIGN KEY (`help_mediaposition`) REFERENCES `hmediaposition` (`hmediaposition_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `help_ibfk_2` FOREIGN KEY (`help_mediatype`) REFERENCES `hmediatype` (`hmediatype_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `institute`
---
-ALTER TABLE `institute`
-  ADD CONSTRAINT `institute_ibfk_1` FOREIGN KEY (`institute_country`) REFERENCES `country` (`country_id`);
-
---
--- Constraints for table `measure`
---
-ALTER TABLE `measure`
-  ADD CONSTRAINT `measure_ibfk_1` FOREIGN KEY (`measure_equip`) REFERENCES `equip` (`equip_id`);
 
 --
 -- Constraints for table `menu`
 --
 ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menu_plugin`) REFERENCES `plugin` (`plugin_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menu_plugin`) REFERENCES `plugin` (`plugin_id`);
 
 --
 -- Constraints for table `param`
@@ -1767,7 +1729,7 @@ ALTER TABLE `param`
 -- Constraints for table `permissions`
 --
 ALTER TABLE `permissions`
-  ADD CONSTRAINT `permissions_ibfk_4` FOREIGN KEY (`permissions_user`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `permissions_ibfk_4` FOREIGN KEY (`permissions_user`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `permissions_ibfk_5` FOREIGN KEY (`permissions_resource`) REFERENCES `resource` (`resource_id`),
   ADD CONSTRAINT `permissions_ibfk_6` FOREIGN KEY (`permissions_level`) REFERENCES `permlevel` (`permlevel_id`);
 
@@ -1796,7 +1758,7 @@ ALTER TABLE `resaccess`
 --
 ALTER TABLE `resource`
   ADD CONSTRAINT `resource_ibfk_10` FOREIGN KEY (`resource_resp`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `resource_ibfk_11` FOREIGN KEY (`resource_color`) REFERENCES `color` (`color_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `resource_ibfk_11` FOREIGN KEY (`resource_color`) REFERENCES `color` (`color_id`),
   ADD CONSTRAINT `resource_ibfk_8` FOREIGN KEY (`resource_type`) REFERENCES `type` (`type_id`),
   ADD CONSTRAINT `resource_ibfk_9` FOREIGN KEY (`resource_status`) REFERENCES `resstatus` (`resstatus_id`);
 
@@ -1819,12 +1781,13 @@ ALTER TABLE `resxfields`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_dep`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`user_level`) REFERENCES `level` (`level_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_dep`) REFERENCES `department` (`department_id`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`user_level`) REFERENCES `level` (`level_id`),
+  ADD CONSTRAINT `user_ibfk_6` FOREIGN KEY (`user_alert`) REFERENCES `alert` (`alert_id`);
+  
 --
 -- Constraints for table `xfieldsval`
 --
 ALTER TABLE `xfieldsval`
   ADD CONSTRAINT `xfieldsval_ibfk_2` FOREIGN KEY (`xfieldsval_field`) REFERENCES `xfields` (`xfields_id`),
-  ADD CONSTRAINT `xfieldsval_ibfk_3` FOREIGN KEY (`xfieldsval_entry`) REFERENCES `entry` (`entry_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `xfieldsval_ibfk_3` FOREIGN KEY (`xfieldsval_entry`) REFERENCES `entry` (`entry_id`);
