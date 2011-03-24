@@ -16,7 +16,7 @@
 		error_reporting(0);
 		// require_once(".htconnect.php");
 		require_once("permClass.php");
-        $maxNoActivity = 5*60; // Seconds of session duration of no activity
+        $maxNoActivity = 10*60; // Seconds of session duration of no activity
 		$difference = (time() - $_SESSION['activeTime']);
 		if($difference > $maxNoActivity && isset($_SESSION['activeTime']))
 			logOff();
