@@ -29,7 +29,7 @@
 
 	function logIn(){
 		initSession();
-		
+
 		$user=$_POST['user_idm'];
 		$pass=$_POST['user_passwd'];
 		$resource=$_GET['resource'];
@@ -38,20 +38,26 @@
 		if(isset($logOff) && $logOff)
 			logOff();
 		
-		if (isset($user) && isset($pass) && $pass !=''){
+		if(isset($_SESSION['user_id']) && isset($_SESSION['user_pass'])){
+			$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName()."user where user_id = ".$_SESSION['user_id'];
+			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			$arr=dbHelp::mysql_fetch_row2($res);
+			$_SESSION['user_name'] = $arr[0];
+			$_SESSION['user_lastName'] = $arr[1];
+			$user = $_SESSION['user_id'];
+			$pass = $_SESSION['user_pass'];
+		}
+		else if (isset($user) && isset($pass) && $pass !=''){
 			$_SESSION['user_id'] = $user;
 			$pass = cryptPassword($pass);
 			$_SESSION['user_pass'] = $pass;
 			$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName()."user where user_id = ".$user;
-			// $res=dbHelp::mysql_query2($sql) or die ($sql);
-			// $arr=dbHelp::mysql_fetch_row2($res);
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			$arr=dbHelp::mysql_fetch_row2($res);
 			$_SESSION['user_name'] = $arr[0];
 			$_SESSION['user_lastName'] = $arr[1];
 		}else if(isset($_SESSION['user_name'])){
 			$user = $_SESSION['user_id'];
-			$pass = $_SESSION['user_pass'];
 		}
 		else{
 			return;

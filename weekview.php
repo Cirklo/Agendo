@@ -2,7 +2,8 @@
 //session_start();
 // This file was altered by Pedro Pires (The chosen two)
 	require_once("commonCode.php");
-	logIn($resource, $user_id, $pwd, $logOff);
+	// logIn($resource, $user_id, $pwd, $logOff);
+	logIn();
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
