@@ -1712,6 +1712,71 @@ INSERT INTO `mainconfig` (`mainconfig_id`, `mainconfig_institute`, `mainconfig_s
 (1, 'Instituto Gulbenkian de Ciência', 'IGC', 'www.igc.gulbenkian.pt', 'uicweb@igc.gulbenkian.pt', 'uicweb!2010', 'mail.igc.gulbenkian.pt', 25, 'none', 0);
 
 
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_ibfk_3` FOREIGN KEY (`admin_user`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `admin_ibfk_4` FOREIGN KEY (`admin_permission`) REFERENCES `access` (`access_id`);
+
+--
+-- Constraints for table `announcement`
+--
+ALTER TABLE `announcement`
+  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`announcement_object`) REFERENCES `resource` (`resource_id`);
+
+-- 
+-- Constraints for table `board`
+-- 
+ALTER TABLE `board`
+  ADD CONSTRAINT `board_ibfk_1` FOREIGN KEY (`board_parent`) REFERENCES `board` (`board_id`);
+
+--
+-- Constraints for table `department`
+--
+ALTER TABLE `department`
+  ADD CONSTRAINT `department_ibfk_1` FOREIGN KEY (`department_inst`) REFERENCES `institute` (`institute_id`);
+
+--
+-- Constraints for table `entry`
+--
+ALTER TABLE `entry`
+  ADD CONSTRAINT `entry_ibfk_10` FOREIGN KEY (`entry_user`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `entry_ibfk_11` FOREIGN KEY (`entry_repeat`) REFERENCES `repetition` (`repetition_id`),
+  ADD CONSTRAINT `entry_ibfk_12` FOREIGN KEY (`entry_status`) REFERENCES `status` (`status_id`),
+  ADD CONSTRAINT `entry_ibfk_13` FOREIGN KEY (`entry_resource`) REFERENCES `resource` (`resource_id`);
+
+--
+-- Constraints for table `equip`
+--
+ALTER TABLE `equip`
+  ADD CONSTRAINT `equip_ibfk_14` FOREIGN KEY (`equip_resourceid`) REFERENCES `resource` (`resource_id`),
+  ADD CONSTRAINT `equip_ibfk_15` FOREIGN KEY (`equip_boardID`) REFERENCES `board` (`board_id`),
+  ADD CONSTRAINT `equip_ibfk_16` FOREIGN KEY (`equip_para`) REFERENCES `parameter` (`parameter_id`),
+  ADD CONSTRAINT `equip_ibfk_17` FOREIGN KEY (`equip_user`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `help`
+--
+ALTER TABLE `help`
+  ADD CONSTRAINT `help_ibfk_1` FOREIGN KEY (`help_mediaposition`) REFERENCES `hmediaposition` (`hmediaposition_id`),
+  ADD CONSTRAINT `help_ibfk_2` FOREIGN KEY (`help_mediatype`) REFERENCES `hmediatype` (`hmediatype_id`);
+
+--
+-- Constraints for table `institute`
+--
+ALTER TABLE `institute`
+  ADD CONSTRAINT `institute_ibfk_1` FOREIGN KEY (`institute_country`) REFERENCES `country` (`country_id`);
+
+--
+-- Constraints for table `measure`
+--
+ALTER TABLE `measure`
+  ADD CONSTRAINT `measure_ibfk_1` FOREIGN KEY (`measure_equip`) REFERENCES `equip` (`equip_id`);
 
 --
 -- Constraints for table `menu`
@@ -1790,4 +1855,4 @@ ALTER TABLE `user`
 --
 ALTER TABLE `xfieldsval`
   ADD CONSTRAINT `xfieldsval_ibfk_2` FOREIGN KEY (`xfieldsval_field`) REFERENCES `xfields` (`xfields_id`),
-  ADD CONSTRAINT `xfieldsval_ibfk_3` FOREIGN KEY (`xfieldsval_entry`) REFERENCES `entry` (`entry_id`);
+  ADD CONSTRAINT `xfieldsval_ibfk_3` FOREIGN KEY (`xfieldsval_entry`) REFERENCES `entry` (`entry_id`) ON DELETE CASCADE;

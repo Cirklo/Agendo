@@ -14,7 +14,6 @@
 	// this function is to be entered without a user being logged in
 	function initSession($needsToBeLogged=false){
 		error_reporting(0);
-		// require_once(".htconnect.php");
 		require_once("permClass.php");
         $maxNoActivity = 10*60; // Seconds of session duration of no activity
 		$difference = (time() - $_SESSION['activeTime']);
@@ -78,12 +77,6 @@
 	
 	function logOff(){
 		session_start();
-	/*	$_SESSION['logOff'] = true;
-		$_SESSION['user_id'] = null;
-		$_SESSION['user_pass'] = null;
-		$_SESSION['user_name'] = null;
-		$_SESSION['user_lastName'] = null;
-		$_SESSION['isCrypted'] = null;*/
 		echo "<meta HTTP-EQUIV='REFRESH' content='0; url=./'>";
 		session_destroy();
 	}
@@ -103,8 +96,7 @@
 		return hash('sha256', $uncryptedPass);
 	}
 	
-// Buttons for help, videos, resources and user/management
-	// Links for help, videos, resources and user/management
+	// Buttons for help, videos, resources and user/management
 	function echoUserVideosResourceHelpLinks($phpFile, $resource){
 		echo "<img style='cursor:pointer' width=30px id=help title='help' src=pics/ask.png onclick=\"javascript:window.open('http://www.cirklo.org','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\" align='right'>";
 		echo "<img style='cursor:pointer' width=30px id=video title='feature videos' src=pics/video.png onclick=go(this) align='right'>";
@@ -123,26 +115,15 @@
 	
 	// Videos div
 	function echoVideosDiv(){
-	//old method
-		// echo "<div id=videodiv align='center' style='cursor:pointer;padding:5px;display:none;position:absolute;left:590px;width:150px;color:#444444;background-color:#FFFFFF;opacity:0.9;'>";
-			// echo "<a onclick=\"javascript:window.open('videos/recoverpwd.swf','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">Recover Password</a><br>";
-			// echo "<a onclick=\"javascript:window.open('videos/askfor.swf','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">New user</a><br>";
-			// echo "<a onclick=\"javascript:window.open('videos/confirm.swf','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">Entry Confirmation</a><br>";
-			// echo "<a onclick=\"javascript:window.open('videos/newperm.swf','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">New Permission</a><br>";
-			// echo "<a onclick=\"javascript:window.open('videos/waitlist.swf','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">Waiting Lists</a><br>";
-		// echo "</div>";
-	// table method
 		echo "<div id=videodiv align='center' style='cursor:pointer;padding:5px;display:none;position:absolute;left:590px;width:150px;color:#444444;background-color:#FFFFFF;opacity:0.9;'>";
 			$sql= "select media_name, media_link, media_description from media order by media_name";
-			// $res=dbHelp::mysql_query2($sql) or die ($sql);
-			// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-				// mysql_data_seek($res,$i);
-				// $arr=dbHelp::mysql_fetch_row2($res);
-
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
+			$vidWidth = 640;
+			$vidHeight = 480;
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
-				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\">".$arr[0]."</a><br>";
+				// echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
+				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('videos.php?videourl=".$arr[1]."&width=".$vidWidth."&height=".$vidHeight."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
 			}
 		echo "</div>";		
 	}
@@ -153,10 +134,6 @@
 			echo "<a href=index.php?class=0>ALL Resources</a><hr>";
 			echo "<a href=index.php>Most used</a><br><br>";
 			$sql= "select * from type order by type_name";
-			// $res=dbHelp::mysql_query2($sql) or die ($sql);
-			// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-				// mysql_data_seek($res,$i);
-				// $arr=dbHelp::mysql_fetch_row2($res);
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
