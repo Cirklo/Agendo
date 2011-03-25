@@ -41,7 +41,7 @@ $class = '';
 if (isset($_GET['class'])) {
     $class=clean_input($_GET['class']);
     // $sql="SELECT sum(entry_slots) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name order by e desc";
-    $sql="SELECT sum(entry_slots*resource_resolution) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc";
+    $sql="SELECT sum(entry_slots*resource_resolution) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by resource_name,e desc";
     if ($class==0){
         // $sql="select 1,resource_name,resource_id from resource order by resource_name";
         $sql="select resource_name,type_name, resstatus_name, resource_id from resource, resstatus, type where resource_type = type_id and resource_status = resstatus_id order by resource_name";
@@ -52,7 +52,7 @@ if (isset($_GET['class'])) {
 // Shows most used resources filtered by a month of use
 } else {
     $class='';
-    $sql="SELECT sum(entry_slots*resource_resolution) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by e desc limit 10";
+    $sql="SELECT sum(entry_slots*resource_resolution) e,resource_name, resource_id from entry, resource where resource_id=entry_resource and entry_status in (1,2) group by resource_name,resource_id order by resource_name,e desc limit 10";
     // $datefilter=' and entry_datetime between date_sub(now(),interval 1 month) and now()';
     $datefilter=" and entry_datetime between ".dbHelp::date_sub('now()', '1', 'month')." and now()";
 }
