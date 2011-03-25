@@ -98,7 +98,7 @@
 	
 	// Buttons for help, videos, resources and user/management
 	function echoUserVideosResourceHelpLinks($phpFile, $resource){
-		echo "<img style='cursor:pointer' width=30px id=help title='help' src=pics/ask.png onclick=\"javascript:window.open('http://www.cirklo.org','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\" align='right'>";
+		echo "<img style='cursor:pointer' width=30px id=help title='help' src=pics/ask.png onclick=\"javascript:window.open('https://github.com/Cirklo/Datumo-2.0/wiki/_pages','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=800,height=600')\" align='right'>";
 		echo "<img style='cursor:pointer' width=30px id=video title='feature videos' src=pics/video.png onclick=go(this) align='right'>";
 		echo "<img style='cursor:pointer' width=30px id=resources title='resource type' src=pics/resource.png onclick=go(this) align='right'>";
 		echo "<img style='cursor:pointer' width=30px id=user title='user area' src=pics/user.png onclick=go(this) align='right'>";
@@ -122,8 +122,8 @@
 			$vidHeight = 480;
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
-				// echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
-				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('videos.php?videourl=".$arr[1]."&width=".$vidWidth."&height=".$vidHeight."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
+				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
+				// echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('videos.php?videourl=".$arr[1]."&width=".$vidWidth."&height=".$vidHeight."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
 			}
 		echo "</div>";		
 	}
@@ -131,8 +131,9 @@
 	// Resources div
 	function echoResourcesDiv(){
 		echo "<div id=resourcesdiv  align='center' style='padding:5px;display:none;position:absolute;left:485px;width:250px;color:#444444;background-color:#FFFFFF;opacity:0.9'>\n";
-			echo "<a href=index.php?class=0>ALL Resources</a><hr>";
-			echo "<a href=index.php>Most used</a><br><br>";
+			echo "<a href=index.php?class=0>All Resources</a><br>";
+			echo "<a href=index.php>Most used</a>";
+			echo "<hr>";
 			$sql= "select * from type order by type_name";
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {

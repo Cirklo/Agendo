@@ -57,7 +57,7 @@ if (isset($_GET['class'])) {
     $datefilter=" and entry_datetime between ".dbHelp::date_sub('now()', '1', 'month')." and now()";
 }
 
-echo "<div id='logo' class=logo>";
+echo "<div id='logo' class='logo'>";
 	echo "<table border=0>";
 		echo "<tr>";
 			echo "<td style='font-size:11px;text-align:center'>";
@@ -106,7 +106,7 @@ echo "<table class=equilist>";
 		if ($class=='0' ) {
 			// echo "<th><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
 			 // resource_name,type_name, resstatus_name, resource_id
-			echo "<th><a href=weekview.php?resource=" . $arrResource[3]. ">" . $arrResource[0] .  "</a></th>\n";
+			echo "<th><a href=weekview.php?resource=" . $arrResource[3]. " class='asd'>" . $arrResource[0] .  "</a></th>\n";
 			echo "<td>".$arrResource[1]."</td>\n";
 			echo "<td style='height:18px;'>".$arrResource[2]."</td>\n";
 			echo "</tr>\n";
@@ -124,7 +124,7 @@ echo "<table class=equilist>";
 				if ($j==0) $max =$arr[0];
 				echo "<tr>";
 					if ($j==0)
-						echo "<th rowspan=" . dbHelp::mysql_numrows2($res) . "><a href=weekview.php?resource=" . $arrResource[2]. ">" . $arrResource[1] .  "</a></th>\n";
+						echo "<th rowspan=" . dbHelp::mysql_numrows2($res) . "><a href=weekview.php?resource=" . $arrResource[2]. " class='asd'>" . $arrResource[1] .  "</a></th>\n";
 					echo "<td>" . $arr[1] . "</td>\n";
 					echo "<td style='height:18px;'><img src=pics/scale.gif height=18px width=". $arr[0]/$max*250 . "px'</td>\n";
 				echo "</tr>\n";

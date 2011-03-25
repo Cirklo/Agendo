@@ -85,6 +85,7 @@ a {
 
 a:hover {
 	border: none;
+	color: #aaaaaa;
 }
 
 h1 a, h2 a, h3 a {

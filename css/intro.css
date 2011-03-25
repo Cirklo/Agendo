@@ -1,7 +1,31 @@
 body {
 	margin:0;
 	background: #1e4F54;
+}
 
+a {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-decoration: none;
+	color: #789095;
+}
+
+a:hover {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border: none;
+	color: #aaaaaa;
+}
+
+a.asd {
+	color: #444444;
+	text-decoration:none;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+a.asd:hover {
+	color: #666666;
 }
 
 div.logo {
@@ -40,16 +64,6 @@ td {
 	color: #bbbbbb;
 }
 
-a {
-	color: #444444;
-	text-decoration:none;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size:12px;
-}
-
-a:hover {
-	color: #666666;
-}
 
 a.new {
 	color: #FFFFFF;
