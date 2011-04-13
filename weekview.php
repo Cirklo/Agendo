@@ -114,7 +114,7 @@ echo "<div id=calendar class='calendar'> ";
     }
    if ($calendar->getStatus()==0 or $calendar->getStatus()==2) { //inactive or invisible
         echo "<h1 style='color:#cc8888'>".$calendar->getResourceName()." not available for reservations</h1>";
-        $sql ="SELECT user_firstname,user_lastname,user_email from ".dbHelp::getSchemaName()."user,resource where user_id=resource_resp";
+        $sql ="SELECT user_firstname,user_lastname,user_email from ".dbHelp::getSchemaName().".user,resource where user_id=resource_resp";
         $res = dbHelp::mysql_query2($sql);
         $arr = dbHelp::mysql_fetch_array2($res);
         echo "<h2>Please contact " . $arr['user_firstname'] . " ".$arr['user_lastname'] . "</h2>";

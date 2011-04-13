@@ -63,8 +63,8 @@ function __construct($resource=0) {
   
     $this->Resource=$resource;
     
-    // $sql="select user_id,user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName()."user,resource where resource_resp=user_id and resource_id=". $this->Resource;
-    $sql="select user_id,user_email,user_mobile, user_firstname,user_lastname,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName()."user,resource where resource_resp=user_id and resource_id=". $this->Resource;
+    // $sql="select user_id,user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName().".user,resource where resource_resp=user_id and resource_id=". $this->Resource;
+    $sql="select user_id,user_email,user_mobile, user_firstname,user_lastname,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName().".user,resource where resource_resp=user_id and resource_id=". $this->Resource;
     
     $res=dbHelp::mysql_query2($sql);
     
@@ -97,8 +97,8 @@ function __construct($resource=0) {
 
 function setUser($user_id){
     
-    // $sql="select concat(user_firstname,' ',user_lastname) name,user_email,user_mobile,user_alert from ".dbHelp::getSchemaName()."user where user_id=". $user_id;
-    $sql="select user_firstname,user_lastname,user_email,user_mobile,user_alert from ".dbHelp::getSchemaName()."user where user_id=". $user_id;
+    // $sql="select concat(user_firstname,' ',user_lastname) name,user_email,user_mobile,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
+    $sql="select user_firstname,user_lastname,user_email,user_mobile,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
     $res=dbHelp::mysql_query2($sql);
     $arruser=dbHelp::mysql_fetch_row2($res);
     // $this->UserFullName=$arruser[0];
@@ -132,8 +132,8 @@ function toWaitList($type){
     
     // $sql="select @edt:=entry_datetime,@res:=entry_resource from entry where entry_id=". $this->LastEntry;
     // $res=dbHelp::mysql_query2($sql);
-    // $sql="select user_mobile,user_email,date_format(entry_datetime,'%d, %M %Y') d, date_format(entry_datetime,'%H:%i') t,resource_name, user_alert from entry,".dbHelp::getSchemaName()."user,resource where entry_resource=resource_id and entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
-    $sql="select user_mobile,user_email,".dbHelp::getFromDate('entry_datetime','%d, %M %Y')." as d, ".dbHelp::getFromDate('entry_datetime','%H:%i')." as t,resource_name, user_alert from entry,".dbHelp::getSchemaName()."user,resource where entry_resource=resource_id and entry_user=user_id and entry_status=4 and (entry_datetime, entry_resource) in (select entry_datetime,entry_resource from entry where entry_id=". $this->LastEntry.") order by entry_id";
+    // $sql="select user_mobile,user_email,date_format(entry_datetime,'%d, %M %Y') d, date_format(entry_datetime,'%H:%i') t,resource_name, user_alert from entry,".dbHelp::getSchemaName().".user,resource where entry_resource=resource_id and entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
+    $sql="select user_mobile,user_email,".dbHelp::getFromDate('entry_datetime','%d, %M %Y')." as d, ".dbHelp::getFromDate('entry_datetime','%H:%i')." as t,resource_name, user_alert from entry,".dbHelp::getSchemaName().".user,resource where entry_resource=resource_id and entry_user=user_id and entry_status=4 and (entry_datetime, entry_resource) in (select entry_datetime,entry_resource from entry where entry_id=". $this->LastEntry.") order by entry_id";
     $res=dbHelp::mysql_query2($sql);
     $arrStatus=dbHelp::mysql_fetch_array2($res);
         
@@ -182,11 +182,11 @@ function toAdmin($datetime,$extra,$type,$comment=''){
     if ($this->ResourceResp==$this->User) return;
     $extrainfo='';
     
-    $min=substr($datetime,10,2);
-    $hour=substr($datetime,8,2);
     $year=substr($datetime,0,4);
     $month=substr($datetime,4,2);
     $day=substr($datetime,6,2);
+    $hour=substr($datetime,8,2);
+    $min=substr($datetime,10,2);
 
     if ($extra!='') // fields for new or update entry
         foreach ($extra as $key => $value) {
@@ -268,8 +268,8 @@ END:VCALENDAR";
 */
 
 function recover($user_id){
-    // $sql="select user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert from ".dbHelp::getSchemaName()."user where user_id=". $user_id;
-    $sql="select user_email,user_mobile,user_alert from ".dbHelp::getSchemaName()."user where user_id=". $user_id;
+    // $sql="select user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
+    $sql="select user_email,user_mobile,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
     $res=dbHelp::mysql_query2($sql);
     $arr=dbHelp::mysql_fetch_array2($res);
     $vowels="aeiyou";
@@ -315,8 +315,8 @@ echo "Password updated";
 
 function nonconf(){
     
-    // $sql="select user_email,user_mobile,user_alert,resource_name,(select user_email from ".dbHelp::getSchemaName()."user where user_id=resource_resp) as resp,(select user_alert from ".dbHelp::getSchemaName()."user where user_id=resource_resp) as resp_alert,entry_id,date_format(entry_datetime,'%d %M at %H:%i') as date from ".dbHelp::getSchemaName()."user,entry,resource where entry_status=2 and date_add(entry_datetime, interval resource_resolution*entry_slots+resource_confirmtol*resource_resolution+60 minute) between now() and date_add(now(),interval 60 minute) and entry_user=user_id and entry_resource=resource_id and resource_status<>4";
-    $sql="select user_email,user_mobile,user_alert,resource_name,(select user_email from ".dbHelp::getSchemaName()."user where user_id=resource_resp) as resp,(select user_alert from ".dbHelp::getSchemaName()."user where user_id=resource_resp) as resp_alert,entry_id,".dbHelp::getFromDate('entry_datetime','%d %M at %H:%i')." as date from ".dbHelp::getSchemaName()."user,entry,resource where entry_status=2 and ".dbHelp::date_add('entry_datetime', 'resource_resolution*entry_slots+resource_confirmtol*resource_resolution+60','minute')." between now() and ".dbHelp::date_add('now()','60', 'minute')." and entry_user=user_id and entry_resource=resource_id and resource_status<>4";
+    // $sql="select user_email,user_mobile,user_alert,resource_name,(select user_email from ".dbHelp::getSchemaName().".user where user_id=resource_resp) as resp,(select user_alert from ".dbHelp::getSchemaName().".user where user_id=resource_resp) as resp_alert,entry_id,date_format(entry_datetime,'%d %M at %H:%i') as date from ".dbHelp::getSchemaName().".user,entry,resource where entry_status=2 and date_add(entry_datetime, interval resource_resolution*entry_slots+resource_confirmtol*resource_resolution+60 minute) between now() and date_add(now(),interval 60 minute) and entry_user=user_id and entry_resource=resource_id and resource_status<>4";
+    $sql="select user_email,user_mobile,user_alert,resource_name,(select user_email from ".dbHelp::getSchemaName().".user where user_id=resource_resp) as resp,(select user_alert from ".dbHelp::getSchemaName().".user where user_id=resource_resp) as resp_alert,entry_id,".dbHelp::getFromDate('entry_datetime','%d %M at %H:%i')." as date from ".dbHelp::getSchemaName().".user,entry,resource where entry_status=2 and ".dbHelp::date_add('entry_datetime', 'resource_resolution*entry_slots+resource_confirmtol*resource_resolution+60','minute')." between now() and ".dbHelp::date_add('now()','60', 'minute')." and entry_user=user_id and entry_resource=resource_id and resource_status<>4";
     $res=dbHelp::mysql_query2($sql) or die($sql);
     for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
         // mysql_data_seek($res,$i);
@@ -365,7 +365,7 @@ function fromAdmin($type,$extra=''){
             $extrainfo.= $key. ":".$value .";";
         }
         
-        $sql="select user_id,user_email,".dbHelp::getFromDate('entry_datetime','%d, %M %Y')." as d, ".dbHelp::getFromDate('entry_datetime','%H:%i')." as t,user_mobile, user_alert from entry,".dbHelp::getSchemaName()."user,resource where entry_user=user_id and entry_id=". $this->LastEntry;
+        $sql="select user_id,user_email,".dbHelp::getFromDate('entry_datetime','%d, %M %Y')." as d, ".dbHelp::getFromDate('entry_datetime','%H:%i')." as t,user_mobile, user_alert, entry_comments from entry,".dbHelp::getSchemaName().".user,resource where entry_user=user_id and entry_id=". $this->LastEntry;
         $res=dbHelp::mysql_query2($sql);
         $arr=dbHelp::mysql_fetch_array2($res);
         //if ($arr['user_id']==$this->ResourceResp) exit;
@@ -374,13 +374,16 @@ function fromAdmin($type,$extra=''){
             $msg="Entry on " . $this->ResourceName . " updated by resource administrator. New entry time " . $arr['t'] . " on the ". $arr['d'] . ". Visit calendar for further details";
             break;
         case 'confirm':
-             $msg="Entry on " . $this->ResourceName  . " at ". $arr['t'] . " on the ". $arr['d'] . " confirmed by administrator. Visit calendar for further details";
+			if(isset($arr['entry_comments']))
+				$msg="Entry on " . $this->ResourceName  . " at ". $arr['t'] . " on the ". $arr['d'] . " confirmed by administrator with the following comment:\n".$arr['entry_comments']."\n. Visit calendar for further details";
+			else
+				$msg="Entry on " . $this->ResourceName  . " at ". $arr['t'] . " on the ". $arr['d'] . " confirmed by administrator. Visit calendar for further details";
             break;    
         case 'delete':
             $msg="Your/some entry(ies) on  " . $this->ResourceName  . " was/were deleted by administrator";
             break;
         }
-        
+		
         switch ($arr['user_alert']) {
         case 2:
             try {

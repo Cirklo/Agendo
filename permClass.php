@@ -53,36 +53,37 @@ function setPermission($user,$resource,$passwd) {
 	// $arrcheck = cryptPassword($passwd);
     
 	// Gets the crypted password from the given user
-    $sql="select user_passwd from ".dbHelp::getSchemaName()."user where user_id=". $user;
+    $sql="select user_passwd from ".dbHelp::getSchemaName().".user where user_id=". $user;
     $res=dbHelp::mysql_query2($sql);
     $arrpwd=dbHelp::mysql_fetch_row2($res);
 	// Gets the password and id of the resource responsible
-    $sql="select user_passwd,user_id from ".dbHelp::getSchemaName()."user,resource where user_id=resource_resp and resource_id=" . $resource;
+    $sql="select user_passwd,user_id from ".dbHelp::getSchemaName().".user,resource where user_id=resource_resp and resource_id=" . $resource;
     $res=dbHelp::mysql_query2($sql);
     $arrpwdadmin=dbHelp::mysql_fetch_row2($res);
     
-	// Gets the permission level, .., etc, of the given resource and user
-    // $sql="select lpad(bin(permissions_level),4,'0'),resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
-    $sql="select permissions_level,resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
-    $res=dbHelp::mysql_query2($sql) or die ($sql);
-    $arr=dbHelp::mysql_fetch_row2($res);
-	// instead of lpad(bin...)
-	$arr[0] = decbin($arr[0]);
-	$arr[0] = str_pad($arr[0], 4, "0", STR_PAD_LEFT);
-	// echo $arrpwdadmin[0]."-".$passwd."-";
 	// Checks if the responsible's password matches the given one
     if ($arrpwdadmin[0]==$passwd){
         $this->WasAdmin=true;
-        $this->Permission='1111';    // full permission for admin
+		$sql="select '1111',resource_maxdays,resource_maxslots,resource_status,resource_delhour from resource where resource_id=". $resource;
+		$res=dbHelp::mysql_query2($sql) or die ($sql);
+		$arr=dbHelp::mysql_fetch_row2($res);
     } else {
         $this->WasAdmin=false;
-        $this->Permission=$arr[0];
+		$sql="select permissions_level,resource_maxdays,resource_maxslots,resource_status,resource_delhour from permissions,resource where permissions_resource=resource_id and permissions_user=". $this->User ." and permissions_resource=". $resource;
+		$res=dbHelp::mysql_query2($sql) or die ($sql);
+		$arr=dbHelp::mysql_fetch_row2($res);
+
+		// instead of lpad(bin...)
+		$arr[0] = decbin($arr[0]);
+		$arr[0] = str_pad($arr[0], 4, "0", STR_PAD_LEFT);
     }
+	
+	$this->Permission=$arr[0];
     $this->DaysAhead=$arr[1];
     $this->MaxSlots=$arr[2];
-    $this->Passwd=$passwd;
     $this->ResourceStatus=$arr[3];
     $this->ResouceDelHour=$arr[4];
+    $this->Passwd=$passwd;
     
 	// Checks if the user's password matches the converted one given OR if the responsible's password does
     if ($arrpwd[0]==$passwd || $this->WasAdmin) {
@@ -182,7 +183,7 @@ function addBack($date)      {
 function confirmEntry($entry){
     $this->warning='';
     $cookie='';
-    $sql="select user_id,resource_status,resource_confIP,resource_confirmtol,resource_resolution from ".dbHelp::getSchemaName()."user,resource where user_id=resource_resp and resource_id=" . $this->Resource;
+    $sql="select user_id,resource_status,resource_confIP,resource_confirmtol,resource_resolution from ".dbHelp::getSchemaName().".user,resource where user_id=resource_resp and resource_id=" . $this->Resource;
     $res=dbHelp::mysql_query2($sql);
     $arrStatus=dbHelp::mysql_fetch_array2($res);
     $sql="select ".dbHelp::getFromDate('entry_datetime','%Y%m%d%H%i')." date, entry_datetime,entry_slots,entry_user  from entry where entry_id=". $entry;

@@ -9,6 +9,7 @@ var showingMsg = false;
 var fadeCount;
 // variable used for a patch in the checkfields function
 var usingSession;
+var detectedUser;
 
 //bgcolor2='document..backgroundColor; // just to set bgcolor2 at the beggining
 
@@ -154,8 +155,8 @@ function ManageEntries(action,ttime,tresolution) {
     
     switch(action) {
         case 'del':
+			detectedUser = true;
             for (i=1;i<tablesize;i++) {
-                //alert(bgcolor2);
                 for (j=1;j<table.rows[i].cells.length;j++) {
                     cell=table.rows[i].cells[j];
                     if (cell.title!='0' && (cell.style.backgroundColor==bgcolor)) {
@@ -167,7 +168,11 @@ function ManageEntries(action,ttime,tresolution) {
                 }
                 //alert(table.rows[i].cells.length);
             }
+			if(!detectedUser){
+				document.getElementById('entry').value = '0';
+			}
             if (entry!='0') {
+            // if (entry!='0' && detectedUser) {
                 var resp=confirm('All associated entries will be deleted!');
                 if (!(resp)) return;
                 ajaxEntries('GET','process.php?deleteall=1&resource=' + resource,true);
@@ -316,7 +321,6 @@ function addcomments(entry) {
         resource=document.getElementById('resource').value;
         user_id=document.getElementById('user_id').title;
         myForm=document.getElementById('entrycomments');
-        
         if (myForm[0].value!='') {
             var re = /\'/g;
             myForm[0].value=myForm[0].value.replace(re," ");
@@ -374,7 +378,6 @@ function ajaxEntries(method,url,nosync){
     case 'add':
         for (nelements=0;nelements<objForm.length;nelements++){
             if (checkfield(objForm[nelements])) return;
-            
         }
     break;
     case 'update':
@@ -384,35 +387,35 @@ function ajaxEntries(method,url,nosync){
         }
     break;
     case 'del':
-        if (checkfield(objForm['user_id']))return;
-        if (checkfield(objForm['user_passwd']))return;
+        if (checkfield(objForm['user_id'])){detectedUser = false; return;}
+        if (checkfield(objForm['user_passwd'])){detectedUser = false; return;}
     break;
     case 'monitor':
     // alert (par);
-        if (checkfield(objForm['user_id']))return;
-        if (checkfield(objForm['user_passwd']))return;
+        for (nelements=0;nelements<objForm.length;nelements++){
+            if (checkfield(objForm[nelements])) return;
+        }
+        // if (checkfield(objForm['user_id']))return;
+        // if (checkfield(objForm['user_passwd']))return;
     break;
     case 'confirm':
         
     break;
     }
     objForm.user_id.value=objForm.user_id.title;
-    // alert(objForm.user_id.value);
-    // alert (par);
     
     // builds post string
     for (nelements=0;nelements<objForm.length;nelements++){
         if (objForm[nelements].lang=='send') {
-                if (objForm[nelements].type=='checkbox') {
-                    par=par+ objForm[nelements].name + '=' + objForm[nelements].checked + "&";
-                } else {
-                    par=par+ objForm[nelements].name + '=' + objForm[nelements].value + "&";
-                }
-            }
-            
+			if (objForm[nelements].type=='checkbox') {
+				par=par+ objForm[nelements].name + '=' + objForm[nelements].checked + "&";
+			} else {
+				par=par+ objForm[nelements].name + '=' + objForm[nelements].value + "&";
+			}
+		}
     }
 	// par has username and pass
-    // alert(par);
+	// alert(url + '&' + par);
     xmlhttp.open(method, url + '&' + par, nosync);
     xmlhttp.send(null);
     xmlhttp.onreadystatechange = function () {

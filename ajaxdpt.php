@@ -23,7 +23,7 @@ if(isset($_GET['user'])){
     $login = strtok($login,"@");
     $firstname = $_GET['fn'];
     $lastname = $_GET['ln'];
-    $sql = "SELECT * from ".dbHelp::getSchemaName()."user WHERE lower(user_firstname)=lower('$firstname') AND lower(user_lastname)=lower('$lastname') AND lower(user_login)=lower('$login')";
+    $sql = "SELECT * from ".dbHelp::getSchemaName().".user WHERE lower(user_firstname)=lower('$firstname') AND lower(user_lastname)=lower('$lastname') AND lower(user_login)=lower('$login')";
     $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
     $nrows = dbHelp::mysql_numrows2($res);
     if($nrows == 0){ //not yet registered

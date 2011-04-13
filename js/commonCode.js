@@ -22,7 +22,7 @@ function go (objIMG) {
     }
 }
 
-function submitUser(phpFile,resource,user,pass) {
+function submitUser(phpFile,resource,user,pass,loginToDatumo) {
     formObj=document.getElementById('edituser');
 	if(user==null){
 		if (checkfield(formObj.user_idm)) return;
@@ -33,7 +33,19 @@ function submitUser(phpFile,resource,user,pass) {
 		formObj.user_idm.value = user;
 		formObj.user_passwd = pass;
 	}
-    formObj.action= phpFile + '.php?resource=' + resource;
+	if(loginToDatumo == 1){
+		url="commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
+		var result = ajaxRequest(url);
+		if(result != ''){ //wrong login
+			alert(result);
+			//clean all fields
+			// formObj.user_idm.value = "";
+			// formObj.user_passwd.value = "";
+			return;
+		}
+	}
+		
+	formObj.action= phpFile + '.php?resource=' + resource;
     formObj.submit();
 }
 
@@ -41,4 +53,17 @@ function logOff(phpFile,resource){
     formObj=document.getElementById('edituser');
     formObj.action = phpFile + '.php?logOff=true&resource=' + resource;
     formObj.submit();
+}
+
+function ajaxRequest(url){
+	if (window.XMLHttpRequest){ 
+        xmlhttp=new XMLHttpRequest();
+    } else {
+        alert("Your browser does not support XMLHTTP!");
+        exit;
+    }
+	xmlhttp.open("GET",url,false);
+    xmlhttp.send(null);
+    var str=xmlhttp.responseText;
+    return str;
 }

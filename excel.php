@@ -34,7 +34,7 @@ while($row = dbHelp::mysql_fetch_row2($res)){
 //main query
 dbHelp::mysql_select_db2($db);
 if($userid == '')    $sql = "SELECT * FROM $table";
-else $sql = "SELECT * FROM ".dbHelp::getSchemaName()."$table AND ".dbHelp::getSchemaName().$table."_userid=$userid";
+else $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table." AND ".dbHelp::getSchemaName()".".$table."_userid=$userid";
 $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error());
 $nrows = dbHelp::mysql_numrows2($res);
 $nfields = mysql_num_fields($res);

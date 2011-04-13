@@ -151,7 +151,7 @@ class cal extends phpCollection{
     //private $ResStatus;
     function __construct ($Resource,$update=0){
 		// require_once("__dbHelp.php");
-        $sql="select * from resource,resstatus,".dbHelp::getSchemaName()."user where resource_status=resstatus_id and user_id=resource_resp and resource_id=" . $Resource;
+        $sql="select * from resource,resstatus,".dbHelp::getSchemaName().".user where resource_status=resstatus_id and user_id=resource_resp and resource_id=" . $Resource;
         $res=dbHelp::mysql_query2($sql) or die ($sql);
         $arrresource= dbHelp::mysql_fetch_array2($res);
 		$this->setResource($Resource);
@@ -255,7 +255,7 @@ class cal extends phpCollection{
             $txt=$from."-".$to;
             echo "<td align=center width=10% class=date >". $txt ."</td>\n";
                     
-			// $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+			// $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName().".user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
            for($weekday=1;$weekday<8;$weekday++){
                 //if ($weekday==0) {
                     
@@ -264,9 +264,9 @@ class cal extends phpCollection{
                     $cell= new calCell;
                     $this->Day=date("Ymd",mktime(0,0,0,substr($this->StartDate,4,2),substr($this->StartDate,6,2)+$weekday,substr($this->StartDate,0,4)));
                     //echo $this->Day;
-                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status, date_format(entry_datetime,'%H')+ date_format(entry_datetime,'%i')/60 time,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and date_format(entry_datetime,'%Y%m%d')=". $this->Day . " and date_format(entry_datetime,'%H%i')=" . date('Hi',$this->SlotStart) . " order by entry_id";
-                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName()."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
-                    $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".$schemaName."user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".$sqlDate1."='". $this->Day . "' and ".$sqlDate2."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status, date_format(entry_datetime,'%H')+ date_format(entry_datetime,'%i')/60 time,entry_slots from entry,".dbHelp::getSchemaName().".user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and date_format(entry_datetime,'%Y%m%d')=". $this->Day . " and date_format(entry_datetime,'%H%i')=" . date('Hi',$this->SlotStart) . " order by entry_id";
+                    // $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".dbHelp::getSchemaName().".user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".dbHelp::getFromDate('entry_datetime','%Y%m%d')."='". $this->Day . "' and ".dbHelp::getFromDate('entry_datetime','%H%i')."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
+                    $sql= "select user_login,entry_id,entry_user,entry_repeat, entry_status,entry_slots from entry,".$schemaName.".user where entry_status<>3 and entry_resource=" . $this->getResource() ." and user_id=entry_user and ".$sqlDate1."='". $this->Day . "' and ".$sqlDate2."='" . date('Hi',$this->SlotStart) . "' order by entry_id";
                     $res=dbHelp::mysql_query2($sql) or die ($sql);
                     $arr= dbHelp::mysql_fetch_array2($res);
                     $cell->setStartDate($this->Day);

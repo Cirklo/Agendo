@@ -41,9 +41,9 @@ if(isset($_GET['val'])){ //new user form -> ajax response
     // $res = dbHelp::mysql_query2($sql) or die($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
     // $row = dbHelp::mysql_fetch_row2($res);
     // $pwd = $row[0];
-    // $sql = "SELECT user_passwd, CONCAT(user_firstname,' ',user_lastname),user_email from ".dbHelp::getSchemaName()."user WHERE user_login = '".$user_login."'";
+    // $sql = "SELECT user_passwd, CONCAT(user_firstname,' ',user_lastname),user_email from ".dbHelp::getSchemaName().".user WHERE user_login = '".$user_login."'";
     $pwd = cryptPassword($pwd);
-    $sql = "SELECT user_passwd,user_firstname,user_lastname,user_email from ".dbHelp::getSchemaName()."user WHERE user_login = '".$user_login."'";
+    $sql = "SELECT user_passwd,user_firstname,user_lastname,user_email from ".dbHelp::getSchemaName().".user WHERE user_login = '".$user_login."'";
     $res = dbHelp::mysql_query2($sql) or die($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
     $row = dbHelp::mysql_fetch_row2($res);
     $nrows = dbHelp::mysql_numrows2($res);
@@ -61,7 +61,7 @@ if(isset($_GET['val'])){ //new user form -> ajax response
         exit();
     }
     
-    $sql = "SELECT permissions_resource FROM permissions WHERE permissions_user IN (SELECT user_id from ".dbHelp::getSchemaName()."user WHERE user_login='$user_login') AND permissions_resource = $resource";
+    $sql = "SELECT permissions_resource FROM permissions WHERE permissions_user IN (SELECT user_id from ".dbHelp::getSchemaName().".user WHERE user_login='$user_login') AND permissions_resource = $resource";
     $res = dbHelp::mysql_query2($sql) or die($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
     if(dbHelp::mysql_numrows2($res) != 0){
         echo "<script type='text/javascript'>";
@@ -71,7 +71,7 @@ if(isset($_GET['val'])){ //new user form -> ajax response
         exit();
     }
     
-    $sql = "SELECT user_email, resource_name from ".dbHelp::getSchemaName()."user, resource WHERE user_id = resource_resp AND resource_id = ".$resource;
+    $sql = "SELECT user_email, resource_name from ".dbHelp::getSchemaName().".user, resource WHERE user_id = resource_resp AND resource_id = ".$resource;
     $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', ''));
     $row = dbHelp::mysql_fetch_row2($res);
     

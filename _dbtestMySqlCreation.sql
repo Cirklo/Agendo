@@ -606,12 +606,13 @@ CREATE TABLE IF NOT EXISTS `restree` (
 
 DROP TABLE IF EXISTS `resxfields`;
 CREATE TABLE IF NOT EXISTS `resxfields` (
-  `resxfields_id` int(11) NOT NULL,
+  `resxfields_id` int(11) NOT NULL AUTO_INCREMENT,
   `resxfields_field` tinyint(4) NOT NULL,
   `resxfields_resource` int(11) NOT NULL,
+  PRIMARY KEY (`resxfields_id`),
   KEY `resxfields_id` (`resxfields_field`),
   KEY `resxfields_resource` (`resxfields_resource`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -692,6 +693,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_alert` int(11) NOT NULL COMMENT '1 - Alert by email<br />2 - Alert by SMS',
   `user_level` int(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_login` (`user_login`),
   KEY `user_dep` (`user_dep`),
   KEY `user_alert` (`user_alert`),
   KEY `user_level` (`user_level`)

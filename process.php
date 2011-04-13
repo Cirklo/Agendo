@@ -28,9 +28,13 @@ call_user_func($action);
 function getUserId(){
 	if(isset($_SESSION['user_id']) && $_SESSION['user_id']!='')
 		return $_SESSION['user_id'];
-	else 
+	else {
+		$sql= "select user_id from ".dbHelp::getSchemaName().".user where user_login = '".$_GET['user_id']."'";
+		$res=dbHelp::mysql_query2($sql) or die ($sql);
+		$arr=dbHelp::mysql_fetch_row2($res);
 		// return $_GET['user_id'];
-		return clean_input($_GET['user_id']);
+		return clean_input($arr[0]);
+	}
 }
 
 function getPass(){
@@ -110,9 +114,10 @@ function add(){
         $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
         $res=dbHelp::mysql_query2($sql) or die($sql);
         $extra= array();
-        for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+        // for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
             // mysql_data_seek($res,$i);
-            $arr=dbHelp::mysql_fetch_row2($res);
+		while($arr=dbHelp::mysql_fetch_row2($res)){
+            // $arr=dbHelp::mysql_fetch_row2($res);
             $var=$arr[0];
             $val=clean_input($_GET[$var]);
             eval("\$$var='$val';");
@@ -147,7 +152,6 @@ function del(){
     $resource=clean_input($_GET['resource']);
     $entry=clean_input($_GET['entry']);
     $seekentry='';
-  
     // Gets the all the users, entry_ids and status of the given entry_id date, of a given resource
     $sql="SELECT entry_user,entry_id,entry_status FROM entry where entry_datetime in (select entry_datetime from entry where entry_id=".$entry.") and entry_resource=".$resource." AND entry_status IN ( 1, 2, 4 ) order by entry_id";
     $res=dbHelp::mysql_query2($sql) or die($sql);
@@ -259,8 +263,8 @@ function update(){
         echo "User not updated. ";
     } else {
         //notification for waiting list
-        // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
-        $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName()."user where entry_user=user_id and entry_status=4 and entry_datetime='".$arrdt[0]."' and entry_resource=".$arrdt[1]." order by entry_id";
+        // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName().".user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
+        $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName().".user where entry_user=user_id and entry_status=4 and entry_datetime='".$arrdt[0]."' and entry_resource=".$arrdt[1]." order by entry_id";
         $res=dbHelp::mysql_query2($sql);
         $arrStatus=dbHelp::mysql_fetch_row2($res);
         if (dbHelp::mysql_numrows2($res)>0) {
@@ -360,20 +364,24 @@ function monitor(){
     dbHelp::mysql_query2($sql) or die($sql);
     
     // $sql="SELECT LAST_INSERT_ID()";
-	$sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = ".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i')." and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
+	// $sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = (".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i').") and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
+	$sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = '".$arr[2]."' and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
     $res=dbHelp::mysql_query2($sql) or die($sql);
     $last=dbHelp::mysql_fetch_row2($res);
         
     $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
-        $res=dbHelp::mysql_query2($sql) or die($sql);
-        for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-            // mysql_data_seek($res,$i);
-            $arrx=dbHelp::mysql_fetch_row2($res);
-            $sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(". $last[0] . "," . $arrx[1] . ",'Update info')";
-            dbHelp::mysql_query2($sql) or die($sql);
-        }
+	$res=dbHelp::mysql_query2($sql) or die($sql);
+	while($arrx=dbHelp::mysql_fetch_row2($res)){
+	// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
+		// mysql_data_seek($res,$i);
+		// $arrx=dbHelp::mysql_fetch_row2($res);
+		$var=$arrx[0];
+		$val=clean_input($_GET[$var]);
+		eval("\$$var='$val';");
+		$sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(".$last[0].",".$arrx[1].",'".$val."')";
+		dbHelp::mysql_query2($sql) or die($sql);
+	}
     echo "Entry monitored!";
-    
 }
 
 //change the entry status from  2 to 1
@@ -393,7 +401,6 @@ function confirm(){
 		echo $perm->getWarning();
 		return;
 	}
-
     if ($perm->getResourceStatus()==4 && $perm->getWasAdmin()) {
         $notify=new alert($resource);
         $notify->setEntry($entry);
@@ -426,17 +433,18 @@ function addcomments(){
     $resource=clean_input($_GET['resource']);
     $entry=clean_input($_GET['entry']);
     $comments=clean_input($_GET['comments']);
-    
 	// $user=clean_input($_GET['user_id']);
     $user_id=getUserId();
 
     $notify=new alert($resource);
     $notify->setEntry($entry);
-    $notify->setUser($user);
+    $notify->setUser($user_id);
     
-    $sql="update entry set entry_comments='" . $comments . " 'where entry_id=" . $entry;
-    if ($comments!='') $notify->toAdmin(date("YmdHi"),'','comment',$comments); 
-    dbHelp::mysql_query2($sql) or die($sql);
-    echo "Comment added";
+    if ($comments!=''){
+		$sql="update entry set entry_comments='" . $comments . " 'where entry_id=" . $entry;
+		dbHelp::mysql_query2($sql) or die($sql);
+		if($notify->getResourceResp() != $user_id) $notify->toAdmin(date("YmdHi"),'','comment',$comments); 
+		echo "Comment added";
+	}
 }
 ?>

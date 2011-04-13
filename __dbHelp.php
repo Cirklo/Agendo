@@ -78,7 +78,7 @@
 		
 		public static function getSchemaName(){
 			$connect = dbHelp::getConnect();
-			return $connect->getSchemaName().".";
+			return $connect->getSchemaName();
 		}
 
 		public static function date_add($datefield, $interval, $timeType){

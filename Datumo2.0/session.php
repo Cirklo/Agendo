@@ -18,19 +18,15 @@ if(isset($_GET['logout'])){	logout();}
 if(isset($_GET['pwd'])){	recoverPwd();}
 
 function login(){
-	//call classes
-	$db = new dbConnection();
-	$genObj = new genObjClass();
-	
 	//posted variables
 	if(isset($_POST['login'])){ $user_login = $_POST['login'];}
 	if(isset($_POST['pass'])){ $user_passwd = $_POST['pass'];}
 	
-	//crypt password
+	// crypt password
 	$user_passwd = $genObj->cryptPass($user_passwd);
 	$sql = $db->prepare("SELECT user_id FROM ".$db->getDatabase().".user WHERE user_login='$user_login' AND user_passwd='$user_passwd'");
 	$sql->execute();
-	//is there any match for this key??
+	// is there any match for this key??
 	if($sql->rowCount()>0){
 		$row = $sql->fetch();
 		initSession($row[0]);
@@ -38,7 +34,6 @@ function login(){
 		echo "Wrong login";
 	}
 }
-
 
 function initSession($user_id){
 	session_start();
@@ -48,16 +43,15 @@ function initSession($user_id){
 
 function startSession(){
 	session_start();
-	// $_SESSION['user_id']=28;
-
-	if(isset($_POST['user_idm'])){
-		$genObj = new genObjClass();
-		$_SESSION['user_id'] = $_POST['user_idm'];
-		if(!isset($_SESSION['user_pass']))
-			$_SESSION['user_pass'] = $genObj->cryptPass($_POST['user_passwd']);
-	}
 
 	if(isset($_SESSION['user_id'])){
+		// Checks if the database is the same as the one the user first logged in
+		$db = new dbConnection();
+		if(isset($_SESSION['database']) && $_SESSION['database']!= $db->getDatabase())
+			logout();
+		else
+			$_SESSION['database']!= $db->getDatabase();
+			
 		$user = $_SESSION['user_id'];
 		return $user; 
 	} else {
@@ -118,7 +112,6 @@ function recoverPwd(){
 	
 	
 }
-
 
 function createPwd(){
 	$length = 10;

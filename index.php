@@ -65,7 +65,7 @@ echo "<div id='logo' class='logo'>";
 			echo "</td>";
 			//echo "<br><font color=#f4c337>circlo.org</td>";
 			echo "<td width=100% rowspan=3 align=right>";
-				echo "<a href=http://www.mozilla-europe.org style='text-decoration:none'><font color=#FFFFFF size=1.5px>Optimized for Mozilla Firefox v3.6</font></a>";
+				echo "<a href=http://www.mozilla-europe.org style='text-decoration:none'><font color=#FFFFFF size=1.5px>Optimized for Mozilla Firefox v4.0</font></a>";
 				echo "<br><br><br><br><br>";
 				echoUserVideosResourceHelpLinks('index', 0);
 			echo "</td>";
@@ -111,7 +111,7 @@ echo "<table class=equilist>";
 			echo "<td style='height:18px;'>".$arrResource[2]."</td>\n";
 			echo "</tr>\n";
 		} else {
-			$sql="SELECT sum(entry_slots*resource_resolution) e,department_name from entry, resource, department, ".dbHelp::getSchemaName()."user where $extra entry_user=user_id and user_dep=department_id and department_id<>17 and resource_id=entry_resource and entry_status in (1,2) $datefilter and resource_id=" . $arrResource[2] . " group by department_name order by e desc limit 3";
+			$sql="SELECT sum(entry_slots*resource_resolution) e,department_name from entry, resource, department, ".dbHelp::getSchemaName().".user where $extra entry_user=user_id and user_dep=department_id and department_id<>17 and resource_id=entry_resource and entry_status in (1,2) $datefilter and resource_id=" . $arrResource[2] . " group by department_name order by e desc limit 3";
 			// $res=dbHelp::mysql_query2($sql) or die ($sql);
 			// $res=$connect->query($sql) or die ($sql);
 			$res=dbHelp::mysql_query2($sql) or die ($sql);

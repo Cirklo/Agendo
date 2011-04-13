@@ -10,6 +10,10 @@
   @Code used in lots of places and all joined in an artistic way to avoid copy pasting same methods in different places
 */
 
+	if(isset($_GET['checkUserAndPass'])){
+		validUserAndPass($_GET['user'], $_GET['pass']);
+	}
+		
 	// Initializes the session, checks if it timesOut and if needsToBeLogged it doesnt allow the page where 
 	// this function is to be entered without a user being logged in
 	function initSession($needsToBeLogged=false){
@@ -30,34 +34,49 @@
 	function logIn(){
 		initSession();
 
-		$user=$_POST['user_idm'];
+		// $user=$_POST['user_idm'];
+		$userLogin=$_POST['user_idm'];
 		$pass=$_POST['user_passwd'];
+		
 		$resource=$_GET['resource'];
 		$logOff=$_GET['logOff'];
 
 		if(isset($logOff) && $logOff)
 			logOff();
 		
-		if(isset($_SESSION['user_id']) && isset($_SESSION['user_pass'])){
-			$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName()."user where user_id = ".$_SESSION['user_id'];
-			$res=dbHelp::mysql_query2($sql) or die ($sql);
-			$arr=dbHelp::mysql_fetch_row2($res);
-			$_SESSION['user_name'] = $arr[0];
-			$_SESSION['user_lastName'] = $arr[1];
+		if(isset($_SESSION['user_id'])){
 			$user = $_SESSION['user_id'];
-			$pass = $_SESSION['user_pass'];
+			
+			if(isset($_SESSION['user_pass'])){
+			
+				if($_SESSION['database'] != dbHelp::getSchemaName()){
+					wtf($_SESSION['database'] ."-". dbHelp::getSchemaName());
+					logOff();
+				}
+					
+				$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName().".user where user_id = ".$_SESSION['user_id'];
+				$res=dbHelp::mysql_query2($sql) or die ($sql);
+				$arr=dbHelp::mysql_fetch_row2($res);
+				$_SESSION['user_name'] = $arr[0];
+				$_SESSION['user_lastName'] = $arr[1];
+				$pass = $_SESSION['user_pass'];
+			}
 		}
-		else if (isset($user) && isset($pass) && $pass !=''){
-			$_SESSION['user_id'] = $user;
+		// else if (isset($user) && isset($pass) && $pass !=''){
+		else if (isset($userLogin) && isset($pass) && $pass !=''){
+			// $_SESSION['user_id'] = $user;
 			$pass = cryptPassword($pass);
 			$_SESSION['user_pass'] = $pass;
-			$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName()."user where user_id = ".$user;
+			// $sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName().".user where user_id = ".$user;
+			$sql= "select user_firstname, user_lastname, user_id from ".dbHelp::getSchemaName().".user where user_login = '".$userLogin."'";
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			$arr=dbHelp::mysql_fetch_row2($res);
 			$_SESSION['user_name'] = $arr[0];
 			$_SESSION['user_lastName'] = $arr[1];
-		}else if(isset($_SESSION['user_name'])){
+			$_SESSION['user_id'] = $arr[2];
 			$user = $_SESSION['user_id'];
+			
+			$_SESSION['database'] = dbHelp::getSchemaName();
 		}
 		else{
 			return;
@@ -75,6 +94,23 @@
 		}
 	}
 	
+	function validUserAndPass($user, $pass, $passCrypted = false){
+		if(!$passCrypted)
+			$pass = cryptPassword($pass);
+
+		$sql= "select user_id from ".dbHelp::getSchemaName().".user where user_login = '".$user."' and user_passwd = '".$pass."'";
+		$res=dbHelp::mysql_query2($sql) or die ($sql);
+		if(dbHelp::mysql_numrows2($res) <= 0)
+			echo "Wrong Login";
+		else{
+			$arr=dbHelp::mysql_fetch_row2($res);
+			$_SESSION['user_id'] = $arr[0];
+			$_SESSION['user_pass'] = $pass;
+			$_SESSION['database'] = dbHelp::getSchemaName();
+			echo "";
+		}
+	}
+
 	function logOff(){
 		session_start();
 		echo "<meta HTTP-EQUIV='REFRESH' content='0; url=./'>";
@@ -171,7 +207,7 @@
 						echo "</tr>";
 						echo "<tr>";
 							echo "<td colspan=2 style='text-align:center'>";
-								echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",'".$user_id."','".$user_pass."') value='AdminArea'>";
+								echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",'".$user_id."','".$user_pass."',0) value='AdminArea'>";
 							echo "</td>\n";
 						echo "</tr>";
 					echo "</table>";
@@ -185,8 +221,8 @@
 				echo "</tr>\n";
 				echo "<tr>";
 					echo "<td colspan=2 style='text-align:right'>";
-						echo "<input type=button style='font-size:11px' onclick=submitUser('".$phpFile."',".$resource.",null,null) value='Login'>";
-						echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",null,null) value='AdminArea'>";
+						echo "<input type=button style='font-size:11px' onclick=submitUser('".$phpFile."',".$resource.",null,null,0) value='Login'>";
+						echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",null,null,1) value='AdminArea'>";
 					echo "</td>\n";
 				echo "</tr>";
 			echo "</table>";

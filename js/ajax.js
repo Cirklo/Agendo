@@ -52,16 +52,12 @@ var xmlhttp,url;
             var str=xmlhttp.responseText.split("|");
             obj.value=str[0].replace(/^\s+|\s+$/g,"");
             obj.title=str[1];
-            
-            
         }
-        
     }
     
     //alert(Page + objTagOri.value);
     url="ajax.php?type=user&value=" + obj.value;
     xmlhttp.open("GET",url,true);
-    
     xmlhttp.send(null);
 }
 

@@ -102,7 +102,7 @@ class errorHandler extends PHPMailer{
     }
     
     function getUser($id){ //get user login
-        $sql = "SELECT user_login from ".dbHelp::getSchemaName()."user WHERE user_id =".$id;
+        $sql = "SELECT user_login from ".dbHelp::getSchemaName().".user WHERE user_id =".$id;
         $res = dbHelp::mysql_query2($sql);
         $row = dbHelp::mysql_fetch_row2($res);
         return $row[0];

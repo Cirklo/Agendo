@@ -271,7 +271,7 @@ echo "<td><img src=".$picsPath."delete.png border=0></td><td>Delete selected row
 echo "<td><img src=".$picsPath."update.png border=0></td><td>Save changes</td>";
 echo "<td><img src=".$picsPath."copy.png border=0></td><td>Copy data</td>";
 echo "<td><img src=".$picsPath."multiple.png border=0></td><td>Clone row (multiple insert)</td>";*/
-$sql = "SELECT user_login from ".dbHelp::getSchemaName()."user WHERE user_id=$user_id";
+$sql = "SELECT user_login from ".dbHelp::getSchemaName().".user WHERE user_id=$user_id";
 $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
 $row = dbHelp::mysql_fetch_row2($res);
 echo "<td align=right>You are logged in as ".$row[0]."! <a href=logout.php>Sign out</a></td>";
@@ -362,14 +362,14 @@ if($_GET['userid'] == ''){
 } else {
     if($where == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table." WHERE ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table." WHERE ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ".$order;
     else
-        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
     }else{
     if($FKtable == '')
-        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table.$where." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ".$order;
     else
-        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order'];
 
     }
 }
@@ -381,30 +381,30 @@ if(!isset($_GET['search'])){
 //display query
 if($_GET['userid'] == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where.$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table.$where.$having." ".$order." LIMIT ".$page.",".$limit;
     else
         if($where == '')
-            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
         else
-            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+            $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col.$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
 
 } else {
     if($where == ''){
     if($FKtable == '')
-        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table." WHERE ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table." WHERE ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
     else
-        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable." WHERE ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
     }else{
     if($FKtable == '')
-        $sql = "SELECT * FROM ".dbHelp::getSchemaName().$table.$where." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
+        $sql = "SELECT * FROM ".dbHelp::getSchemaName().".".$table.$where." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ".$order." LIMIT ".$page.",".$limit;
     else
-        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
+        $sql = "SELECT ".$fields." FROM ".dbHelp::getSchemaName().".".$table.",".$FKtable.$where." AND ".$FKtable."_id = ".$col." AND ".dbHelp::getSchemaName().".".$table."_userid = ".$_GET['userid'].$having." ORDER BY ".$FKorder." ".$_GET['order']." LIMIT ".$page.",".$limit;
     }
 }
 
 //check for quick search
 if(isset($_GET['search'])){
-    $sql = "SELECT search_query FROM search WHERE search_table='".dbHelp::getSchemaName().$table"'";
+    $sql = "SELECT search_query FROM search WHERE search_table='".dbHelp::getSchemaName().".".$table"'";
     $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
     $row = dbHelp::mysql_fetch_row2($res);
     $sql = $row[0];

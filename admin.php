@@ -109,7 +109,7 @@ while($line = dbHelp::mysql_fetch_array2($result)){
 }
 //Header
 echo "<h1 align=left>Admin Area</h1>";
-$sql = "SELECT * from ".dbHelp::getSchemaName()."user WHERE user_id = ".$user_id;
+$sql = "SELECT * from ".dbHelp::getSchemaName().".user WHERE user_id = ".$user_id;
 $res = dbHelp::mysql_query2($sql);
 $nfields = mysql_num_fields($res);
 $row = dbHelp::mysql_fetch_array2($res);
@@ -167,7 +167,7 @@ if($db == 'animalhouse'){
    echo "<form name=calform method=post>";
    echo "Calendar access: ";
    echo "<select name=usercalendar id=usercalendar>";
-   $sql = "SELECT user_id, user_login from ".dbHelp::getSchemaName()."user";
+   $sql = "SELECT user_id, user_login from ".dbHelp::getSchemaName().".user";
    $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, '', $user_id));
    while($row = dbHelp::mysql_fetch_array2($res)){
    echo "<option value=".$row[0].">".$row[1]."</option>";

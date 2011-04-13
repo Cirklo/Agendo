@@ -46,12 +46,12 @@ function resource() {
 
 function user() {
     $value=clean_input($_GET['value']);
-    $sql="select user_login,user_id from ".dbHelp::getSchemaName()."user where user_login like '" . $value . "%'";
+    $sql="select user_login,user_id from ".dbHelp::getSchemaName().".user where user_login like '" . $value . "%'";
     $res=dbHelp::mysql_query2($sql) or die ($sql);
     $arr=dbHelp::mysql_fetch_row2($res);
     echo $arr[0];
-    echo "|" . $arr[1];
-
+    // echo "|" . $arr[1];
+    echo "|" . $arr[0];
 }
 
 /**
@@ -87,13 +87,13 @@ function admin() {
 }
 function DisplayUserInfo() {
     $value=clean_input($_GET['value']);
-    // $sql="select concat(user_firstname, ' ', user_lastname) name,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,date_format(entry_datetime,'%H:%i') s,date_format(date_add(entry_datetime,interval resource_resolution*entry_slots minute),'%H:%i') e from ".dbHelp::getSchemaName()."user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
-    // $sql="select user_firstname,user_lastname,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,date_format(entry_datetime,'%H:%i') s,date_format(date_add(entry_datetime,interval resource_resolution*entry_slots minute),'%H:%i') e from ".dbHelp::getSchemaName()."user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
-	$sqlAux = "select resource_resolution,entry_slots from ".dbHelp::getSchemaName()."user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
+    // $sql="select concat(user_firstname, ' ', user_lastname) name,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,date_format(entry_datetime,'%H:%i') s,date_format(date_add(entry_datetime,interval resource_resolution*entry_slots minute),'%H:%i') e from ".dbHelp::getSchemaName().".user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
+    // $sql="select user_firstname,user_lastname,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,date_format(entry_datetime,'%H:%i') s,date_format(date_add(entry_datetime,interval resource_resolution*entry_slots minute),'%H:%i') e from ".dbHelp::getSchemaName().".user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
+	$sqlAux = "select resource_resolution,entry_slots from ".dbHelp::getSchemaName().".user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
     $res=dbHelp::mysql_query2($sqlAux) or die ($sqlAux);
     $arr=dbHelp::mysql_fetch_row2($res);
 	
-    $sql="select user_firstname,user_lastname,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,".dbHelp::getFromDate('entry_datetime','%H:%i')." as s,".dbHelp::getFromDate(dbHelp::date_add('entry_datetime',$arr[0]*$arr[1],'minute'),'%H:%i')." as e from ".dbHelp::getSchemaName()."user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
+    $sql="select user_firstname,user_lastname,user_email,user_mobile,user_phone,user_phonext,department_name,institute_name,".dbHelp::getFromDate('entry_datetime','%H:%i')." as s,".dbHelp::getFromDate(dbHelp::date_add('entry_datetime',$arr[0]*$arr[1],'minute'),'%H:%i')." as e from ".dbHelp::getSchemaName().".user,entry,department,institute,resource where user_dep=department_id and department_inst=institute_id and entry_user=user_id and entry_resource=resource_id and entry_id=" . $value;
     $res=dbHelp::mysql_query2($sql) or die ($sql);
     $arr=dbHelp::mysql_fetch_row2($res);
     echo "<table>";
