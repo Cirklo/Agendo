@@ -69,6 +69,9 @@ echo "<td bgcolor=". cal::PreCellColorOff . ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td
 echo "<td bgcolor=". cal::ErrCellColorOff . ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Unconfirmed</td>";
 echo "<td bgcolor=". cal::MonCellColorOff . ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Monitored</td>";
 echo "</tr></table>";
+if($calendar->monitor($calendar->getResourceName())){
+	echo "<hr><p style='text-align:center'><a href=monitor.php target='blank'>Monitored resource</a>";
+}
 if ($calendar->getLink()!='') echo "<hr><p style='text-align:center'>More info <a href='" . $calendar->getLink() . "' target=_blank>here</a>";
 echo "<p style='text-align:right'><a href=# onclick=\"javascript:d=document.getElementById('help');d.style.display ='none'\">close</a>";
 echo "</div>";
