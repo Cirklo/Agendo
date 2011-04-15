@@ -332,6 +332,17 @@ class cal extends phpCollection{
         } // end of time
         echo "</table>";
     }
+	
+	public function monitor($resource){
+    	$sql="SELECT DISTINCT equip_resourceid FROM equip, resource WHERE resource_id=equip_resourceid AND resource_name='$resource'";
+    	$res=dbHelp::mysql_query2($sql) or die ($sql);
+        if(dbHelp::mysql_numrows2($res)==0){
+        	return false;
+        } else {
+        	return true;
+        }
+    }
+
 }
 
 ?>
