@@ -255,12 +255,38 @@ function update(){
     $arrdt=dbHelp::mysql_fetch_row2($resdt);
     if ($user_id!=$arrdt[2]) {echo "Wrong User";exit;} // if update not from same user
 	
+	//************************************
+	// if resource needs confirmation by resp or user
+	if (!$perm->getWasAdmin() && ($perm->getResourceStatus() == 4 || $perm->getResourceStatus() == 3)){ 
+	
+		// current date in time format
+		$todaysDate = time(date("YmdHi"));
+		
+		// entry time with addded resource delete hour(s)
+		$otherDate = strtotime($datetime) - $perm->getResourceDelHour()*60*60;
+
+		$sql="select entry_status from entry where entry_id = ". $entry;
+		$res = dbHelp::mysql_query2($sql) or die("Entry info not updated!");
+		$arr = dbHelp::mysql_fetch_row2($res);
+		
+		// if the user is too late to change an entry and the entry is confirmed
+		// if ($otherDate < $todaysDate && $arr[0] == 1) {
+			// echo "You can't modify this entry. Talk to the person responsible for the equipment.";
+			// exit;
+		// }
+		if ($otherDate > $todaysDate) {
+			$sql="update entry set entry_status = 2 where entry_id=". $entry;
+			$res = dbHelp::mysql_query2($sql) or die("Entry info not updated!");
+		}
+    }
+	//************************************
+	
     $sql="update entry set entry_user=".$user_id.", entry_datetime=".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i').",entry_slots=".$slots." where entry_id=". $entry;
-    $resPDO = dbHelp::mysql_query2($sql . $extra) or die("User not updated!");
-    
+    $resPDO = dbHelp::mysql_query2($sql.$extra) or die("Entry info not updated!");
    // if (mysql_affected_rows()==0) {
-    if (dbHelp::mysql_numrows2($resPDO)==0) {
-        echo "User not updated. ";
+    if (dbHelp::mysql_numrows2($resPDO) == 0) {
+        echo "Entry info not updated.";
+		exit;
     } else {
         //notification for waiting list
         // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName().".user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
@@ -276,7 +302,6 @@ function update(){
             $sql="delete from entry where entry_id=" . $arrStatus[0]; // deleting a monitoring entry
             dbHelp::mysql_query2($sql);
             //echo $sql
-            
         }
     }
     
@@ -307,7 +332,6 @@ function update(){
         $notify->setUser($user_id);
         $notify->fromAdmin('update',$extra);
     }
-    
     
     echo "Entry info updated!";
 }

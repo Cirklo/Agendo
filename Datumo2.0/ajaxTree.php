@@ -3,6 +3,7 @@ require_once("session.php");
 $user_id = startSession();
 
 ?>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /> 
 <script type="text/javascript">
 $(document).ready(function(){
 	$("*").tipTip(); //tiptip initialization
@@ -200,6 +201,7 @@ for($j=0;$row = $sql->fetch();$j++){
 		$table2="";
 	}
 	echo "<li>";
+	//check if $row[1] is a foreign key. If so, get second field. If not, display it right away
 	//display first table options
 	if($type==1){
 		echo "<span class='folder' onclick=dispTree('Tree_$row[0]','$table1','$table2','$dblConn','$row[0]',1,2,false,$treeview_id);>$row[1]</span>";
@@ -207,6 +209,7 @@ for($j=0;$row = $sql->fetch();$j++){
 	
 	//if it is the last branch of the tree
 	if($type==2) {
+		$row[1]=$display->FKfield($table1, $row[1]);
 		if($tree->getUpdate() or $tree->getDelete()) echo "<input type=checkbox id=$row[0] onclick=dispInputTree('details','$table1','$val',true,$treeview_id);>";
 		//echo "<span class=file onclick=getdetails('details','$table1','$row[0]',true,$treeview_id);>$row[1]</span>";
 		echo "<span class=file>$row[1]</span>";

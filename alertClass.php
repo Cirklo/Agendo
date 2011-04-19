@@ -192,7 +192,7 @@ function toAdmin($datetime,$extra,$type,$comment=''){
         foreach ($extra as $key => $value) {
         $extrainfo.= $key. ":".$value ."\\n";
         }
-        $extrainfo=substr($extrainfo,0,strlen($extrainfo)-4);
+        $extrainfo=substr($extrainfo,0,strlen($extrainfo)-2);
         
    // $m=($type=='delete')?'METHOD:CANCEL':'';
    // $s=($type=='delete')?'STATUS:CANCELLED':'';
@@ -224,8 +224,18 @@ END:VCALENDAR";
             $msg="Assistance requested for " . $this->ResourceName  . " at $hour:$min on the $year-$month-$day";
             break;
         case 'update':
-            $this->AddStringAttachment($att,'agendo.ics');
-            $msg="Update on ". $this->ResourceName . " at ". $hour . ":". $min ." on " . "$year-$month-$day from user " . $this->UserFullName;
+		
+			$sql="select xfields_label, xfieldsval_value from xfields, xfieldsval where xfieldsval_entry = ".$this->LastEntry." and xfieldsval_field = xfields_id";
+			$res=dbHelp::mysql_query2($sql);
+			$fields = '';
+			while ($arr = dbHelp::mysql_fetch_row2($res)){
+				$fields = " with field ".$arr[0]." = ".$arr[1].",";
+			}
+			if($fields != '')
+				$fields=substr($fields,0,strlen($fields)-1);
+
+				$this->AddStringAttachment($att,'agendo.ics');
+            $msg="Update on ".$this->ResourceName." at ".$hour.":".$min." on "."$year-$month-$day from user ".$this->UserFullName.$fields.".";
             break;
           case 'delete':
             $this->AddStringAttachment($att,'agendo.ics');
@@ -269,7 +279,7 @@ END:VCALENDAR";
 
 function recover($user_id){
     // $sql="select user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
-    $sql="select user_email,user_mobile,user_alert from ".dbHelp::getSchemaName().".user where user_id=". $user_id;
+    $sql="select user_email,user_mobile,user_alert from ".dbHelp::getSchemaName().".user where user_login='". $user_id."'";
     $res=dbHelp::mysql_query2($sql);
     $arr=dbHelp::mysql_fetch_array2($res);
     $vowels="aeiyou";
@@ -283,7 +293,7 @@ function recover($user_id){
         }
     }
     // $sql="update user set user_passwd = password('$pwd') where user_id=". $user_id;
-    $sql="update user set user_passwd = '".cryptPassword($pwd)."' where user_id=". $user_id;
+    $sql="update user set user_passwd = '".cryptPassword($pwd)."' where user_login='". $user_id."'";
     $res=dbHelp::mysql_query2($sql) or die('Password not updated');
     switch ($arr['user_alert']) {
     case 2:

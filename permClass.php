@@ -23,7 +23,7 @@ class permClass {
     private $Resolution;
     private $Slots;
     private $ResourceStatus;
-    private $ResouceDelHour;
+    private $ResourceDelHour;
     private $Resource;
     private $WasAdmin;
     // 14 perm = 14 ->10110 :can delete others, can add ahead
@@ -82,7 +82,7 @@ function setPermission($user,$resource,$passwd) {
     $this->DaysAhead=$arr[1];
     $this->MaxSlots=$arr[2];
     $this->ResourceStatus=$arr[3];
-    $this->ResouceDelHour=$arr[4];
+    $this->ResourceDelHour=$arr[4];
     $this->Passwd=$passwd;
     
 	// Checks if the user's password matches the converted one given OR if the responsible's password does
@@ -118,7 +118,7 @@ function getResourceStatus(){
 }
 
 function getResourceDelHour(){
-    return $this->ResouceDelHour;
+    return $this->ResourceDelHour;
 }
 
 
@@ -140,11 +140,11 @@ function addAhead($date)     {
         return true;
 
     } else {
-        $min=substr($date,10,2);
-        $hour=substr($date,8,2);
-        $day=substr($date,6,2);
-        $month=substr($date,4,2);
         $year=substr($date,0,4);
+        $month=substr($date,4,2);
+        $day=substr($date,6,2);
+        $hour=substr($date,8,2);
+        $min=substr($date,10,2);
         
         
         $Tday=date("d");

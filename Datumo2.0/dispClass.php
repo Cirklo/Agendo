@@ -106,20 +106,21 @@ class dispClass{
 		echo "<table border=0>";
 		echo "<form name=table$j method=post>";
 		$sql->execute();
+		//print_r($_POST);
 		for($i=0;$row=$sql->fetch();$i++){ 
 			echo "<tr><td>".$this->header[$i]."</td>";
-			echo "<td><input type=text name=$row[0] id=$row[0]";
+			echo "<td><input type=text name=$row[0]_f_ id=$row[0]_f_";
 			//is it a foreign key?
 			if($this->FKtable[$i]!='' and $this->FKtable[$i]!=$objName) {
-				if($_POST[$row[0]] != ''){
-					$this->getFKvalue($_POST[$row[0]], $i);
+				if($_POST[$row[0]."_f_"] != ''){
+					$this->getFKvalue($_POST[$row[0]."_f_"], $i);
 					$value = $this->FKvalue;
 				} else {
 					$value = "";
 				}
 				echo " class=fk lang=__fk "; //set this as a FK input
 			} else {
-				$value = $_POST[$row[0]];
+				$value = $_POST[$row[0]."_f_"];
 				echo " class=reg ";
 				if($this->datatype[$this->fullheader[$i]]=="date" or $this->datatype[$this->fullheader[$i]]=="datetime")
 					echo " onfocus=showCalendarControl(this) readonly=readonly";
@@ -277,7 +278,7 @@ class dispClass{
  * @abstract method to build dynamic queries responsible for displaying the results in manager.php
  */
 	
-	public function queryBuilder($user_id, $objName, $nrows, $filter, $offset, $setOrder, $colOrder){
+	public function queryBuilder($user_id, $objName, $nrows, $filter, $offset, $setOrder, $colOrder, $stype){
 		$arr = array();
 		//change the database to the original
 		$this->pdo->dbConn();
@@ -285,17 +286,23 @@ class dispClass{
 		$sql = "SELECT * FROM ".$this->pdo->getDatabase().".$objName";
 		$where = " WHERE ";
 		//is the ordering column a foreign key?
-		if ($this->FKeys[$colOrder] and $j!=0) {
+	//	echo $this->FKeys[$colOrder];
+		if ($this->FKeys[$colOrder]) {
 			$arr = $this->queryFK($objName, $this->FKeys[$colOrder], $colOrder);
 			$sql = $arr[0];
 			$where .= $arr[1];
 			$colOrder = $arr[2];
+	
 		}
-		$order = " ORDER BY $colOrder $setOrder"; //set order to display the results
+		if($colOrder!="" and $setOrder!="")
+			$order = " ORDER BY $colOrder $setOrder"; //set order to display the results
 		$limit = " LIMIT $nrows OFFSET $offset"; //set limits for pagination
 		//Was it called by advanced filter??
 		if(!$filter){ 
 			foreach($this->vars as $key=>$value){
+				//it comes from filter
+				if(substr($key,strlen($key)-3,strlen($key))=="_f_")
+					$key=substr($key,0,strlen($key)-3);
 				switch ($this->datatype[$key]){//search for attribute type
 					case "varchar": //mysql string
 						$op = " regexp ";
@@ -321,6 +328,7 @@ class dispClass{
 		if(sizeof($this->vars)!=0 or sizeof($arr)!=0 or $having!="") $where = substr($where,0,strlen($where)-4);
 		else $where = "";
 		$this->mainQuery = $sql.$where.$order.$limit;
+	//	echo $this->mainQuery;
 		$this->setQuerySession($sql.$where.$order);
 		//echo $this->mainQuery;
 	}
@@ -371,7 +379,7 @@ class dispClass{
 		try{
 			$sql->execute();
 		} catch (Exception $e){
-			$this->error->errorDisplay($this->mainQuery,$objName,$e->getMessage(),"Could not execute query. <b>If the problem persists please contact the administrator! <a href=admin.php>Return to main menu</a></b>");
+			//$this->error->errorDisplay($this->mainQuery,$objName,$e->getMessage(),"Could not execute query. <b>If the problem persists please contact the administrator! <a href=admin.php>Return to main menu</a></b>");
 		}
 		$nrows = $sql->rowCount();
 		for($i=0;$row=$sql->fetch();$i++){
@@ -552,6 +560,10 @@ class dispClass{
 				$size = $this->length[$this->fullheader[$j]];
 				$mlength = $this->length[$this->fullheader[$j]];
 				break;
+			case "datetime":
+				$size=20;
+				$mlength=20;
+				break;
 			default:
 				$size = 10;	
 				$mlength = 10;
@@ -570,6 +582,9 @@ class dispClass{
 		if(sizeof($this->vars) !=0){
 			if(!$filter){
 				foreach($this->vars as $key=>$value){
+					//it comes from filter
+					if(substr($key,strlen($key)-3,strlen($key))=="_f_")
+						$key=substr($key,0,strlen($key)-3);
 					switch ($this->datatype[$key]){//search for attribute type
 						case "varchar": //mysql string
 							$op = " regexp ";
@@ -691,7 +706,7 @@ class dispClass{
 			//exit page
 			echo "<tr><td><a href=javascript:void(0) onclick=window.close()>Exit</a></td></tr>";	
 		}
-		echo "<tr><td><a href=javascript:void(0) title='Need help?'>Help</a></td></tr>";
+		echo "<tr><td><a href='http://github.com/Cirklo/Datumo-2.0' title='Need help?'>Help</a></td></tr>";
 	}
 	
 /**
@@ -747,6 +762,27 @@ class dispClass{
         echo "</form>";
 		echo "</div>";
 		echo "<div id=errorNotify></div>";
+		
+	}
+	
+/**
+ * Method to check if this is a foreign key field or not 
+ */
+	
+	function FKfield($objName, $val){
+		//change database to information schema
+		$this->pdo->dbInfo();
+		$sql=$this->pdo->query("SELECT b.referenced_table_name FROM columns a, key_column_usage b WHERE a.column_name=b.column_name and a.table_schema=b.table_schema AND b.table_name='$objName' AND b.table_schema='".$this->pdo->getDatabase()."' AND a.ordinal_position=2");
+		if($sql->rowCount()==0)
+			return $val;
+		else {
+			$row=$sql->fetch();
+			//change to main schema
+			$this->pdo->dbConn();
+			$sql=$this->pdo->query("SELECT * FROM ".$this->pdo->getDatabase().".$row[0] WHERE $row[0]_id='$val'");
+			$row=$sql->fetch();
+			return $row[1];
+		}
 		
 	}
 }
