@@ -67,3 +67,33 @@ function ajaxRequest(url){
     var str=xmlhttp.responseText;
     return str;
 }
+
+$.ajaxSetup ({  
+	cache: false  
+});  
+
+var ajaxSendVar = 'poop';
+function ajaxSend(url){
+	$.post(url, {}, function(data){return(data);}, "text");
+}
+
+// function ajaxSend(url){
+	// $.ajax({url: url, type:'GET', dataType:'json',success: function(data){;return data;}});
+// }
+
+function setAjaxResult(data){
+	// alert('doneSet');
+	ajaxSendVar = data;
+}
+function getAjaxResult(){
+	// alert(data);
+	return ajaxSendVar;
+}
+	// function ajaxTest(value){
+		// value = 'received' + value;
+		// $.post(	'teste.php', 
+				// {vari:'teste'},
+				// function(){
+					// alert(value);
+				// });
+	// }

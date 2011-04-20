@@ -32,6 +32,24 @@ require_once("genMsg.php");
 $resource=clean_input($_GET['resource']);
 // $resource=$_GET['resource'];
 
+// Used to hide buttons, and show or not, a custom interface
+$ressql = "select resource_status from resource where resource_id = ".$resource;
+$res = dbHelp::mysql_query2($ressql) or die($ressql);
+$arr = dbHelp::mysql_fetch_row2($res);
+$imResstatus5 = false;
+if($arr[0] == 5){
+	$imResstatus5 = true;
+	// if (isset($_COOKIE["resource_ip"]) && $_COOKIE["resource_ip"] == getenv("REMOTE_ADDR")){
+	if (isset($_COOKIE["resourceStatus"]) && $_COOKIE["resourceStatus"] == 5){
+		$ressql = "select resinterface_phpfile from resinterface where resinterface_resource = ".$resource;
+		$res = dbHelp::mysql_query2($ressql) or die($ressql);
+		$arr = dbHelp::mysql_fetch_row2($res);
+		echo "<meta HTTP-EQUIV='REFRESH' content='0; url=./".$arr[0]."?resource=".$resource."'>";
+		exit;
+	}
+}
+// ***********************************************************
+
 if (isset($_GET['update'])) {$update=clean_input($_GET['update']);$entry=clean_input($_GET['update']);} else {$update=0;} ;
 //instatiation for calendar
 $calendar=new cal($resource,$update);
@@ -276,6 +294,11 @@ echo "</td></tr></table>";
 
 //echo "<img height=64 src=pics/resource" . $calendar->getResource() .".gif border=0 size=64>&nbsp;&nbsp;&nbsp;<a style='font-size:20px' href=\"javascript:d=document.getElementById('help');d.style.display ='block';AssignPosition(d)\">?</a>";
 echo "<h2 align=center>". $calendar->getResourceName() ."</h2><hr></td></tr>";
+
+// Used to hide buttons
+if(!$imResstatus5){
+//**********************
+
 echo "<tr>";
 	echo "<td colspan=2>Repeat Week Pattern</td>";
 	echo "<tr>";
@@ -312,11 +335,16 @@ echo "<tr><td style='display:".$display."' colspan=2>Password<br><input class=in
 echo "<tr><td colspan=3 class=di></td></tr>\n";
 echo "<tr><td colspan=3 align=jusfify>\n";
 echo "<input type=button style='width:40px' onkeypress='return noenter()' id=delButton class=bu  value='Del' onClick=\"ManageEntries('del');\">";
-echo "<input type=button style='width:60px' onkeypress='return noenter()'  id=monitorButton class=bu value='WaitList' onClick=\"ManageEntries('monitor');\">";
+echo "<input type=button style='width:60px' onkeypress='return noenter()' id=monitorButton class=bu value='WaitList' onClick=\"ManageEntries('monitor');\">";
 echo "<input type=button style='width:40px' onkeypress='return noenter()' id=addButton class=bu value='Add' onClick=\"ManageEntries('add','" . $calendar->getStartTime(). "','" . cal::getResolution()/60 . "');\"><br>";
-echo "<input type=button style='width:70px' onkeypress='return noenter()'  id=updateButton  class=bu value='Update' onClick=\"ManageEntries('update','" . $calendar->getStartTime(). "','" . cal::getResolution()/60 . "');\">";
+echo "<input type=button style='width:70px' onkeypress='return noenter()' id=updateButton  class=bu value='Update' onClick=\"ManageEntries('update','" . $calendar->getStartTime(). "','" . cal::getResolution()/60 . "');\">";
 echo "<input type=button style='width:70px' onkeypress='return noenter()' id=confirmButton class=bu value='Confirm' onClick=\"ManageEntries('confirm');\">";
 echo "<tr><td colspan=2><hr></td></tr>";
+
+// Used to hide buttons
+}
+//*********************
+
 echo "</table>";
 echo "</td></tr></table>";
 echo "<input name=action lang=send style='visibility:hidden;font-size:0px' value='' id=action>";
