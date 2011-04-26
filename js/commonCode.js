@@ -74,7 +74,7 @@ $.ajaxSetup ({
 
 var ajaxSendVar = 'poop';
 function ajaxSend(url){
-	$.post(url, {}, function(data){return(data);}, "text");
+	$.get(url, {}, function(data){return(data);}, "text");
 }
 
 // function ajaxSend(url){

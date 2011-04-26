@@ -13,11 +13,6 @@
 		validUserAndPass($_GET['user'], $_GET['pass']);
 	}
 		
-	
-	function useJquery($path){
-		echo "<script type='text/javascript' src='".$path."'></script>";
-	}
-
 	// Initializes the session, checks if it timesOut and if needsToBeLogged it doesnt allow the page where 
 	// this function is to be entered without a user being logged in
 	function initSession($needsToBeLogged=false){
