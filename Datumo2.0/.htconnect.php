@@ -19,6 +19,7 @@ class dbConnection extends PDO{
 	private $schema;
 	private $schemaQuery;
 	private $admin;
+	private $folder;
 	
 	public function __construct(){
 		$this->databaseSettings();
@@ -37,27 +38,24 @@ class dbConnection extends PDO{
 	}
 	
 	public function databaseSettings(){
-		// $this->engine = "pgsql"; //"mysql" OR "pgsql"
 		$this->engine = "mysql"; //"mysql" OR "pgsql"
-		// $this->database = "postgres";//"dbtest" or "postgres"
-		$this->database = "dbtest";//"dbtest" or "postgres"
-		// $this->username = "postgres"; //"root" OR "postgres"
+		$this->database = "labcal";//"dbtest" or "postgres"
 		$this->username = "root"; //"root" OR "postgres"
-		// $this->password = "nasaki"; // "" OR "nasaki"
 		$this->password = ""; // "" OR "nasaki"
 		$this->host = "localhost";
-		$this->schema = "dbtest";// Name of the schema (same as database for mysql)
-		$this->description = "IGC requisitions system";
+		$this->schema = "labcal";// Name of the schema (same as database for mysql)
+		$this->description = "datumo";
 		$this->admin = "info@cirklo.org";
+		$this->folder = "agendo/Datumo2.0"; //folder where the main files of datumo are located
 	}
 	
-
-	public function getEngine(){ return $this->engine;}
-	public function getDatabase(){ return $this->database;}
-	public function getSchema(){ return $this->schemaQuery;}
-	public function getDescription(){ return $this->description;}
-	public function getAdmin(){ return $this->admin;}
-	public function getSchemaName(){ return $this->schema;}
+	public function getFolder(){		return $this->folder;} 
+	public function getEngine(){ 		return $this->engine;}
+	public function getDatabase(){	 	return $this->database;}
+	public function getSchema(){ 		return $this->schemaQuery;}
+	public function getDescription(){ 	return $this->description;}
+	public function getAdmin(){ 		return $this->admin;}
+	public function getSchemaName(){ 	return $this->schema;}
 	
 /**
  * @author João Lagarto / Nuno Moreno
