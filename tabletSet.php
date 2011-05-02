@@ -1,9 +1,8 @@
 <?php
-//foreach ($_SERVER as $key => $value) {
-//     echo "Key: $key; Value: $value<br />\n";
-//}
     $res_id=$_GET['resourceStatus'];
-    //cookie for 5 year
+    // 5 year cookie
     setcookie('resourceStatus',5,time()+157680000,'/');
+	// remove cookie
+    // setcookie('resourceStatus','',time()-3600,'/');
 	echo "Cookie is set";
 ?>

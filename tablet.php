@@ -67,8 +67,7 @@ function userExit($pin, $resource, $dateenter, $entry){
 		$res = dbHelp::mysql_query2($sql) or die ($sql);
 		$arr = dbHelp::mysql_fetch_row2($res);
 		
-		$currentTime = time();
-		$slots = ceil((time() + 60.0 - time($dateenter)) / (float)$arr[0] / 60.0);
+		$slots = ceil(((time() - strtotime($dateenter)) / 60.0) / $arr[0]);
 		$currentTime = dbHelp::convertDateStringToTimeStamp(date("YmdHi", time()),'%Y%m%d%H%i');
 		// $sql = "update tablet_entry set tablet_entry_dateexit = ".$currentTime." where tablet_entry_user = ".$_SESSION['tablet_entry_user']." and tablet_entry_resource = ".$_SESSION['tablet_entry_resource']." and tablet_entry_dateenter = ".$_SESSION['tablet_entry_dateenter'];
 		$sql = "update entry set entry_action = ".$currentTime.", entry_slots = ".$slots." where entry_id = ".$entry;
@@ -112,6 +111,6 @@ echo "<table id='all'>";
 			echo "</table>";
 		echo "</td>";
 	echo "</tr>";
-	echo "<tr align='center'><td colspan = 2><input type='text' class='stateMessage' id='userLabel' value ='No user is using this resource now' ></input></td></tr>";
+	echo "<tr align='center'><td colspan = 2><input type='text' class='stateMessage' id='userLabel' value ='No user is using this resource now' disabled></input></td></tr>";
 echo "</table>";
 ?>

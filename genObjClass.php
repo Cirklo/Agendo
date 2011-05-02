@@ -127,7 +127,6 @@ class genObj {
 	// @author Pedro Pires
 	// @abstract: Gets the user's password, encrypts it and updates it on the user table 
 	function updatePass($ObjName, $user_id, $id){
-		// require_once("commonCode.php");
 		// Gets password
 		$sql="select ".$ObjName."_passwd from ".$ObjName." where ".$ObjName."_id='$id'";
 		$passRow = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);

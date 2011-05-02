@@ -12,8 +12,8 @@
 		treta();
 	}
 
-useJquery('js/jquery-1.5.2.min.js');
 ?>
+<script type='text/javascript' src='js/jquery-1.5.2.min.js'></script>
 
 <script type="text/javascript" src="js/commonCode.js"></script>
 <script type="text/javascript">
@@ -72,20 +72,21 @@ window.onresize = function (){resizeMe();}
 	echo soundex('moreno');
 	echo "<br></br>";
 	
-	$myTime = strtotime('201011231415');
-	$timePlus = $myTime + 60*60;
-	echo date('YmdHi',$myTime)."<br>";
-	echo date('YmdHi',$timePlus)."<br>";
-	if ($myTime < $timePlus) echo "asdasdasd";
-	else echo "qweqweqwe</br>";
+	echo "<a href='android/AccellValues.apk'>file</a>";
+	// $myTime = strtotime('201011231415');
+	// $timePlus = $myTime + 60*60;
+	// echo date('YmdHi',$myTime)."<br>";
+	// echo date('YmdHi',$timePlus)."<br>";
+	// if ($myTime < $timePlus) echo "asdasdasd";
+	// else echo "qweqweqwe</br>";
 	
 	
-	echo "<table id=all border=10>";
-		echo "<tr>";
-			echo "<td>";
-				$url = 'teste.php?myvar=';
-				echo "<input id='text' type='text' width='50' style='text-align:center;' onkeyup=\"ajaxTest('".$url."',this.value)\">";
-			echo "</td>";
-		echo "</tr>";
-	echo "</table>";
+	// echo "<table id=all border=10>";
+		// echo "<tr>";
+			// echo "<td>";
+				// $url = 'teste.php?myvar=';
+				// echo "<input id='text' type='text' width='50' style='text-align:center;' onkeyup=\"ajaxTest('".$url."',this.value)\">";
+			// echo "</td>";
+		// echo "</tr>";
+	// echo "</table>";
 ?>

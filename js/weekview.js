@@ -227,8 +227,8 @@ function ManageEntries(action,ttime,tresolution) {
                         //t=Date.UTC(parseInt(tdate.substring(0,4)),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),(tstarttime-Math.floor(tstarttime))*60);
                         //entryDate.setTime(t);
                         if (seed==0) exit;
-                        var entryDate = new Date(tdate.substring(0,4),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),(tstarttime-Math.floor(tstarttime))*60,'00');
-                        //alert(formatDate(entryDate,"yyyyMMddHHmm"));
+                        var entryDate = new Date(tdate.substring(0,4),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),Math.ceil((tstarttime-Math.floor(tstarttime))*60),'00');
+                        // alert(formatDate(entryDate,"yyyyMMddHHmm"));
                         ajaxEntries('GET','process.php?' + 'slots=' + seed + '&datetime=' + formatDate(entryDate,"yyyyMMddHHmm") + '&resource=' + resource,true);
                         seed=0;
                         k=0;

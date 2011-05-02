@@ -404,7 +404,7 @@ if($_GET['userid'] == ''){
 
 //check for quick search
 if(isset($_GET['search'])){
-    $sql = "SELECT search_query FROM search WHERE search_table='".dbHelp::getSchemaName().".".$table"'";
+    $sql = "SELECT search_query FROM search WHERE search_table='".dbHelp::getSchemaName().".".$table."'";
     $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $table, $user_id));
     $row = dbHelp::mysql_fetch_row2($res);
     $sql = $row[0];

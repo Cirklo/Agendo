@@ -49,7 +49,6 @@
 			if(isset($_SESSION['user_pass'])){
 			
 				if($_SESSION['database'] != dbHelp::getSchemaName()){
-					wtf($_SESSION['database'] ."-". dbHelp::getSchemaName());
 					logOff();
 				}
 					

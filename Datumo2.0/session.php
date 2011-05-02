@@ -18,6 +18,11 @@ if(isset($_GET['logout'])){	logout();}
 if(isset($_GET['pwd'])){	recoverPwd();}
 
 function login(){
+	//call classes
+	$db = new dbConnection();
+	$genObj = new genObjClass();
+	$database=$db->getDatabase();
+
 	//posted variables
 	if(isset($_POST['login'])){ $user_login = $_POST['login'];}
 	if(isset($_POST['pass'])){ $user_passwd = $_POST['pass'];}
@@ -29,29 +34,26 @@ function login(){
 	// is there any match for this key??
 	if($sql->rowCount()>0){
 		$row = $sql->fetch();
-		initSession($row[0]);
+		initSession($row[0],$database);
 	} else {
 		echo "Wrong login";
 	}
 }
 
-function initSession($user_id){
+function initSession($user_id,$database){
 	session_start();
 	$_SESSION['user_id'] = $user_id;	
+	$_SESSION['database'] = $database;	
 }
 
 
 function startSession(){
 	session_start();
+	$db = new dbConnection();
+	$database=$db->getDatabase();
 
-	if(isset($_SESSION['user_id'])){
-		// Checks if the database is the same as the one the user first logged in
-		$db = new dbConnection();
-		if(isset($_SESSION['database']) && $_SESSION['database']!= $db->getDatabase())
-			logout();
-		else
-			$_SESSION['database']!= $db->getDatabase();
-			
+	// Checks if the database is the same as the one the user first logged in
+	if(isset($_SESSION['user_id']) && isset($_SESSION['database']) && $_SESSION['database'] == $database){
 		$user = $_SESSION['user_id'];
 		return $user; 
 	} else {
@@ -67,7 +69,7 @@ function logout(){
 
 function notlogged(){
 	session_destroy();
-	echo "We are watching you!! Return to <a href=./>homepage</a>";
+	echo "We are watching you!! Return to <a href=../>homepage</a>";
 	//echo "<meta HTTP-EQUIV='REFRESH' content='0; url=./'>";
 	exit();
 }
@@ -75,7 +77,6 @@ function notlogged(){
 function recoverPwd(){
 	//includes
 	require_once ("mailClass.php");
-	require_once ("genObjClass.php");
 	//call class
 	$mail = new mailClass();
 	$db = new dbConnection();

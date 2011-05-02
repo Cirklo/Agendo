@@ -40,11 +40,9 @@ class permClass {
     */
 
 function setPermission($user,$resource,$passwd) {
-    // require_once('commonCode.php');
 
     $this->User=$user;
     $this->Resource=$resource;
-    //require_once('.htconnect.php');
 	
 	// Encrypts the given password
     // $sql="select password('". $passwd ."')";
