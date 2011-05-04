@@ -10,6 +10,7 @@ var fadeCount;
 // variable used for a patch in the checkfields function
 var usingSession;
 var detectedUser;
+var path = '';
 
 //bgcolor2='document..backgroundColor; // just to set bgcolor2 at the beggining
 
@@ -27,6 +28,10 @@ var detectedUser;
         window.clearInterval(mousedownTimeout);
         
     }
+	
+	function setPath(rightPath){
+		path = rightPath; // always pick the right path young grasshopper
+	}
 	
 // sets the usingSession global variable with the isUsing value (boolean)
 function setUsingSession(isUsing){
@@ -73,7 +78,7 @@ function swapColor(obj,tag,action){
 				alert("Your browser does not support XMLHTTP!");
 				exit;
 			}
-			url='ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
+			url='../ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
 			xmlhttp.open('GET', url , true);
 			xmlhttp.send(null);
 			xmlhttp.onreadystatechange = function () {
@@ -162,7 +167,7 @@ function ManageEntries(action,ttime,tresolution) {
                     if (cell.title!='0' && (cell.style.backgroundColor==bgcolor)) {
                         //alert(cell.style.backgroundColor);
                         document.getElementById('entry').value=cell.title;
-                        ajaxEntries('GET','process.php?deleteall=0&resource=' + resource ,true);
+                        ajaxEntries('GET','../process.php?deleteall=0&resource=' + resource ,true);
                         //alert ("No entries were selected");
                     }
                 }
@@ -175,14 +180,14 @@ function ManageEntries(action,ttime,tresolution) {
             // if (entry!='0' && detectedUser) {
                 var resp=confirm('All associated entries will be deleted!');
                 if (!(resp)) return;
-                ajaxEntries('GET','process.php?deleteall=1&resource=' + resource,true);
+                ajaxEntries('GET','../process.php?deleteall=1&resource=' + resource,true);
                 clear_table(table,false);
             }
         break;
         case 'add':
             var arr=new Array(); // creates an array to define cells with rowspan>1
             if (update>0) document.getElementById('entry').value=update; // for the update it has to send the entry
-            //alert(update);
+            // alert('kajshdjkhasjkd');
             for (i=1;i<=tablesize;i++) {
                 arr[i]= new Array();
                 for (j=1;j<8;j++) arr[i][j]=0; // fills the array
@@ -229,7 +234,7 @@ function ManageEntries(action,ttime,tresolution) {
                         if (seed==0) exit;
                         var entryDate = new Date(tdate.substring(0,4),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),Math.ceil((tstarttime-Math.floor(tstarttime))*60),'00');
                         // alert(formatDate(entryDate,"yyyyMMddHHmm"));
-                        ajaxEntries('GET','process.php?' + 'slots=' + seed + '&datetime=' + formatDate(entryDate,"yyyyMMddHHmm") + '&resource=' + resource,true);
+                        ajaxEntries('GET','../process.php?' + 'slots=' + seed + '&datetime=' + formatDate(entryDate,"yyyyMMddHHmm") + '&resource=' + resource,true);
                         seed=0;
                         k=0;
                     } else if(cell.title!='0' && document.getElementById('addButton').value=='All' && cell.style.backgroundColor==bgcolor2 )  {
@@ -263,7 +268,7 @@ function ManageEntries(action,ttime,tresolution) {
                     if (cell.title!='0' && (cell.style.backgroundColor==bgcolor)) {
                         //alert(cell.style.backgroundColor);
                             document.getElementById('entry').value=cell.title;
-                            ajaxEntries('GET','process.php?&resource=' + resource,true);
+                            ajaxEntries('GET','../process.php?&resource=' + resource,true);
                             clear_table(table,false);                 
                     } else {
                        //alert ("No entries were selected");
@@ -325,13 +330,13 @@ function addcomments(entry) {
             var re = /\'/g;
             myForm[0].value=myForm[0].value.replace(re," ");
             //alert(myForm[0].value);
-            url='process.php?resource=' + resource +'&entry=' + entry + '&user_id=' + user_id + '&action=addcomments&comments='+ myForm[0].value;
+            url='../process.php?resource=' + resource +'&entry=' + entry + '&user_id=' + user_id + '&action=addcomments&comments='+ myForm[0].value;
             xmlhttp.open('GET', url , true);
             xmlhttp.send(null);
         }
     }
     
-    ajaxEntries('GET','process.php?resource=' + resource,true);
+    ajaxEntries('GET','../process.php?resource=' + resource,true);
     clear_table(table,false); 
     myForm.style.display = "none";
 
@@ -476,7 +481,7 @@ function showFadeAux(element, count){
 }
 
 function init(s,m){
-    document.getElementById('enddate').value=formatDate(curDate,"yyyy-M-dd");
+    document.getElementById('enddate').value = formatDate(curDate,"yyyy-M-dd");
     if (document.getElementById('entry').value!='0') {
         if (document.getElementById('update').value!='0') {
 			table=document.getElementById('caltable');
@@ -504,6 +509,6 @@ function submitUser(resource) {
     if (checkfield(formObj.user_idm)) return;
     if (checkfield(formObj.user_passwd)) return;
     formObj.user_idm.value=formObj.user_idm.title;
-    formObj.action='admin.php?resource=' + resource;
+    formObj.action='../admin.php?resource=' + resource;
     formObj.submit();
 }

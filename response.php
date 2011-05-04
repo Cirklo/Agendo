@@ -9,7 +9,8 @@
 */
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
+require_once("commonCode.php");
 require_once("functions.php");
 $db = dbHelp::database2(1);
 dbHelp::mysql_select_db2('information_schema');

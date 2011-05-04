@@ -56,7 +56,7 @@ var xmlhttp,url;
     }
     
     //alert(Page + objTagOri.value);
-    url="ajax.php?type=user&value=" + obj.value;
+    url="../ajax.php?type=user&value=" + obj.value;
     xmlhttp.open("GET",url,true);
     xmlhttp.send(null);
 }
@@ -83,7 +83,7 @@ obj=document.getElementById('user_idm');
     }
     
     //alert(Page + objTagOri.value);
-    url="ajax.php?type=newpwd&value=" + obj.title; // title has user_id info
+    url="../ajax.php?type=newpwd&value=" + obj.title; // title has user_id info
     xmlhttp.open("GET",url,true);
     xmlhttp.send(null);
 	// alert('Your new password was sent.');

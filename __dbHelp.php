@@ -1,5 +1,5 @@
 <?php
-	include_once("Datumo2.0/.htconnect.php");
+	include_once($_SESSION['path']."/.htconnect.php");
 
 	class dbHelp{ 
 	

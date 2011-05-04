@@ -12,23 +12,16 @@ class dbConnection extends PDO{
 	private $engine;
 	private $host;
 	private $database;
+	private $description;
 	private $username;
 	private $password;
 	private $dsn;
+	private $schema;
 	private $schemaQuery;
-	private $schemaName;
-		
+	private $admin;
+	
 	public function __construct(){
-		$this->engine = "pgsql"; //"mysql" OR "pgsql"
-		// $this->engine = "mysql"; //"mysql" OR "pgsql"
-		$this->database = "postgres";//"dbtest" or "postgres"
-		// $this->database = "dbtest";//"dbtest" or "postgres"
-		$this->username = "postgres"; //"root" OR "postgres"
-		// $this->username = "root"; //"root" OR "postgres"
-		$this->password = "nasaki"; // "" OR "nasaki"
-		// $this->password = ""; // "" OR "nasaki"
-		$this->host = "localhost";
-		$this->schemaName = "dbtest";// Name of the schema (same as database for mysql)
+		$this->databaseSettings();
 		$this->dsn = $this->engine.":dbname=".$this->database.";host=".$this->host;
 		try {
 			//database connection
@@ -36,17 +29,35 @@ class dbConnection extends PDO{
 			//PDO error handling
 			parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// Sets to the right schema
-			$this->dbSchemaSet();
+			$this->dbConn();
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			exit();
 		}
 	}
 	
+	public function databaseSettings(){
+		// $this->engine = "pgsql"; //"mysql" OR "pgsql"
+		$this->engine = "mysql"; //"mysql" OR "pgsql"
+		// $this->database = "postgres";//"dbtest" or "postgres"
+		$this->database = "bugworkerstest";//"dbtest" or "postgres"
+		// $this->username = "postgres"; //"root" OR "postgres"
+		$this->username = "root"; //"root" OR "postgres"
+		// $this->password = "nasaki"; // "" OR "nasaki"
+		$this->password = ""; // "" OR "nasaki"
+		$this->host = "localhost";
+		$this->schema = "bugworkerstest";// Name of the schema (same as database for mysql)
+		$this->description = "IGC requisitions system";
+		$this->admin = "info@cirklo.org";
+	}
+	
+
 	public function getEngine(){ return $this->engine;}
 	public function getDatabase(){ return $this->database;}
 	public function getSchema(){ return $this->schemaQuery;}
-	public function getSchemaName(){ return $this->schemaName;}
+	public function getDescription(){ return $this->description;}
+	public function getAdmin(){ return $this->admin;}
+	public function getSchemaName(){ return $this->schema;}
 	
 /**
  * @author João Lagarto / Nuno Moreno
@@ -56,7 +67,7 @@ class dbConnection extends PDO{
  */
 	
 	public function dbConn(){
-		$this->schemaSelect($this->engine, $this->getDatabase());
+		$this->schemaSelect($this->schema);
 		$sql = parent::prepare($this->schemaQuery);
 		$sql->execute();
 	}
@@ -69,7 +80,7 @@ class dbConnection extends PDO{
  */
 	
 	public function dbInfo(){
-		$this->schemaSelect($this->engine, "information_schema");
+		$this->schemaSelect("information_schema");
 		$sql = parent::prepare($this->schemaQuery);
 		$sql->execute();
 	}
@@ -81,13 +92,13 @@ class dbConnection extends PDO{
  * @abstract method to handle different database engines
  */
 	
-	public function schemaSelect(){ 
+	public function schemaSelect($db){ 
 		switch($this->engine){
 			case "mysql": //query to change database in mysql
-				$this->schemaQuery = "use ".$this->schemaName;
+				$this->schemaQuery = "use ".$db;
 				break;
 			case "pgsql"; //query to change database in postgresql
-				$this->schemaQuery = "set search_path to ".$this->schemaName.",public";
+				$this->schemaQuery = "set search_path to ".$db.",public";
 				break;
 		}
 	}
@@ -96,19 +107,13 @@ class dbConnection extends PDO{
  * @author Pedro Pires
  * @version Datumo 2.0
  * @copyright EUPL
- * @abstract method to handle different database engines
+ * @abstract method to change to different databases
  */
 	public function dbSelect($db){ 
 		$this->database = $db;
 		$this->dbConn();
 	}
-	
-	public function dbSchemaSet(){ 
-		$this->schemaSelect();
-		$sql = parent::prepare($this->schemaQuery);
-		$sql->execute();
-	}
-	
+		
 }
 
 ?>

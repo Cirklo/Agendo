@@ -41,7 +41,7 @@ function clickit(id,action,table,resource) {
     }
     var resp=confirm('Sure you want to ' + action + ' this record?');
     if (resp) {
-        CurForm.action='usermanage.php?&action=update&resource=' + resource;
+        CurForm.action='../usermanage.php?&action=update&resource=' + resource;
         CurForm[0].disabled=false;
         CurForm.submit();
     } 

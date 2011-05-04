@@ -1,7 +1,8 @@
 <?php
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
+require_once("commonCode.php");
 require_once("errorHandler.php");
 
 $error = new errorHandler;

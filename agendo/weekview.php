@@ -1,7 +1,10 @@
 <?php
-//session_start();
 // This file was altered by Pedro Pires (The chosen two)
-	require_once("commonCode.php");
+	session_start();
+	$pathOfIndex = explode('\\',getcwd());
+	$pathOfIndex[sizeof($pathOfIndex)-1];
+	$_SESSION['path'] = $pathOfIndex[sizeof($pathOfIndex)-1];
+	require_once("../commonCode.php");
 	// logIn($resource, $user_id, $pwd, $logOff);
 	logIn();
 ?>
@@ -13,21 +16,23 @@
 <META HTTP-EQUIV="REFRESH" CONTENT="180">
 <meta name="keywords" content="" />
 <meta name="description" content="" /> 
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/CalendarControl.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/cal.js"></script>
-<script type="text/javascript" src="js/ajax.js"></script>
-<script type="text/javascript" src="js/datefunc.js"></script>
-<script type="text/javascript" src="js/overdiv.js"></script>
-<script type="text/javascript" src="js/weekview.js"></script>
-<script type="text/javascript" src="js/commonCode.js"></script>
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/CalendarControl.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/cal.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/datefunc.js"></script>
+<script type="text/javascript" src="../js/overdiv.js"></script>
+<script type="text/javascript" src="../js/weekview.js"></script>
+<script type="text/javascript" src="../js/commonCode.js"></script>
+
 
 <?php
+
 error_reporting(1);
-require_once("calClass.php");
+require_once("../calClass.php");
 // require_once(".htconnect.php");
-require_once("functions.php");
-require_once("genMsg.php");
+require_once("../functions.php");
+require_once("../genMsg.php");
 
 $resource=clean_input($_GET['resource']);
 // $resource=$_GET['resource'];
@@ -88,7 +93,7 @@ echo "<td bgcolor=". cal::ErrCellColorOff . ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td
 echo "<td bgcolor=". cal::MonCellColorOff . ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>Monitored</td>";
 echo "</tr></table>";
 if($calendar->monitor($calendar->getResourceName())){
-	echo "<hr><p style='text-align:center'><a href=monitor.php target='blank'>Monitored resource</a>";
+	echo "<hr><p style='text-align:center'><a href=../monitor.php target='blank'>Monitored resource</a>";
 }
 if ($calendar->getLink()!='') echo "<hr><p style='text-align:center'>More info <a href='" . $calendar->getLink() . "' target=_blank>here</a>";
 echo "<p style='text-align:right'><a href=# onclick=\"javascript:d=document.getElementById('help');d.style.display ='none'\">close</a>";
@@ -119,10 +124,9 @@ echo "<div id=calendar class='calendar'> ";
 	
 	// Resources div
 	echoResourcesDiv();
-	
+
 	// User/management div
 	echoUserDiv("weekview", $calendar->getResource());
-	
     //This is where msgs are displayed (changed)
     echo "<div id='msg' style=\"top:200;left:178px;width:574px;height:50;filter:alpha(opacity=0);line-height:50px;\" class=msg >";
 		echo $msg;
@@ -143,6 +147,7 @@ echo "<div id=calendar class='calendar'> ";
         echo "<a href=weekview.php?resource=" . ($calendar->getResource() +1) . "&date=" . $calendar->getStartDate() . "><img border=0 src=pics/resplus.png></a>";
         exit;
     }
+
     if (isset($_POST['action'])) call_user_func($_POST['action']);
     if (isset($_GET['entry'])){
         $entry=clean_input($_GET['entry']);

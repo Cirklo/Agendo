@@ -1,3 +1,7 @@
+<?php
+require_once("commonCode.php");
+?>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/admin.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/checkfields.js"></script>
@@ -23,7 +27,6 @@ function getValue(id,target){
     {// code for IE6, IE5
         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-			    
     url="ajaxdpt.php?val=" + val;
     xmlhttp.open("GET", url, false);
     xmlhttp.send(null);
@@ -42,7 +45,7 @@ function checktrain(id){
 <?php
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
 require_once("errorHandler.php");
 
 $error = new errorHandler;

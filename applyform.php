@@ -1,3 +1,7 @@
+<?php
+require_once("commonCode.php");
+?>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/admin.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
@@ -9,7 +13,7 @@ function back(){
 <?php
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
 require_once("errorHandler.php");
 
 $error = new errorHandler;

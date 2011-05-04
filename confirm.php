@@ -1,10 +1,14 @@
+<?php
+require_once("commonCode.php");
+?>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/admin.css" rel="stylesheet" type="text/css">
 
 <?php
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
 require_once("errorHandler.php");
 require_once("alert/class.phpmailer.php");
 
@@ -62,8 +66,8 @@ $res = dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(
 		echo "<tr><td>You can also check our feature videos to learn how the reservation system works and how to proceed in any situation.<br><br></td></tr>";
 		echo "<tr><td>You can find further information on our website at <a href='www.cirklo.org'>www.cirklo.org</a>.</a></td></tr>";
 		echo "<tr>";
-		echo "<td align=left valign=top><a href='http://www.facebook.com/pages/Cirklo/152674671417637?ref=ts'><img src=pics/facebook_logo.png border=0></a>";
-		echo "<a href='http://twitter.com/cirklo2010'><img src=pics/twitter_logo.png border=0></a></td>";
+		echo "<td align=left valign=top><a href='http://www.facebook.com/pages/Cirklo/152674671417637?ref=ts'><img src=".$_SESSION['path']."/pics/facebook_logo.png border=0></a>";
+		echo "<a href='http://twitter.com/cirklo2010'><img src=".$_SESSION['path']."/pics/twitter_logo.png border=0></a></td>";
 		echo "</tr>";
 		echo "<tr><td><a href=# onclick='window.close()'>Exit</a></td></tr>";
 }

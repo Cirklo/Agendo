@@ -1,10 +1,13 @@
+<?php
+require_once("commonCode.php");
+?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="admin.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="js/checkfields.js"></script>
 
 <?php
 
 require_once("genObjClass.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
 // require_once(".htconnect.php");
 
 function showRestrictions($user_id, $table, $j, $nrows, $userid, $order, $page, $limit, $value){

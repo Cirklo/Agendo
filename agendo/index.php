@@ -1,15 +1,19 @@
 <?php
 	//session_start();	
 	// This file was altered by Pedro Pires (The chosen two)
-	require_once("commonCode.php");
+	session_start();
+	$pathOfIndex = explode('\\',getcwd());
+	$pathOfIndex[sizeof($pathOfIndex)-1];
+	$_SESSION['path'] = $pathOfIndex[sizeof($pathOfIndex)-1];
+	require_once("../commonCode.php");
 	logIn();
 ?>
 
 <head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-<link href="css/intro.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="js/ajax.js"></script>
-<script type="text/javascript" src="js/commonCode.js"></script>
+<link href="../css/intro.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../js/commonCode.js"></script>
 <script type="text/javascript">
 function noenter() {
   return !(window.event && window.event.keyCode == 13);
@@ -33,7 +37,7 @@ function checkfield(field) {
 <body>
 <?php
 // require_once(".htconnect.php"); $connect = new dbConnection();
-require_once("functions.php");
+require_once("../functions.php");
 
 $extra = '';
 $class = '';

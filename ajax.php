@@ -2,7 +2,7 @@
 //session_start();	
 // This class was altered by Pedro Pires (The chosen two)
 	require_once("commonCode.php");
-	initSession();
+	// initSession();
 ?>
 
 
@@ -20,7 +20,6 @@
 require_once("functions.php");
 
 $type=$_GET['type'];
-
 //echo $action;
 call_user_func($type);
 

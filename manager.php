@@ -151,7 +151,8 @@ function getdetails(table, val, id){
 */
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
+require_once("commonCode.php");
 require_once("genObjClass.php");
 require_once("functions.php");
 require_once("restrictions.php");

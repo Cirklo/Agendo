@@ -1,9 +1,11 @@
 <?php
+require_once("commonCode.php");
+
 header("Content-type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename='export-to-excel.xls'");
 
 // require_once(".htconnect.php");
-require_once("__dbHelp.php");
+// require_once("__dbHelp.php");
 
 set_time_limit(0); //sets unlimited timerange (no timeout)
 

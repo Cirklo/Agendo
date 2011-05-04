@@ -73,7 +73,7 @@ function clickit(id,action,table,nrows,user_id, order, page, limit, ninserts) {
 						xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 					}
 					
-					url="response.php?val=" + CurForm[i].value + "&id=" + CurForm[i].id;
+					url="../response.php?val=" + CurForm[i].value + "&id=" + CurForm[i].id;
 					xmlhttp.open("GET", url, false);
 					xmlhttp.send(null);
 					
@@ -83,9 +83,9 @@ function clickit(id,action,table,nrows,user_id, order, page, limit, ninserts) {
 			}
         }
 		if(action == 'multiple'){
-			CurForm.action='manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&n=' + ninserts; 
+			CurForm.action='../manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&n=' + ninserts; 
 		}else 
-			CurForm.action='manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&id=' + id;  		
+			CurForm.action='../manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&id=' + id;  		
 		for (i=0;i<CurForm.length;i++) {
 			CurForm[i].disabled=false;
 		}
@@ -127,14 +127,14 @@ function checkFill(id, action, table, nrows, order, user_id, page, limit, ninser
 			    {// code for IE6, IE5
 				    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			    }
-			    url="response.php?val=" + CurForm[i].value + "&id=" + CurForm[i].id;
+			    url="../response.php?val=" + CurForm[i].value + "&id=" + CurForm[i].id;
 			    xmlhttp.open("GET", url, false);
 			    xmlhttp.send(null);
 			    var str = xmlhttp.responseText;
 			    CurForm[i].value = str;
 		    }
 		}
-		CurForm.action='manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&id=' + id;  		
+		CurForm.action='../manager.php?table='+ table + '&action=' + action + '&nrows=' + nrows + '&col=' + table + '_id&order=' + order + '&page=' + page + '&limit=' + limit + '&id=' + id;  		
 		for (i=0;i<CurForm.length;i++) CurForm[i].disabled=false;
 		CurForm.submit();
 	    }

@@ -34,7 +34,7 @@ function submitUser(phpFile,resource,user,pass,loginToDatumo) {
 		formObj.user_passwd = pass;
 	}
 	if(loginToDatumo == 1){
-		url="commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
+		url="../commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
 		var result = ajaxRequest(url);
 		if(result != ''){ //wrong login
 			alert(result);

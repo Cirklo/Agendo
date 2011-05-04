@@ -1,6 +1,4 @@
 <?php
-	session_start();
-	require_once("__dbHelp.php");
 /*
   @author Pedro Pires or the Chosen Two
   @copyright 2010-2011 Pedro Pires
@@ -8,6 +6,14 @@
   @version 1.0
   @Code used in lots of places and all joined in an artistic way to avoid copy pasting same methods in different places
 */
+
+	session_start();
+	if(!isset($_SESSION['path']) || $_SESSION['path'] == ''){
+		echo "No path defined";
+		exit;
+	}
+		
+	require_once("__dbHelp.php");
 
 	if(isset($_GET['checkUserAndPass'])){
 		validUserAndPass($_GET['user'], $_GET['pass']);
@@ -157,7 +163,6 @@
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
 				echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('".$arr[1]."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
-				// echo "<a title='".$arr[2]."' onclick=\"javascript:window.open('videos.php?videourl=".$arr[1]."&width=".$vidWidth."&height=".$vidHeight."','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=yes,scrollbars=no,width=".$vidWidth.",height=".$vidHeight."')\">".$arr[0]."</a><br>";
 			}
 		echo "</div>";		
 	}
@@ -225,29 +230,16 @@
 				echo "</tr>";
 			echo "</table>";
 			echo "<center><hr>";
-			echo "<input type=button style='font-size:11px' value='New User' onclick=\"javascript:window.open('application.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=600,height=475')\">";
-			echo "<input type=button style='font-size:11px' value='New Permission' onclick=\"javascript:window.open('newperm.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=400,height=275')\">";
+			echo "<input type=button style='font-size:11px' value='New User' onclick=\"javascript:window.open('../application.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=600,height=475')\">";
+			echo "<input type=button style='font-size:11px' value='New Permission' onclick=\"javascript:window.open('../newperm.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=400,height=275')\">";
 			echo "<br>";
 			echo "<br>";
-			echo "<input type=button style='font-size:11px' onclick=ajaxRecoverPWD()  value='Recover Password'>\n";
+			echo "<input type=button style='font-size:11px' onclick=ajaxRecoverPWD() value='Recover Password'>\n";
 			echo "<br>";
 			echo "</form>";
 		echo "</div>";
 	}	
 // End of buttons for help, videos, resources and user/management
-	
-	// function wtfSQL($path, $res){
-		// if($path == "") $path = "c:/a.txt";
-			
-		// $fh = fopen($path, "w") or die("Can't open file!");
-		// while($resArray = dbHelp::mysql_fetch_row2($res)){
-			// foreach($resArray as $key=>$value){
-				// fwrite($fh, $key."->".$value." ");
-			// }
-			// fwrite($fh, "\n");
-		// }
-		// fclose($fh);
-	// }
 	
 	function wtf($string, $path = "c:/a.txt", $mode = "w"){
 		if($path == "") $path = "c:/a.txt";
@@ -257,8 +249,4 @@
 		fwrite($fh, $string."\n");
 		fclose($fh);
 	}
-	
-	// function wtf($text){
-		// echo "<script type=\"text/javascript\">alert('".$text."');</script>";
-	// }
 ?>
