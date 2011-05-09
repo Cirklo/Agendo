@@ -4,6 +4,9 @@
 <script type="text/javascript" src="js/monitor.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
 <script type="text/javascript" src="js/jquery.flot.selection.js"></script>
+<script type="text/javascript" src="js/jquery.flot.crosshair.js"></script>
+<script type="text/javascript" src="js/jquery.flot.threshold.js"></script>
+
 
 <?php
 
@@ -17,7 +20,7 @@ $query="SELECT DISTINCT resource_id, resource_name FROM resource,equip WHERE res
 echo "<fieldset class=resource>";
 echo "<legend>Ekrano remote monitoring</legend>";
 echo "Monitored equipment<br>";
-echo "<select name=resource id=resource onchange=resourceSelect(this.id)>";
+echo "<select name=resource id=resource onchange=resourceSelect()>";
 echo "<option id=0 selected>Select a resource...</option>";
 foreach($sql=$conn->query($query) as $row){
 	echo "<option value=$row[0]>$row[1]</option>";

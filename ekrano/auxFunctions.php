@@ -1,6 +1,6 @@
 <?php 
 
-require_once ".htconnect.php";
+require_once "../Datumo2.0/.htconnect.php";
 
 if(isset($_GET['type'])){
 	$type=$_GET['type'];
@@ -12,6 +12,8 @@ if(isset($_GET['type'])){
 			$ld=loadInfo($_GET['equip'], $_GET['resource'], $_GET['time']);
 			echo $ld;
 			break;
+		case 2: 
+			limits();
 	}
 }
 
@@ -39,7 +41,7 @@ function resourceDisplay(){
 
 function monitoredParams($resource_id){
 	$conn=new dbConnection();
-	$query="SELECT equip_id, parameter_type, equip_desc, parameter_bool
+	$query="SELECT equip_id, parameter_type, equip_desc
 	FROM resource, parameter, equip 
 	WHERE equip_para=parameter_id
 	AND equip_resourceid=resource_id 
@@ -47,16 +49,18 @@ function monitoredParams($resource_id){
 	$sql=$conn->query($query);
 	echo "<table class=display cellpadding=3px>";
 	//set the number of plots into a variable
-	$noPlots=$sql->rowCount();
+	//$noPlots=$sql->rowCount();
+	$noPlots=0;
 	for($i=0;$row=$sql->fetch();$i++){
 		//Parameters to check
-		if($row[3]){
+		if($row[2]!="NA"){
 			$check="checked";
+			$noPlots++;
 		} else {
 			$check="";
 		}
 		echo "<tr>";
-		echo "<td><input type=checkbox name=".($i+1)." id=".($i+1)." $check onclick=getValuesToPlot()></td>";
+		echo "<td><input type=checkbox name=".($i+1)." id=".($i+1)." $check onclick=getValuesToPlot() disabled></td>";
 		echo "<td>$row[1]</td>";
 		echo "<td><input type=text class=params name=tag_".($i+1)." id=tag_".($i+1)." value='$row[2]' readonly></td>";
 		echo "</tr>";
@@ -113,7 +117,42 @@ function loadInfo($parameter_id, $resource_id, $tm){
 	return $str;
 }
 
-
+function limits(){
+	//call database class
+	$conn=new dbConnection();
+	//url variables
+	if(isset($_GET['resource']))	$resource=$_GET['resource'];
+	if(isset($_GET['param']))	$parameter_id=$_GET['param'];
+	
+	$query="SELECT equip_min, equip_max, equip_calibration, resource_type 
+	FROM equip, resource
+	WHERE equip_resourceid=resource_id 
+	AND equip_resourceid='$resource' 
+	AND equip_para=$parameter_id";
+	
+	$sql=$conn->query($query);
+	//echo $sql->queryString;
+	$row=$sql->fetch();
+	if($row[3]==10){ //environmental control resource
+		$value = $row[0];
+		$cval = $row[2];
+		eval ("\$var = ".str_replace(':','$',$cval).";");
+		if($parameter_id<5)
+			$row['equip_max']=$var;
+		else 
+			$row['equip_min']=$var;
+		$value = $row[1];
+		eval ("\$val = ".str_replace(':','$',$cval).";");
+		if($parameter_id<5)
+			$row['equip_min']=$val;
+		else 
+			$row['equip_max']=$val;
+	} else {	//resource that is set for reservation
+		$row['equip_min']=0;
+		$row['equip_max']=5000;
+	}
+	echo json_encode($row);
+}
 
 
 
