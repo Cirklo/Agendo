@@ -85,7 +85,7 @@ function procedures($param, $nrows, $order, $user_id, $show, $db){
 }
 
 function showtables($table, $type,$i){
-   $db = dbHelp::database2(1);
+   $db = dbHelp::getDatabase();
    $search = new quickSearch;
    try{
    echo "<form name=nrows".$table. " id=nrows".$table. ">";
@@ -134,7 +134,7 @@ function filled($array, $size){
 
 function get_comment($table){
     dbHelp::mysql_select_db2("information_schema");
-    $db = dbHelp::database2(1);
+    $db = dbHelp::getDatabase();
     $sql = "SELECT TABLE_COMMENT FROM TABLES WHERE TABLE_NAME = '".$table."' AND TABLE_SCHEMA = '".$db."'";
     $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
     $row = dbHelp::mysql_fetch_row2($res);

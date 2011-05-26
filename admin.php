@@ -88,7 +88,7 @@ require_once("errorHandler.php");
 
 $error = new errorHandler;
 
-$db = dbHelp::database2(1);
+$db = dbHelp::getDatabase();
 
 //initialize arrays
 $arr_table = array();

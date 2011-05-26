@@ -2,7 +2,7 @@ function go (objIMG) {
     
     s=objIMG.src;
     objDIV=document.getElementById(objIMG.id + 'div');
-    
+    // alert(document.getElementById('video').x);
     
     if (s.substring(s.length-5,s.length)!="_.png"){
         document.getElementById('video').src='pics/video.png';
@@ -15,7 +15,7 @@ function go (objIMG) {
         document.getElementById('resourcesdiv').style.display='none';
         document.getElementById('videodiv').style.display='none';
         objDIV.style.display = "block";   
-
+		objDIV.style.left = objIMG.x - objDIV.offsetWidth/2 + objIMG.offsetWidth/2;
     } else {
         objIMG.src=s.substring(0,s.length-5) + ".png";
         objDIV.style.display = "none";   
@@ -34,8 +34,9 @@ function submitUser(phpFile,resource,user,pass,loginToDatumo) {
 		formObj.user_passwd = pass;
 	}
 	if(loginToDatumo == 1){
-		url="../commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
+		url="../agendo/commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
 		var result = ajaxRequest(url);
+		alert(formObj.user_idm.value+"---"+formObj.user_passwd.value);
 		if(result != ''){ //wrong login
 			alert(result);
 			//clean all fields

@@ -163,7 +163,7 @@ require_once("classSearch.php");
 
 // print_r($_POST);
 //database configuration
-$db = dbHelp::database2(1);
+$db = dbHelp::getDatabase();
 
 //call classes
 $search = new quickSearch;

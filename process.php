@@ -3,6 +3,10 @@
 	// This class was altered by Pedro Pires (The chosen two)
 	require_once("commonCode.php");
 	initSession();
+	require_once("permClass.php");
+	require_once("alertClass.php");
+	require_once("functions.php");
+
 ?>
 
 <?php
@@ -17,10 +21,6 @@
     
 // require_once(".htconnect.php");
 // require_once("__dbHelp.php");
-require_once("permClass.php");
-require_once("alertClass.php");
-require_once("functions.php");
-
 $action=$_GET['action'];
 //echo $action;
 call_user_func($action);
@@ -61,15 +61,10 @@ function add(){
     $slots=clean_input($_GET['slots']);
     $assistance=($assistance=='true')?"1":"0";
     
-    // $user_id=$_GET['user_id'];
-    // $user_passwd=$_GET['user_passwd'];
     $user_id=getUserId();
     $user_passwd=getPass();
-	// $user_passwd=cryptPassword($user_passwd);
     $resource=clean_input($_GET['resource']);
 	
-    //checking the permission 
-    //$perm= new permClass;
     $perm= new permClass;
 
     if (!$perm->setPermission($user_id,$resource,$user_passwd)) {echo $perm->getWarning();exit;};
@@ -143,9 +138,6 @@ function add(){
 //changes the entry state to 3, ie, invisible
 function del(){
     
-    // $user_id=clean_input($_GET['user_id']);
-    // $user_passwd=clean_input($_GET['user_passwd']);
-	// $user_passwd=cryptPassword($user_passwd);
     $user_id=getUserId();
     $user_passwd=getPass();
 	
@@ -158,7 +150,6 @@ function del(){
     $found=false;
     $perm= new permClass;
     for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-        // mysql_data_seek($res,$i);
         $arr=dbHelp::mysql_fetch_row2($res);
 		// Checks if the current user from the $res list is allowed to delete the current entry
         if($perm->setPermission($arr[0],$resource,$user_passwd)){

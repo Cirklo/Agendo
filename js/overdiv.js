@@ -56,7 +56,7 @@ function ShowContent(d,entry_id) {
     }
     
     
-    url="../ajax.php?type=" + d + "&value=" + entry_id; // title has user_id info
+    url="../agendo/ajax.php?type=" + d + "&value=" + entry_id; // title has user_id info
     xmlhttp.open("GET",url,true);
     xmlhttp.send(null);
     dd.style.display = "block";

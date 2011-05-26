@@ -78,7 +78,7 @@ function swapColor(obj,tag,action){
 				alert("Your browser does not support XMLHTTP!");
 				exit;
 			}
-			url='../ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
+			url='../agendo/ajax.php?entry=' +   obj.title + "&type=DisplayEntryInfo" ;
 			xmlhttp.open('GET', url , true);
 			xmlhttp.send(null);
 			xmlhttp.onreadystatechange = function () {
@@ -167,7 +167,7 @@ function ManageEntries(action,ttime,tresolution) {
                     if (cell.title!='0' && (cell.style.backgroundColor==bgcolor)) {
                         //alert(cell.style.backgroundColor);
                         document.getElementById('entry').value=cell.title;
-                        ajaxEntries('GET','../process.php?deleteall=0&resource=' + resource ,true);
+                        ajaxEntries('GET','../agendo/process.php?deleteall=0&resource=' + resource ,true);
                         //alert ("No entries were selected");
                     }
                 }
@@ -180,14 +180,13 @@ function ManageEntries(action,ttime,tresolution) {
             // if (entry!='0' && detectedUser) {
                 var resp=confirm('All associated entries will be deleted!');
                 if (!(resp)) return;
-                ajaxEntries('GET','../process.php?deleteall=1&resource=' + resource,true);
+                ajaxEntries('GET','../agendo/process.php?deleteall=1&resource=' + resource,true);
                 clear_table(table,false);
             }
         break;
         case 'add':
             var arr=new Array(); // creates an array to define cells with rowspan>1
             if (update>0) document.getElementById('entry').value=update; // for the update it has to send the entry
-            // alert('kajshdjkhasjkd');
             for (i=1;i<=tablesize;i++) {
                 arr[i]= new Array();
                 for (j=1;j<8;j++) arr[i][j]=0; // fills the array
@@ -201,7 +200,7 @@ function ManageEntries(action,ttime,tresolution) {
                 }
                 k=0;
             }
-            for (i=1;i<tablesize;i++) {
+           for (i=1;i<tablesize;i++) {
                 ncells=table.rows[i].cells.length;
                 for (j=1;j<8;j++) {
                     add=0;
@@ -209,12 +208,10 @@ function ManageEntries(action,ttime,tresolution) {
                     cell=table.rows[i].cells[j-add];
                     if (cell.style.backgroundColor==bgcolor && cell.title=='0') {
                         while (table.rows[i+k].cells[j-add].style.backgroundColor==bgcolor && ((i+k) < tablesize)){
-                                //alert(table.rows[i+k].cells[j-add].style.backgroundColor);
                             add=0;
                             seed=seed+1;
                             for (x=1;x<=j;x++) add=arr[i+k][x]+add; // for checking where grow
                             table.rows[i+k].cells[j-add].title=seed; // due to rowspan
-                            //table.rows[i+k].cells[j-add].innerHTML=seed;
                             k=k+1;
                             if ((i+k)==tablesize) break;
                             add=0;  
@@ -228,13 +225,10 @@ function ManageEntries(action,ttime,tresolution) {
                             }
                             
                         }   
-                        tstarttime= parseInt(ttime)+(i-1)*(tresolution);
-                        //t=Date.UTC(parseInt(tdate.substring(0,4)),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),(tstarttime-Math.floor(tstarttime))*60);
-                        //entryDate.setTime(t);
+                       tstarttime= parseInt(ttime)+(i-1)*(tresolution);
                         if (seed==0) exit;
                         var entryDate = new Date(tdate.substring(0,4),parseInt(tdate.substring(4,6),10)-1,parseInt(tdate.substring(6,8),10)+j,Math.floor(tstarttime),Math.ceil((tstarttime-Math.floor(tstarttime))*60),'00');
-                        // alert(formatDate(entryDate,"yyyyMMddHHmm"));
-                        ajaxEntries('GET','../process.php?' + 'slots=' + seed + '&datetime=' + formatDate(entryDate,"yyyyMMddHHmm") + '&resource=' + resource,true);
+                        ajaxEntries('GET','../agendo/process.php?' + 'slots=' + seed + '&datetime=' + formatDate(entryDate,"yyyyMMddHHmm") + '&resource=' + resource,true);
                         seed=0;
                         k=0;
                     } else if(cell.title!='0' && document.getElementById('addButton').value=='All' && cell.style.backgroundColor==bgcolor2 )  {
@@ -268,7 +262,7 @@ function ManageEntries(action,ttime,tresolution) {
                     if (cell.title!='0' && (cell.style.backgroundColor==bgcolor)) {
                         //alert(cell.style.backgroundColor);
                             document.getElementById('entry').value=cell.title;
-                            ajaxEntries('GET','../process.php?&resource=' + resource,true);
+                            ajaxEntries('GET','../agendo/process.php?&resource=' + resource,true);
                             clear_table(table,false);                 
                     } else {
                        //alert ("No entries were selected");
@@ -330,13 +324,13 @@ function addcomments(entry) {
             var re = /\'/g;
             myForm[0].value=myForm[0].value.replace(re," ");
             //alert(myForm[0].value);
-            url='../process.php?resource=' + resource +'&entry=' + entry + '&user_id=' + user_id + '&action=addcomments&comments='+ myForm[0].value;
+            url='../agendo/process.php?resource=' + resource +'&entry=' + entry + '&user_id=' + user_id + '&action=addcomments&comments='+ myForm[0].value;
             xmlhttp.open('GET', url , true);
             xmlhttp.send(null);
         }
     }
     
-    ajaxEntries('GET','../process.php?resource=' + resource,true);
+    ajaxEntries('GET','../agendo/process.php?resource=' + resource,true);
     clear_table(table,false); 
     myForm.style.display = "none";
 
@@ -420,9 +414,8 @@ function ajaxEntries(method,url,nosync){
 		}
     }
 	// par has username and pass
-	// alert(url + '&' + par);
-    xmlhttp.open(method, url + '&' + par, nosync);
-    xmlhttp.send(null);
+   xmlhttp.open(method, url + '&' + par, nosync);
+   xmlhttp.send(null);
     xmlhttp.onreadystatechange = function () {
         if(xmlhttp.readyState==4) {
             code=document.getElementById('code').value;
@@ -509,6 +502,6 @@ function submitUser(resource) {
     if (checkfield(formObj.user_idm)) return;
     if (checkfield(formObj.user_passwd)) return;
     formObj.user_idm.value=formObj.user_idm.title;
-    formObj.action='../admin.php?resource=' + resource;
+    formObj.action='../agendo/admin.php?resource=' + resource;
     formObj.submit();
 }

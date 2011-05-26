@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	$_SESSION['path']='agendo';
 	require_once("commonCode.php");
 
 	function treta(){
@@ -73,20 +75,11 @@ window.onresize = function (){resizeMe();}
 	echo "<br></br>";
 	
 	echo "<a href='android/AccellValues.apk'>file</a>";
-	// $myTime = strtotime('201011231415');
-	// $timePlus = $myTime + 60*60;
-	// echo date('YmdHi',$myTime)."<br>";
-	// echo date('YmdHi',$timePlus)."<br>";
-	// if ($myTime < $timePlus) echo "asdasdasd";
-	// else echo "qweqweqwe</br>";
 	
+	echo str_replace('asdasdasd', '123123', 'qweqweqwe');
 	
-	// echo "<table id=all border=10>";
-		// echo "<tr>";
-			// echo "<td>";
-				// $url = 'teste.php?myvar=';
-				// echo "<input id='text' type='text' width='50' style='text-align:center;' onkeyup=\"ajaxTest('".$url."',this.value)\">";
-			// echo "</td>";
-		// echo "</tr>";
-	// echo "</table>";
+	echo $_SERVER['REMOTE_ADDR']; 
+	echo "<br/>".date('l jS \of F Y h:i:s A');
+
+	echo "<br/>".date("F j, Y, g:i a",mktime(8,0,0,date("m"),date("d")+8,date("Y")));
 ?>

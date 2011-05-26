@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	// include_once($_SESSION['path']."/.htconnect.php");
 	include_once($_SESSION['path']."/.htconnect.php");
 
 	class dbHelp{ 
@@ -10,6 +12,11 @@
 
 		private function __construct(){
 			$connect = new dbConnection();
+			$schema = $connect->getSchemaName();
+		}
+		
+		public static function setConnect($createDB = false){
+			$connect = new dbConnection($createDB);
 			$schema = $connect->getSchemaName();
 		}
 
@@ -28,15 +35,6 @@
 		// }
 		
 		public static function mysql_query2($sql){
-			// if(self::$instance === null) {
-				// self::$instance = new dbHelp();
-			// }
-			// if(!isset(dbHelp::$connect)){
-				// dbHelp::$connect = new dbConnection();
-				// dbHelp::$schema = dbHelp::$connect->getSchemaName();
-				// echo "bla";
-				// echo "<br>";
-			// }
 			$connect = dbHelp::getConnect();
 			$prepSql = $connect->prepare($sql);
 			$prepSql->execute();
@@ -64,16 +62,8 @@
 			dbHelp::getConnect()->dbSelect($db);
 		}
 		
-		public static function database2(){
-			switch($type){
-				case 0:
-					$db = "information_schema";
-					break;
-				case 1:
-					$db = dbHelp::getConnect()->getDatabase(); //change this if the database has a different name
-					break;
-			}
-			return $db;
+		public static function getDatabase(){
+			return dbHelp::getConnect()->getDatabase();
 		}
 		
 		public static function getSchemaName(){
@@ -159,5 +149,41 @@
 			}
 			return $sql;
 		}
+		
+		// Reads a script, expects a big line of sql statements seperated by ';'
+		public static function scriptRead($sql, $successMsg = 'Success',$errorMsg = 'Couldn\'t commit.'){
+			$connect = dbHelp::getConnect();
+			$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$statements = explode(';',$sql);
+			$i = 0;
+			try{
+				while($i < sizeof($statements)){
+					$statements[$i] = trim($statements[$i]);
+					if(!empty($statements[$i]))
+						$connect->exec($statements[$i]);
+					$i++;
+				}
+				return $successMsg;
+			}
+			catch(Exception $e) {
+				return "Exception with sql statement: \n'".$statements[$i]."'.\nException message: \n".$e->getMessage();
+			}
+		}
+		
+		// Gets all the data after a certain string($afterString) and before a string ($beforeString)
+		//	$array = getTablesFromScript($sql, 'CREATE TABLE IF NOT EXISTS', '('); returns an array of table names
+		public function getTablesFromScript($sql, $afterString, $beforeString){
+			$allTables = '';
+			while(($pos1 = stripos($sql, $afterString)) !== false){
+				$pos1 = $pos1 + strlen($afterString);
+				$sql = substr($sql, $pos1, strlen($sql)-$pos1);
+				if(($pos2 = stripos($sql, $beforeString)) === false)
+					break;
+				$allTables = trim(substr($sql, 0, $pos2)).';'.$allTables;
+				$sql = substr($sql, $pos2, strlen($sql));
+			}
+			return explode(';', $allTables);
+		}
+			
 	}
 ?>

@@ -106,7 +106,7 @@ function clean_input($input)
 }
 
 function restrict_access($table, $user_id){
-    $db = dbHelp::database2(1);
+    $db = dbHelp::getDatabase();
     $sql = "SELECT resaccess_column, resaccess_value, resaccess_table FROM resaccess WHERE resaccess_user = $user_id";
     $res = dbHelp::mysql_query2($sql) or die ($sql); //mysql_error().$sql);
     $nres = dbHelp::mysql_numrows2($res);

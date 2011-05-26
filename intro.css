@@ -1,7 +1,6 @@
 body {
 	margin:0;
 	background: #1e4F54;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -12,6 +11,7 @@ a {
 }
 
 a:hover {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	border: none;
 	color: #aaaaaa;
@@ -20,6 +20,7 @@ a:hover {
 a.asd {
 	color: #444444;
 	text-decoration:none;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:12px;
 }
 
@@ -27,14 +28,23 @@ a.asd:hover {
 	color: #666666;
 }
 
-.logo {
-	width:100%;
+div.logo {
+	width: 752px;
+	height: auto;
 	border: 2px solid #999999 ;
-	height: 100%;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background: url(../pics/header.png) no-repeat left top;
+}
+div.table {
+	width: 752px;
+	border:2px solid #999999;
+}
+div.logo h2{
+	margin-top:-39px;
 }
 
-
 h1 {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	margin-top:15px;
 	font-size: 28px;
 	color: #999999;
@@ -42,12 +52,14 @@ h1 {
 	padding:10px;
 }
 h2{
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 18px;
 	text-align:left;
 	padding:10px;
 	color: #999999;
 }
 td {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #bbbbbb;
 }
@@ -56,6 +68,7 @@ td {
 a.new {
 	color: #FFFFFF;
 	text-decoration:none;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:12px;
 	
 }
@@ -67,11 +80,9 @@ a.new:hover {
 hr {
 	width:80%;
 }
-
 table.equilist {
+	
 	width:100%;
-	border: 2px solid #999999 ;
-	margin:auto;
 }
 table.equilist td {
 	background-color:#dddddd;
@@ -96,28 +107,34 @@ table.equilist td.title:hover {
 
 table.equilist  th {
 	background-color:#cccccc;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	
 }
 
 p {
 	color:#777777;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	text-align:center;
 }
 
 
+
+
+
 table.equilist  th:hover {
 	background-color:#6D878D;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
 
 label {
 	color:#aaaaaa;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-align:right;
 }
-
 hr {
 	color:#bb5555;
 	border-style:solid;

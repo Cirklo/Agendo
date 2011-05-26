@@ -12,7 +12,7 @@
 // require_once("__dbHelp.php");
 require_once("commonCode.php");
 require_once("functions.php");
-$db = dbHelp::database2(1);
+$db = dbHelp::getDatabase();
 dbHelp::mysql_select_db2('information_schema');
 
 $id = $_GET['id'];

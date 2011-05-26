@@ -21,20 +21,25 @@ class errorHandler extends PHPMailer{
     
     function __construct() {
     
-        $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM mainconfig WHERE mainconfig_id = 1";
-        $res = dbHelp::mysql_query2($sql) or die ($sql);
-        $row = dbHelp::mysql_fetch_row2($res);
+        // $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM mainconfig WHERE mainconfig_id = 1";
+        // $res = dbHelp::mysql_query2($sql) or die ($sql);
+        // $row = dbHelp::mysql_fetch_row2($res);
+		$sql = "SELECT configparams_name, configparams_value from configparams where configparams_name='host' or configparams_name='port' or configparams_name='password' or configparams_name='email' or configparams_name='smtpsecure' or configparams_name='smtpauth'";
+		$res = dbHelp::mysql_query2($sql);
+		for($i=0; $arr = dbHelp::mysql_fetch_row2($res); $i++){
+			$row[$i] = $arr[1];
+		}
         $this->IsSMTP(); // telling the class to use SMTP
-        $this->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
-        $this->SMTPAuth   = $row[5];                  // enable SMTP authentication
-        $this->SMTPSecure = $row[4];                 // sets the prefix to the servier
-        $this->Port       = $row[1];                   // set the SMTP port for the GMAIL server   
-        $this->Host       = $row[0];      // sets GMAIL as the SMTP server
-        $this->Username   = $row[3];  // GMAIL username
-        $this->Password   = $row[2];            // GMAIL password
+        $this->SMTPDebug  = 1;           // enables SMTP debug information (for testing)
+        $this->Host       = $row[0];     // sets GMAIL as the SMTP server
+        $this->Port       = $row[1];     // set the SMTP port for the GMAIL server   
+        $this->Password   = $row[2];     // GMAIL password
+        $this->Username   = $row[3]; 	 // GMAIL username
+        $this->SMTPSecure = $row[4];     // sets the prefix to the servier
+        $this->SMTPAuth   = $row[5];     // enable SMTP authentication
         $this->SetFrom($row[3], "Calendar Admin");
         $this->AddReplyTo($row[3],"Calendar Admin");
-    }
+   }
     
     function sqlError($type, $num, $query, $table, $user_id){
         // echo $query."-".$type;

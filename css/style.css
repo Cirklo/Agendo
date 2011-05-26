@@ -3,9 +3,8 @@
 	padding: 0;
 }
 
-div.logo {
-	width: auto;
-	height: 100px;
+table.logo {
+	width: 100%;
 	color:#eeeeee;
 	border: 2px solid #EDF2F3;
 }
@@ -53,7 +52,7 @@ div.logo td{
 }
 
 body {
-	margin: 2px 0;
+	margin:0px;
 	background: #1E4F54;
 }
 
@@ -106,19 +105,12 @@ hr {
 }
 
 
-table {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 1em;
-}
-
 table.calendar {
  font-size: 9px;
  background-color:#fff;
  border-collapse:collapse;
  line-height: .7em;
  margin-top: 5px;
- margin-left: 175px;
- 
 }
 div.calendar td {
  border: 1px solid #EAE8D5;
@@ -130,31 +122,22 @@ div.calendar td {
  
 div.buttonsDiv td {
  border: 0px solid;
- width: auto;
  padding: 0px;
  
  }
  
 div.calendar {
-	position:absolute;
 	border: 0px solid #EAE8D5;
-	width: 750px;
 	text-align:center;
 	padding:2px;
- }
- 
- div.calendar {
-	position:absolute;
-	border: 0px solid #EAE8D5;
-	width: 750px;
-	text-align:center;
-	padding:2px;
- }
- 
+	height:100%;
+	vertical-align:top;
+}
  
  div.entrydiv td {
 	color: #EAE8D5;
- }
+	border:5px;
+}
  div.resourcediv td{
 	color: #EAE8D5;
  }
@@ -163,11 +146,10 @@ div.calendar {
  }
  
  div.entrydiv td.di {
-	
 	padding:0px;
  }
+ 
  div.entrydiv input.button {
-	
 	background-color: #EAE8D5;
 	padding:1px;
 	border-width:1px;
@@ -191,36 +173,28 @@ table.entry {
 	padding:0px;
 	width:100%;
  }
+ 
  table.entryinner {
 	border: 0px solid #EAE8D5;
 	padding:2px;
  }
+ 
 div.entrydiv{
- position:absolute;
- border: 0px solid #EAE8D5;
  width: 174px;
- left:0px;
- top: 108px;
  text-align:center;
  padding:2px;
- }
+}
  
 div.resourcediv{
- position:absolute;
  border: 0px solid #EAE8D5;
  width: 174px;
- left:0px;
- top: 108px;
  text-align:center;
  padding:2px;
  visibility:hidden;
  }
  div.managediv{
- position:absolute;
  border: 0px solid #EAE8D5;
  width: 174px;
- left:0px;
- top: 108px;
  text-align:center;
  padding:2px;
  visibility:hidden;

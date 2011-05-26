@@ -4,7 +4,7 @@
 // require_once("__dbHelp.php");
 require_once("commonCode.php");
 require_once("errorHandler.php");
-$db = dbHelp::database2(1);
+$db = dbHelp::getDatabase();
 $error = new errorHandler;
 
 $table = $_GET['table'];

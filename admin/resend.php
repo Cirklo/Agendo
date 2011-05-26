@@ -1,6 +1,6 @@
 <?php
-
-require_once("../.htconnect.php");
+// require_once("../.htconnect.php");
+require_once("../commonCode.php");
 require_once("../alert/class.phpmailer.php");
 
 //initiate classes
@@ -12,13 +12,19 @@ $msg = $_GET['msg'];
 
 //query to send mail
 $sql = "SELECT user_email FROM user WHERE user_mobile='$phone'";
-$res = mysql_query($sql) or die(mysql_error());
-$row = mysql_fetch_row($res);
+$res = dbHelp::mysql_query2($sql) or die(mysql_error());
+$row = dbHelp::mysql_fetch_row2($res);
 $address = $row[0];
 
-$sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_SMTPSecure, mainconfig_SMTPAuth FROM mainconfig WHERE mainconfig_id = 1";
-$res = mysql_query($sql);
-$row = mysql_fetch_row($res);
+// $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_SMTPSecure, mainconfig_SMTPAuth FROM mainconfig WHERE mainconfig_id = 1";
+// $res = mysql_query($sql);
+// $row = mysql_fetch_row($res);
+$sql = "SELECT configparams_name, configparams_value from configparams where configparams_name='host' or configparams_name='port' or configparams_name='password' or configparams_name='email' or configparams_name='smtpsecure' or configparams_name='smtpauth'";
+$res = dbHelp::mysql_query2($sql);
+for($i=0; $arr = dbHelp::mysql_fetch_row2($res); $i++){
+	$row[$i] = $arr[1];
+}
+
 $mail->IsSMTP(); // telling the class to use SMTP
 $mail->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = $row[5];                  // enable SMTP authentication

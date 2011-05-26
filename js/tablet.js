@@ -36,7 +36,8 @@ var entry = '';
 function clearPin(){
 	pin = '';
 	document.getElementById('pin').value = '';
-	document.getElementById('userLabel').value = 'No user is using this resource now';
+	// document.getElementById('userLabel').value = 'No user is using this resource now';
+	document.getElementById('userLabel').innerHTML = 'No user is using this resource now';
 	resizeMe();
 }
 
@@ -82,7 +83,8 @@ function enterOrExit(data,resource){
 	document.getElementById('enterExit').className = bigButtonClass;
 	document.getElementById('enterExit').value = enterButtonValue;
 	document.getElementById('userLabel').className = stateClass;
-	document.getElementById('userLabel').value = message[1];
+	// document.getElementById('userLabel').value = message[1];
+	document.getElementById('userLabel').innerHTML = message[1];
 	if(postToServer){
 		// $.post('tablet.php?resource=' + resource, {pin: pin, dateenter: message[2], entry: message[3]});
 		$.post('tablet.php?resource=' + resource, {pin: pin, dateenter: dateenter, entry: entry});

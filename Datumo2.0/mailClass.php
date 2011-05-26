@@ -10,6 +10,7 @@ class mailClass extends PHPMailer{
 		$this->pdo = new dbConnection();
 		//set search path to main database
 		$this->pdo->dbConn();
+		// mudar isto para configparams !!!!
 		$sql = $this->pdo->prepare("SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM ".$this->pdo->getDatabase().".mainconfig WHERE mainconfig_id = 1");
 		$sql->execute();
 		$row = $sql->fetch();

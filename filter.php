@@ -29,7 +29,7 @@ function findek($table, $value){
 }
 
 function datetime($field){
-    $db = dbHelp::database2(1);
+    $db = dbHelp::getDatabase();
     dbHelp::mysql_select_db2('information_schema');
     $sql = "SELECT data_type FROM columns WHERE (data_type LIKE 'datetime' OR data_type LIKE 'date') AND column_name = '".$field."' AND table_schema='".$db."'";
     $res = dbHelp::mysql_query2($sql);

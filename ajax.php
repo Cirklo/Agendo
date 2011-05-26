@@ -2,6 +2,7 @@
 //session_start();	
 // This class was altered by Pedro Pires (The chosen two)
 	require_once("commonCode.php");
+	require_once("functions.php");
 	// initSession();
 ?>
 
@@ -17,7 +18,6 @@
 */
 
 // require_once(".htconnect.php");
-require_once("functions.php");
 
 $type=$_GET['type'];
 //echo $action;
@@ -96,18 +96,10 @@ function DisplayUserInfo() {
     $res=dbHelp::mysql_query2($sql) or die ($sql);
     $arr=dbHelp::mysql_fetch_row2($res);
     echo "<table>";
-    // echo "<tr><td>Time: </td><td>" . $arr[7] ."-" .$arr[8] ."</td></tr>";
-    // echo "<tr><td>Name: </td><td>" . $arr[0] . "</td></tr>";
     echo "<tr><td>Time: </td><td>" . $arr[8] ."-" .$arr[9] ."</td></tr>";
     echo "<tr><td>Name: </td><td>" . $arr[0] . " " . $arr[1] . "</td></tr>";
 	// Only show this if a user is logged
 	if(isset($_SESSION['user_id']) || $_SESSION['user_id']!= ''){
-		// echo "<tr><td>Email: </td><td>" . $arr[1] . "</td></tr>";
-		// echo "<tr><td>Mobile: </td><td>" . $arr[2] . "</td></tr>";
-		// echo "<tr><td>Phone: </td><td>" . $arr[3] . "</td></tr>";
-		// echo "<tr><td>Phone ext: </td><td>" . $arr[4] . "</td></tr>";
-		// echo "<tr><td>Department: </td><td>" . $arr[5] . "</td></tr>";
-		// echo "<tr><td>Institute: </td><td>" . $arr[6] . "</td></tr>";
 		echo "<tr><td>Email: </td><td>" . $arr[2] . "</td></tr>";
 		echo "<tr><td>Mobile: </td><td>" . $arr[3] . "</td></tr>";
 		echo "<tr><td>Phone: </td><td>" . $arr[4] . "</td></tr>";

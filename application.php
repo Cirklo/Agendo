@@ -43,7 +43,6 @@ function checktrain(id){
 </script>
 
 <?php
-
 // require_once(".htconnect.php");
 // require_once("__dbHelp.php");
 require_once("errorHandler.php");

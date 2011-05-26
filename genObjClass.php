@@ -41,7 +41,7 @@ class genObj {
     function check_field_comment($FieldName,$TableName, $user_id) {
         $error = new errorHandler;
         dbHelp::mysql_select_db2("information_schema");
-        $db = dbHelp::database2(1);
+        $db = dbHelp::getDatabase();
         $sql="SELECT COLUMN_COMMENT FROM COLUMNS WHERE COLUMN_NAME='". $FieldName ."' and TABLE_NAME='". $TableName ."' AND TABLE_SCHEMA LIKE '".$db."'";
         $res=dbHelp::mysql_query2($sql) or die ($sql); //$error->sqlError(mysql_error(), mysql_errno(), $sql, $ObjName, $user_id));
         $arr[0]= dbHelp::mysql_fetch_row2($res);
@@ -191,7 +191,7 @@ class genObj {
     }
     
     function check_foreign_key($field) {
-        $db = dbHelp::database2(1);
+        $db = dbHelp::getDatabase();
         dbHelp::mysql_select_db2("information_schema");
         $sql = "SELECT REFERENCED_TABLE_NAME FROM KEY_COLUMN_USAGE WHERE COLUMN_NAME = '".$field."' AND TABLE_SCHEMA LIKE '".$db."'";
         $resf = dbHelp::mysql_query2($sql);

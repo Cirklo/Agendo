@@ -10,7 +10,7 @@ header("Content-Disposition: attachment; filename='export-to-excel.xls'");
 set_time_limit(0); //sets unlimited timerange (no timeout)
 
 //database select
-$db = dbHelp::database2(1);
+$db = dbHelp::getDatabase();
 dbHelp::mysql_select_db2($db);
 
 //http variables

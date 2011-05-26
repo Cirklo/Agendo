@@ -232,6 +232,7 @@ function confirmEntry($entry){
         
         //echo $utc1;
         //echo $utc2;
+		wtf($utc1."----".$utc2);
         if (!$this->WasAdmin && ((mktime()<$utc1) || (mktime()>$utc2))){
             $this->warning="You can only confirm from " . date("H:i, d M" ,$utc1) . " to " . date("H:i, d M",$utc2);
             return false;

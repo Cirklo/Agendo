@@ -24,12 +24,13 @@ function login(){
 	$database=$db->getDatabase();
 
 	//posted variables
-	if(isset($_POST['login'])){ $user_login = $_POST['login'];}
+	if(isset($_POST['user'])){ $user_login = $_POST['user'];}
 	if(isset($_POST['pass'])){ $user_passwd = $_POST['pass'];}
 	
 	// crypt password
 	$user_passwd = $genObj->cryptPass($user_passwd);
 	$sql = $db->prepare("SELECT user_id FROM ".$db->getDatabase().".user WHERE user_login='$user_login' AND user_passwd='$user_passwd'");
+	echo $sql->queryString;
 	$sql->execute();
 	// is there any match for this key??
 	if($sql->rowCount()>0){
