@@ -49,7 +49,7 @@ function setPermission($user,$resource,$passwd) {
     // $res=dbHelp::mysql_query2($sql);
     // $arrcheck=dbHelp::mysql_fetch_row2($res);
 	// $arrcheck = cryptPassword($passwd);
-    
+
 	// Gets the crypted password from the given user
     $sql="select user_passwd from ".dbHelp::getSchemaName().".user where user_id=". $user;
     $res=dbHelp::mysql_query2($sql);

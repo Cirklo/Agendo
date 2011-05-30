@@ -24,26 +24,40 @@ function go (objIMG) {
 
 function submitUser(phpFile,resource,user,pass,loginToDatumo) {
     formObj=document.getElementById('edituser');
+	passCrypted = 'false';
 	if(user==null){
 		if (checkfield(formObj.user_idm)) return;
 		if (checkfield(formObj.user_passwd)) return;
-		formObj.user_idm.value=formObj.user_idm.title;
+		user = formObj.user_idm.value = formObj.user_idm.title;
+		pass = formObj.user_passwd.value;
 	}
 	else{
 		formObj.user_idm.value = user;
 		formObj.user_passwd = pass;
+		passCrypted = 'true';
 	}
+	
 	if(loginToDatumo == 1){
-		url="../agendo/commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
-		var result = ajaxRequest(url);
-		alert(formObj.user_idm.value+"---"+formObj.user_passwd.value);
-		if(result != ''){ //wrong login
-			alert(result);
-			//clean all fields
+		// url="../agendo/commonCode.php?checkUserAndPass&user="+formObj.user_idm.value+"&pass="+formObj.user_passwd.value;
+		// var result = ajaxRequest(url);
+		// alert(formObj.user_idm.value+"---"+formObj.user_passwd.value);
+		// if(result != ''){ //wrong login
 			// formObj.user_idm.value = "";
 			// formObj.user_passwd.value = "";
-			return;
-		}
+			// return;
+		// }
+		$.post	("../datumo/session.php?login",{login:user, pass:pass, passCrypted:passCrypted},
+							function(data){
+								  //return the data
+								  if(data.length!=0){
+									  // alert("Wrong login: " +user+ "--"+pass);
+									  alert(data);
+								  } else {
+									  window.location = "../datumo/admin.php";
+								  }
+							}
+				);
+		return;
 	}
 		
 	formObj.action= phpFile + '.php?resource=' + resource;

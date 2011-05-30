@@ -1,18 +1,8 @@
 <?php
 	session_start();
-	$_SESSION['path']='agendo';
+	$_SESSION['path']='../calendar';
 	require_once("commonCode.php");
 
-	function treta(){
-		echo ('bla');
-		exit;
-	}
-
-	$postName = 'myvar';
-	$var = $_GET[$postName];
-	if(isset($var)){
-		treta();
-	}
 
 ?>
 <script type='text/javascript' src='js/jquery-1.5.2.min.js'></script>
@@ -80,6 +70,20 @@ window.onresize = function (){resizeMe();}
 	
 	echo $_SERVER['REMOTE_ADDR']; 
 	echo "<br/>".date('l jS \of F Y h:i:s A');
+	addGoggleSearch();
 
-	echo "<br/>".date("F j, Y, g:i a",mktime(8,0,0,date("m"),date("d")+8,date("Y")));
+	
+	function addGoggleSearch(){
+		echo("<!-- Use of this code assumes agreement with the Google Custom Search Terms of Service. -->");
+		echo("<!-- The terms of service are available at http://www.google.com/cse/docs/tos.html -->");
+		echo("<form name='cse' id='searchbox_demo' action='http://www.google.com/cse'>");
+		echo("<input type='hidden' name='cref' value='' />");
+		echo("<input type='hidden' name='ie' value='utf-8' />");
+		echo("<input type='hidden' name='hl' value='' />");
+		echo("<input name='q' type='text' size='40' />");
+		echo("<input type='submit' name='sa' value='Search' />");
+		echo("</form>");
+		echo("<script type='text/javascript' src='http://www.google.com/cse/tools/onthefly?form=searchbox_demo&lang='></script>");
+	}
+
 ?>

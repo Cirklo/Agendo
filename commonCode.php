@@ -8,6 +8,7 @@
 */
 
 	session_start();
+	// session_destroy();
 	if(!isset($_SESSION['path']) || $_SESSION['path'] == ''){
 		echo "No path defined";
 		exit;
@@ -17,6 +18,7 @@
 
 	if(isset($_GET['checkUserAndPass'])){
 		validUserAndPass($_GET['user'], $_GET['pass']);
+		exit;
 	}
 		
 	// Initializes the session, checks if it timesOut and if needsToBeLogged it doesnt allow the page where 
@@ -48,38 +50,37 @@
 
 		if(isset($logOff) && $logOff)
 			logOff();
-		
-		if(isset($_SESSION['user_id'])){
-			$user = $_SESSION['user_id'];
-			
-			if(isset($_SESSION['user_pass'])){
+
+
+		if(isset($_SESSION['user_id']) && $_SESSION['user_id']!=''){
 			
 				if($_SESSION['database'] != dbHelp::getSchemaName()){
 					logOff();
 				}
 					
-				$sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName().".user where user_id = ".$_SESSION['user_id'];
+				$sql= "select user_firstname, user_lastname, user_passwd from ".dbHelp::getSchemaName().".user where user_id = ".$_SESSION['user_id'];
 				$res=dbHelp::mysql_query2($sql) or die ($sql);
 				$arr=dbHelp::mysql_fetch_row2($res);
 				$_SESSION['user_name'] = $arr[0];
 				$_SESSION['user_lastName'] = $arr[1];
+				
+				if(!isset($_SESSION['user_pass']) || $_SESSION['user_pass']==''){
+					$_SESSION['user_pass'] = $arr[2];
+				}
+			
 				$pass = $_SESSION['user_pass'];
-			}
+				$user = $_SESSION['user_id'];
+			// }
 		}
-		// else if (isset($user) && isset($pass) && $pass !=''){
 		else if (isset($userLogin) && isset($pass) && $pass !=''){
-			// $_SESSION['user_id'] = $user;
 			$pass = cryptPassword($pass);
 			$_SESSION['user_pass'] = $pass;
-			// $sql= "select user_firstname, user_lastname from ".dbHelp::getSchemaName().".user where user_id = ".$user;
 			$sql= "select user_firstname, user_lastname, user_id from ".dbHelp::getSchemaName().".user where user_login = '".$userLogin."'";
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			$arr=dbHelp::mysql_fetch_row2($res);
 			$_SESSION['user_name'] = $arr[0];
 			$_SESSION['user_lastName'] = $arr[1];
-			$_SESSION['user_id'] = $arr[2];
-			$user = $_SESSION['user_id'];
-			
+			$_SESSION['user_id'] = $user = $arr[2];
 			$_SESSION['database'] = dbHelp::getSchemaName();
 		}
 		else{
@@ -95,6 +96,18 @@
 			}
 			$_SESSION['logOff'] = null;
 
+		}
+	}
+	
+	function loggedInAs($phpFile, $resource){
+		if(isset($_SESSION['user_name']) && $_SESSION['user_name']!=''){
+			$textColor = 'grey';
+			$textColorHover = 'white';
+			$textSize = '10px';
+			echo "<div align='right' valign='bottom'>";
+			echo "<label style='font-size:".$textSize.";color:".$textColor."'>Logged as: \"".$_SESSION['user_name']." ".$_SESSION['user_lastName']."\"</label>";
+			echo "<a style='font-size:$textSize;cursor:pointer;color:$textColor' onmouseover=\"this.style.color='$textColorHover'\" onmouseout=\"this.style.color='$textColor'\" title='Click here to logoff' onclick=logOff('".$phpFile."',".$resource.")> Logoff</a>&nbsp;&nbsp;<br>";
+			echo "</div>";
 		}
 	}
 	
@@ -146,18 +159,6 @@
 		echo "</div>";
 	}
 	
-	function loggedInAs($phpFile, $resource){
-		if(isset($_SESSION['user_name']) && $_SESSION['user_name']!=''){
-			$textColor = 'grey';
-			$textColorHover = 'white';
-			$textSize = '10px';
-			echo "<div align='right' valign='bottom'>";
-			echo "<label style='font-size:".$textSize.";color:".$textColor."'>Logged as: \"".$_SESSION['user_name']." ".$_SESSION['user_lastName']."\"</label>";
-			echo "<a style='font-size:$textSize;cursor:pointer;color:$textColor' onmouseover=\"this.style.color='$textColorHover'\" onmouseout=\"this.style.color='$textColor'\" title='Click here to logoff' onclick=logOff('".$phpFile."',".$resource.")> Logoff</a>&nbsp;&nbsp;<br>";
-			echo "</div>";
-		}
-	}
-	
 	// Videos div
 	function echoVideosDiv(){
 		echo "<div id=videodiv align='center' style='cursor:pointer;padding:5px;display:none;position:absolute;width:150px;color:#444444;background-color:#FFFFFF;opacity:0.9;'>";
@@ -189,9 +190,9 @@
 	
 	// User/management div
 	function echoUserDiv($phpFile, $resource){
-		$user_id = $_SESSION['user_id'];
-		$user_pass = $_SESSION['user_pass'];
-		echo "<script type='text/javascript' src='js/commonCode.js'></script>";
+		echo "<script type='text/javascript' src='../agendo/js/jquery-1.5.2.min.js'></script>";
+		echo "<script type='text/javascript' src='../agendo/js/commonCode.js'></script>";
+
 		
 		// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file
 		if($phpFile=='weekview')
@@ -201,12 +202,22 @@
 		$display = "table";
 		echo "<div id=userdiv align='center' style='display:none;width:auto;position:absolute;color:#444444;background-color:#FFFFFF;opacity:0.9;padding:5px'>";
 			echo "<form name=edituser id=edituser method=post>";
-				if(isset($_SESSION['user_name'])){
+				if(isset($_SESSION['user_id'])){
 					$display = "none";
+					
+					$sql= "select user_login, user_firstname, user_lastname, user_passwd from user where user_id = ".$_SESSION['user_id'];
+					$res=dbHelp::mysql_query2($sql) or die ($sql);
+					$arr=dbHelp::mysql_fetch_row2($res);
+					$user_login = $arr[0];
+					$user_firstname = $arr[1];
+					$user_lastname = $arr[2];
+					$user_pass = $_SESSION['user_pass'] = $arr[3];
+
 					// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file
 					if($phpFile=='weekview')
 						echo "<script type='text/javascript'> setUsingSession(true) </script>";
 					// end
+					
 					echo "<table>";
 						echo "<tr>";
 							echo "<td><label>Logged as: \"".$_SESSION['user_name']." ".$_SESSION['user_lastName']."\"</label></td>";
@@ -216,47 +227,49 @@
 						echo "</tr>";
 						echo "<tr>";
 							echo "<td colspan=2 style='text-align:center'>";
-								echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",'".$user_id."','".$user_pass."',0) value='AdminArea' />";
+								echo "<input type=button style='font-size:11px' onclick=submitUser('../datumo/session',".$resource.",'".$user_login."','".$user_pass."',1) value='AdminArea' />";
 							echo "</td>";
 						echo "</tr>";
 					echo "</table>";
 				}
-			echo "<table style='display:".$display."'>";
-				echo "<tr>";
-					echo "<td><label>User Name</label></td>";
-					echo "<td><input style='font-size:11px;' name=user_idm id=user_idm value='' onblur=ajaxUser(this) /></td>";
-				echo "</tr>";
-				
-				echo "<tr>";
-					echo "<td><label>Password</label></td>";
-					echo "<td><input type=password style='font-size:11px' id=user_passwd name=user_passwd value='' /></td>";
-				echo "</tr>";
-				
-				echo "<tr>";
-					echo "<td colspan=2 style='text-align:right'>";
-						echo "<input type=button style='font-size:11px' onclick=submitUser('".$phpFile."',".$resource.",null,null,0) value='Login' />";
-						echo "<input type=button style='font-size:11px' onclick=submitUser('Datumo2.0/admin',".$resource.",null,null,1) value='AdminArea' />";
-					echo "</td>\n";
-				echo "</tr>";
+				echo "<table style='display:".$display."'>";
+					echo "<tr>";
+						echo "<td><label>User Name</label></td>";
+						echo "<td><input style='font-size:11px;' name=user_idm id=user_idm value='' onblur=ajaxUser(this) /></td>";
+					echo "</tr>";
+					
+					echo "<tr>";
+						echo "<td><label>Password</label></td>";
+						echo "<td><input type=password style='font-size:11px' id=user_passwd name=user_passwd value='' /></td>";
+					echo "</tr>";
+					
+					echo "<tr>";
+						echo "<td colspan=2 style='text-align:center'>";
+							echo "<input type=button style='font-size:11px' onclick=submitUser('".$phpFile."',".$resource.",null,null,0) value='Login' />";
+							echo "<input type=button style='font-size:11px' onclick=submitUser('../datumo/session',".$resource.",null,null,1) value='AdminArea' />";
+						echo "</td>";
+					echo "</tr>";
 
-				echo "<tr>";
-					echo "<td align=center colspan=2>";
-					echo "<hr />";
-					echo "</td>";
-				echo "</tr>";
-			
-				echo "<tr>";
-					echo "<td align=center colspan=2>";
-					echo "<input type=button style='font-size:11px' value='New User' onclick=\"javascript:window.open('../agendo/application.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=600,height=475')\" />";
-					echo "<input type=button style='font-size:11px' value='New Permission' onclick=\"javascript:window.open('../agendo/newperm.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=400,height=275')\" />";
-					echo "</td>";
-				echo "<tr>";
+					echo "<tr>";
+						echo "<td align=center colspan=2>";
+						echo "<input type=button style='font-size:11px' onclick=ajaxRecoverPWD() value='Recover Password' />";
+						echo "</td>";
+					echo "</tr>";
+				echo "</table>";
 
-				echo "<tr>";
-					echo "<td align=center colspan=2>";
-					echo "<input type=button style='font-size:11px' onclick=ajaxRecoverPWD() value='Recover Password' />";
-					echo "</td>";
-				echo "</tr>";
+				echo "<table>";
+					echo "<tr>";
+						echo "<td align=center colspan=2>";
+						echo "<hr />";
+						echo "</td>";
+					echo "</tr>";
+				
+					echo "<tr>";
+						echo "<td align=center colspan=2>";
+						echo "<input type=button style='font-size:11px' value='New User' onclick=\"javascript:window.open('../agendo/application.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=600,height=475')\" />";
+						echo "<input type=button style='font-size:11px' value='New Permission' onclick=\"javascript:window.open('../agendo/newperm.php','_blank','directories=no,status=no,menubar=yes,location=yes,resizable=no,scrollbars=no,width=400,height=275')\" />";
+						echo "</td>";
+					echo "<tr>";
 				echo "</table>";
 			echo "</form>";
 		echo "</div>";
