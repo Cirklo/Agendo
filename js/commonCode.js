@@ -83,3 +83,12 @@ function ajaxRequest(url){
     return str;
 }
 
+var lastMsg = '';
+function showError(errorMsg){
+// $('#StatusBar').jnotifyInizialize({
+        // oneAtTime: true
+    // });
+	$.jnotify(errorMsg, "");
+	// if(lastMsg != $.jnotify.message())
+	// alert($.jnotify.message());
+}

@@ -15,11 +15,24 @@
 	}
 		
 	require_once("__dbHelp.php");
-
-	if(isset($_GET['checkUserAndPass'])){
-		validUserAndPass($_GET['user'], $_GET['pass']);
-		exit;
+	
+	function importJs(){
+		echo "<script type='text/javascript' src='../agendo/js/jquery-1.5.2.min.js'></script>";
+		echo "<script type='text/javascript' src='../agendo/js/commonCode.js'></script>";
+		echo "<link type='text/css' href='../agendo/css/jquery.jnotify.css' rel='stylesheet' media='all' />";
+		echo "<script type='text/javascript' src='../agendo/js/jquery.jnotify.js'></script>";
 	}
+
+	// function showError($errorMessage, $import = false){
+		// if($import)
+			// importJs();
+		
+	// }
+
+	// if(isset($_GET['checkUserAndPass'])){
+		// validUserAndPass($_GET['user'], $_GET['pass']);
+		// exit;
+	// }
 		
 	// Initializes the session, checks if it timesOut and if needsToBeLogged it doesnt allow the page where 
 	// this function is to be entered without a user being logged in
@@ -95,10 +108,11 @@
 				exit;
 			}
 			$_SESSION['logOff'] = null;
-
 		}
+		// exit;
+		return;
 	}
-	
+
 	function loggedInAs($phpFile, $resource){
 		if(isset($_SESSION['user_name']) && $_SESSION['user_name']!=''){
 			$textColor = 'grey';
@@ -190,8 +204,9 @@
 	
 	// User/management div
 	function echoUserDiv($phpFile, $resource){
-		echo "<script type='text/javascript' src='../agendo/js/jquery-1.5.2.min.js'></script>";
-		echo "<script type='text/javascript' src='../agendo/js/commonCode.js'></script>";
+		// echo "<script type='text/javascript' src='../agendo/js/jquery-1.5.2.min.js'></script>";
+		// echo "<script type='text/javascript' src='../agendo/js/commonCode.js'></script>";
+		importJs();
 
 		
 		// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file

@@ -441,17 +441,20 @@ function filljscombo(tagname,start,end,resolution,selection,entry) {
 }
 
 function showfade(element,count) {
-	fadeCount = count;
-	if(!showingMsg){
-		obj=document.getElementById('msg');
-		if (obj.innerHTML != "") {
-			obj.style.color = 773333;
-			obj.style.fontSize = 25;
-			obj.style.visibility = 'visible';
-			showingMsg = true;
-			showFadeAux(element, fadeCount)
-		}
-	}
+	obj=document.getElementById('msg');
+	if (obj.innerHTML != "")
+		showError(obj.innerHTML);
+	// fadeCount = count;
+	// if(!showingMsg){
+		// obj=document.getElementById('msg');
+		// if (obj.innerHTML != "") {
+			// obj.style.color = 773333;
+			// obj.style.fontSize = 25;
+			// obj.style.visibility = 'visible';
+			// showingMsg = true;
+			// showFadeAux(element, fadeCount)
+		// }
+	// }
 } 
 
 function showFadeAux(element, count){
