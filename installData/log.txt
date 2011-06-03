@@ -4,35 +4,3 @@ Username marker replaced successfully
 Password marker replaced successfully
 Schema marker replaced successfully
 
-Admin marker replaced successfully
-Admin's pass marker replaced successfully
-Admin first name marker replaced successfully
-Admin last name marker replaced successfully
-Admin phone marker replaced successfully
-Admin extension marker replaced successfully
-Admin mobile marker replaced successfully
-Admin email marker replaced successfully
-Institute marker replaced successfully
-Institute short name marker replaced successfully
-Institute URL marker replaced successfully
-Institute mail marker replaced successfully
-Institute mail password marker replaced successfully
-Institute mail host marker replaced successfully
-Institute mail port marker replaced successfully
-Successfully imported the database settings.
-Admin marker replaced successfully
-Admin's pass marker replaced successfully
-Admin first name marker replaced successfully
-Admin last name marker replaced successfully
-Admin phone marker replaced successfully
-Admin extension marker replaced successfully
-Admin mobile marker replaced successfully
-Admin email marker replaced successfully
-Institute marker replaced successfully
-Institute short name marker replaced successfully
-Institute URL marker replaced successfully
-Institute mail marker replaced successfully
-Institute mail password marker replaced successfully
-Institute mail host marker replaced successfully
-Institute mail port marker replaced successfully
-Tables already exist.

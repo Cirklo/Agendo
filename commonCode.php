@@ -115,12 +115,13 @@
 
 	function loggedInAs($phpFile, $resource){
 		if(isset($_SESSION['user_name']) && $_SESSION['user_name']!=''){
-			$textColor = 'grey';
-			$textColorHover = 'white';
-			$textSize = '10px';
+			$textColor = 'white';
+			$textColorHover = '#F7C439';
+			$textSize = '12px';
 			echo "<div align='right' valign='bottom'>";
-			echo "<label style='font-size:".$textSize.";color:".$textColor."'>Logged as: \"".$_SESSION['user_name']." ".$_SESSION['user_lastName']."\"</label>";
-			echo "<a style='font-size:$textSize;cursor:pointer;color:$textColor' onmouseover=\"this.style.color='$textColorHover'\" onmouseout=\"this.style.color='$textColor'\" title='Click here to logoff' onclick=logOff('".$phpFile."',".$resource.")> Logoff</a>&nbsp;&nbsp;<br>";
+			echo "<label style='background:;'><label style='font-size:".$textSize.";color:".$textColor."'>&nbsp;You are logged as </label><label style='font-size:".$textSize.";color:".$textColor."'>".$_SESSION['user_name']." ".$_SESSION['user_lastName']." | </label></label>";
+			echo "<a style='font-size:".$textSize.";cursor:pointer;color:".$textColor."' onmouseover=\"this.style.color='".$textColorHover."'\" onmouseout=\"this.style.color='".$textColor."'\" title='Click here to logoff' onclick=logOff('".$phpFile."',".$resource.")> Logoff</a>";
+			// echo "&nbsp;<input type='button' style='font-size:11px' value='LogOff' onclick=logOff('".$phpFile."',".$resource.")></input>";
 			echo "</div>";
 		}
 	}
@@ -193,7 +194,7 @@
 			echo "<a href=index.php?class=0>All Resources</a><br>";
 			echo "<a href=index.php>Most used</a>";
 			echo "<hr>";
-			$sql= "select * from type order by type_name";
+			$sql= "select * from resourcetype order by resourcetype_name";
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
@@ -206,7 +207,6 @@
 	function echoUserDiv($phpFile, $resource){
 		// echo "<script type='text/javascript' src='../agendo/js/jquery-1.5.2.min.js'></script>";
 		// echo "<script type='text/javascript' src='../agendo/js/commonCode.js'></script>";
-		importJs();
 
 		
 		// Used only for the horrible patch/hack of the checkfields function in the weekview.js, more details on that file

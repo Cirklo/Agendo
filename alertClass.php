@@ -40,13 +40,15 @@ private $RespAlert;
 function __construct($resource=0) {
     
     // $sql = "SELECT mainconfig_host, mainconfig_port, mainconfig_password, mainconfig_email, mainconfig_smtpsecure, mainconfig_smtpauth FROM mainconfig WHERE mainconfig_id = 1";
-    // $res = dbHelp::mysql_query2($sql) or die ("Error while making the query -> " . $sql);;
+    // $res = dbHelp::mysql_query2($sql) or die ("Error while making the query -> " . $sql);
     // $row = dbHelp::mysql_fetch_row2($res);
+	
 	$sql = "SELECT configparams_name, configparams_value from configparams where configparams_name='host' or configparams_name='port' or configparams_name='password' or configparams_name='email' or configparams_name='smtpsecure' or configparams_name='smtpauth'";
 	$res = dbHelp::mysql_query2($sql);
 	for($i=0; $arr = dbHelp::mysql_fetch_row2($res); $i++){
 		$row[$i] = $arr[1];
-}
+	}
+	
 	$this->IsSMTP(); // telling the class to use SMTP
     $this->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
     $this->SMTPAuth   = $row[5];                  // enable SMTP authentication
@@ -70,9 +72,7 @@ function __construct($resource=0) {
     
     // $sql="select user_id,user_email,user_mobile, concat(user_firstname,' ',user_lastname) name,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName().".user,resource where resource_resp=user_id and resource_id=". $this->Resource;
     $sql="select user_id,user_email,user_mobile, user_firstname,user_lastname,user_alert,resource_name,resource_resolution from ".dbHelp::getSchemaName().".user,resource where resource_resp=user_id and resource_id=". $this->Resource;
-    
     $res=dbHelp::mysql_query2($sql);
-    
     $arr=dbHelp::mysql_fetch_row2($res);
     
     // $this->ResourceResp=$arr[0];
@@ -199,9 +199,6 @@ function toAdmin($datetime,$extra,$type,$comment=''){
         }
         $extrainfo=substr($extrainfo,0,strlen($extrainfo)-2);
         
-   // $m=($type=='delete')?'METHOD:CANCEL':'';
-   // $s=($type=='delete')?'STATUS:CANCELLED':'';
-
 $att = "BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Cirklo Agendo
@@ -215,33 +212,38 @@ DESCRIPTION:" . $extrainfo . "
 END:VEVENT
 END:VCALENDAR";
 
-    //Your entry on " . $arr['resource_name'] . " at ". $arr['t'] . " on the ". $arr['d'] . " 
     switch ($type) {
         case 'newentry':
-            $this->AddStringAttachment($att,'agendo.ics');
-            $msg="New entry on ". $this->ResourceName . " at ". $hour . ":". $min ." on the " . "$year-$month-$day from user " . $this->UserFullName;
+
+			$this->AddStringAttachment($att,'agendo.ics');
+            $msg="New entry on ". $this->ResourceName . " at ". $hour . ":". $min ." on the " .$year."-".$month."-".$day." from user ".$this->UserFullName.".";
             break;
+			
         case 'comment':
             $msg="Comment added  on ". $this->ResourceName . ":" . $comment;
             break;
+			
         case 'assistance':
             $this->AddStringAttachment($att,'agendo.ics');
             $msg="Assistance requested for " . $this->ResourceName  . " at $hour:$min on the $year-$month-$day";
             break;
+			
         case 'update':
 		
-			$sql="select xfields_label, xfieldsval_value from xfields, xfieldsval where xfieldsval_entry = ".$this->LastEntry." and xfieldsval_field = xfields_id";
-			$res=dbHelp::mysql_query2($sql);
-			$fields = '';
-			while ($arr = dbHelp::mysql_fetch_row2($res)){
-				$fields = " with field ".$arr[0]." = ".$arr[1].",";
-			}
-			if($fields != '')
-				$fields=substr($fields,0,strlen($fields)-1);
+			// $sql="select xfields_label, xfieldsval_value from xfields, xfieldsval where xfieldsval_entry = ".$this->LastEntry." and xfieldsval_field = xfields_id";
+			// $res=dbHelp::mysql_query2($sql);
+			// $fields = '';
+			// while ($arr = dbHelp::mysql_fetch_row2($res)){
+				// $fields = " with field ".$arr[0]." = ".$arr[1].",";
+			// }
+			// if($fields != '')
+				// $fields=substr($fields,0,strlen($fields)-1);
 
 				$this->AddStringAttachment($att,'agendo.ics');
-            $msg="Update on ".$this->ResourceName." at ".$hour.":".$min." on "."$year-$month-$day from user ".$this->UserFullName.$fields.".";
+            // $msg="Update on ".$this->ResourceName." at ".$hour.":".$min." on "."$year-$month-$day from user ".$this->UserFullName.$fields.".";
+            $msg="Update on ". $this->ResourceName . " at ". $hour . ":". $min ." on the " .$year."-".$month."-".$day." from user ".$this->UserFullName.".";
             break;
+			
           case 'delete':
             $this->AddStringAttachment($att,'agendo.ics');
             $msg="Delete on ". $this->ResourceName  . " at ". $hour . ":". $min ." on " . "$year-$month-$day from user " . $this->UserFullName;
@@ -261,7 +263,8 @@ END:VCALENDAR";
         case 1:
             $this->Subject=strtoupper($type)." on " . $this->ResourceName ;
             $this->AddReplyTo($this->UserEmail,$this->UserFullName);
-            $this->Body=$msg . "\n email:". $this->UserEmail ."\nmobile:".$this->UserMobile ."\n". $extrainfo ;
+			$mobileStr = str_replace("\\n", "\n", $extrainfo);
+            $this->Body=$msg . "\n email:". $this->UserEmail ."\nmobile:".$this->UserMobile ."\n".$mobileStr  ;
             $address = $this->RespEmail;
             $this->AddAddress($address, "");
             if(!$this->Send()) {

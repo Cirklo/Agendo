@@ -7,6 +7,7 @@ table.logo {
 	width: 100%;
 	color:#eeeeee;
 	border: 2px solid #EDF2F3;
+	height:100;
 }
 
 div.msg {
@@ -210,7 +211,7 @@ div.resourcediv{
 	padding:2px;
  }
 
-input.inpbox {
+input.inpbox, select.similar {
 	font-size:12px;
 	width:122px;
 	background:#EAE8E5;

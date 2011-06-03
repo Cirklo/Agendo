@@ -106,20 +106,25 @@ function add(){
         $sql="SELECT entry_id from entry where entry_user = ".$user_id." and entry_datetime = ".dbHelp::convertDateStringToTimeStamp($weekahead,'%Y%m%d%H%i')." and entry_repeat = " . $arrrep[0] ." and entry_resource = " . $resource;
         $res=dbHelp::mysql_query2($sql) or die($sql);
         $last=dbHelp::mysql_fetch_row2($res);
-        $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
+		
+		// xfieldsinputtype: 1 = input, 2 = singlepickcheckbox, 3 = multipickcheckbox
+        $sql="select xfields_name, xfields_id, xfields_label, xfields_type from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=".$resource." group by xfields_id, xfields_type";
         $res=dbHelp::mysql_query2($sql) or die($sql);
         $extra= array();
-        // for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-            // mysql_data_seek($res,$i);
 		while($arr=dbHelp::mysql_fetch_row2($res)){
-            // $arr=dbHelp::mysql_fetch_row2($res);
-            $var=$arr[0];
-            $val=clean_input($_GET[$var]);
-            eval("\$$var='$val';");
-            $sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(". $last[0] . "," . $arr[1] . ",'" . $val . "')";
+			$val = '';
+			$val=clean_input($_GET[$arr[0].$arr[1]]);
+
+            // eval("\$$var='$val';");
+			if(($arr[3] == 2 || $arr[3] == 3) && $val=='true')
+				$extra[$arr[0]]=$arr[2];
+			else if($arr[3] == 1)
+				$extra[$arr[2]]=$val;
+				
+            $sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(".$last[0].",".$arr[1].",'".$val."')";
             dbHelp::mysql_query2($sql) or die($sql);
-            $extra[$arr[0]]=$val;
         }
+		
         $notify->setSlots($slots);
         $notify->setEntry($last[0]);
         $notify->setUser($user_id);
@@ -133,7 +138,7 @@ function add(){
         $weekaheadUTC=mktime(0,0,0,$month, $day+7*$w,$year);
         $weekahead=date("Ymd",$weekaheadUTC) . substr($datetime,8,4);
     }
-    echo "entry(ies) added";
+    echo "Entry(ies) added";
 }
 //changes the entry state to 3, ie, invisible
 function del(){
@@ -273,12 +278,13 @@ function update(){
 	//************************************
 	
     $sql="update entry set entry_user=".$user_id.", entry_datetime=".dbHelp::convertDateStringToTimeStamp($datetime,'%Y%m%d%H%i').",entry_slots=".$slots." where entry_id=". $entry;
-    $resPDO = dbHelp::mysql_query2($sql.$extra) or die("Entry info not updated!");
+    $resPDO = dbHelp::mysql_query2($sql.$extra) or die($sql.$extra);
    // if (mysql_affected_rows()==0) {
     if (dbHelp::mysql_numrows2($resPDO) == 0) {
         echo "Entry info not updated.";
 		exit;
-    } else {
+    } 
+	else {
         //notification for waiting list
         // $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName().".user where entry_user=user_id and entry_status=4 and entry_datetime=@edt and entry_resource=@res order by entry_id";
         $sql="select entry_id, user_id from entry,".dbHelp::getSchemaName().".user where entry_user=user_id and entry_status=4 and entry_datetime='".$arrdt[0]."' and entry_resource=".$arrdt[1]." order by entry_id";
@@ -292,23 +298,22 @@ function update(){
             
             $sql="delete from entry where entry_id=" . $arrStatus[0]; // deleting a monitoring entry
             dbHelp::mysql_query2($sql);
-            //echo $sql
         }
     }
     
-    $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
+	// xfieldsinputtype: 1 = input, 2 = singlepickcheckbox, 3 = multipickcheckbox
+	$sql="select xfields_name,xfields_id, xfields_label from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=".$resource." group by xfields_id, xfields_type";
     $res=dbHelp::mysql_query2($sql) or die($sql);
-    for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-        // mysql_data_seek($res,$i);
-        $arr=dbHelp::mysql_fetch_row2($res);
-        $var=$arr[0];
-        $val=$_GET[$var];
+    while($arr=dbHelp::mysql_fetch_row2($res)) {
+		$val = '';
+		$val=clean_input($_GET[$arr[0].$arr[1]]);
+		
         $extra[$arr[0]]=$val;
-        eval("\$$var='$val';");
-        $sql="update xfieldsval set xfieldsval_value='$val' where xfieldsval_entry=$entry and xfieldsval_field=" . $arr[1];
+        // eval("\$$var='$val';");
+        $sql="update xfieldsval set xfieldsval_value='".$val."' where xfieldsval_entry=".$entry." and xfieldsval_field=".$arr[1];
         dbHelp::mysql_query2($sql) or die("Entry info not updated!");
-        
     }
+	
     $notify=new alert($resource);
     $notify->setUser($user_id);
     $notify->setSlots($slots);
@@ -384,15 +389,14 @@ function monitor(){
     $res=dbHelp::mysql_query2($sql) or die($sql);
     $last=dbHelp::mysql_fetch_row2($res);
         
-    $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=" . $resource;
+	// xfieldsinputtype: 1 = input, 2 = singlepickcheckbox, 3 = multipickcheckbox
+	// $sql="select xfields_name,xfields_id, xfields_label from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=".$resource." group by xfields_id, xfields_type";
+    $sql="select xfields_name,xfields_id from xfields,resxfields where resxfields_field=xfields_id and resxfields_resource=".$resource." group by xfields_id, xfields_type";
 	$res=dbHelp::mysql_query2($sql) or die($sql);
 	while($arrx=dbHelp::mysql_fetch_row2($res)){
-	// for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-		// mysql_data_seek($res,$i);
-		// $arrx=dbHelp::mysql_fetch_row2($res);
-		$var=$arrx[0];
-		$val=clean_input($_GET[$var]);
-		eval("\$$var='$val';");
+		// $var=$arrx[0];
+		$val=clean_input($_GET[$arrx[0].$arrx[1]]);
+		// eval("\$$var='$val';");
 		$sql="insert into xfieldsval(xfieldsval_entry,xfieldsval_field,xfieldsval_value) values(".$last[0].",".$arrx[1].",'".$val."')";
 		dbHelp::mysql_query2($sql) or die($sql);
 	}

@@ -25,6 +25,7 @@ function go (objIMG) {
 function submitUser(phpFile,resource,user,pass,loginToDatumo) {
     formObj=document.getElementById('edituser');
 	passCrypted = 'false';
+
 	if(user==null){
 		if (checkfield(formObj.user_idm)) return;
 		if (checkfield(formObj.user_passwd)) return;
@@ -81,14 +82,4 @@ function ajaxRequest(url){
     xmlhttp.send(null);
     var str=xmlhttp.responseText;
     return str;
-}
-
-var lastMsg = '';
-function showError(errorMsg){
-// $('#StatusBar').jnotifyInizialize({
-        // oneAtTime: true
-    // });
-	$.jnotify(errorMsg, "");
-	// if(lastMsg != $.jnotify.message())
-	// alert($.jnotify.message());
 }

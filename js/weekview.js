@@ -307,8 +307,6 @@ function ManageEntries(action,ttime,tresolution) {
   //  
 }
 function addcomments(entry) {
-    
-    
     if (entry==0){
         if (window.XMLHttpRequest){
             xmlhttp=new XMLHttpRequest();
@@ -333,30 +331,40 @@ function addcomments(entry) {
     ajaxEntries('GET','../agendo/process.php?resource=' + resource,true);
     clear_table(table,false); 
     myForm.style.display = "none";
-
 }
 
-// Checks if a field is empty, returns true if it is
-function checkfield(field) {  
-	// this is a horrible, horrible patch but still brilliant (the chosen two has done it again)
-	// its purpose is to be able to ignore the login fields that are empty when the user and pass are as session variables
-    if(usingSession && (field.name == 'user_id' || field.name == 'user_passwd')){
-		return false;
+checkedValue = '9001!';
+atLeastOneChecked = false;
+nameTable = '';
+// haha brilliant name, oh you....
+// is used to tell between uninteresting checkboxs/radiobuttons and "super sayajin"/xfield ones
+function checkIfNotChecked(elementNumber, objForm){
+	nameTable = objForm[elementNumber].name;
+	if(elementNumber == (objForm.length-1) || objForm[elementNumber+1].name != nameTable || objForm[elementNumber+1].value != checkedValue)
+		return checkIfNotCheckedAux(objForm[elementNumber], true);
+	else
+		return checkIfNotCheckedAux(objForm[elementNumber], false);
+}
+
+function checkIfNotCheckedAux(field, last){
+	if(field.checked)
+		atLeastOneChecked = true;
+	nonChecked = false;	
+	// if(last || (nameTable != '' && nameTable != field.name)){
+	if(last){
+	// alert(nameTable+'--'+field.name);
+		if(!atLeastOneChecked){
+			// alert('field blablabla error');
+			document.getElementById('msg').innerHTML = "Field " + nameTable + " required!";
+			showfade('msg',fadeConstant);
+			clear_table(document.getElementById('caltable'),true);
+			nonChecked = true;
+		}
+		atLeastOneChecked = false;
+		nameTable = '';
+		last = false;
 	}
-    if (field.value=='') {
-        field.focus();
-        //alert ("Field " + field.name + " required!");
-        if (document.getElementById('msg').innerHTML != "Field " + field.name + " required!")
-			document.getElementById('msg').innerHTML = "Field " + field.name + " required!";
-        // showfade('msg',1000);
-        showfade('msg',fadeConstant);
-        //window.location.reload();
-        clear_table(document.getElementById('caltable'),true);
-        // exit;
-        return true;
-    }
-    return false;
-    
+	return nonChecked;
 }
 
 function ajaxEntries(method,url,nosync){
@@ -373,53 +381,67 @@ function ajaxEntries(method,url,nosync){
     } else {
         alert("Your browser does not support XMLHTTP!");  
     }
+
     switch(action) {
     case 'add':
         for (nelements=0;nelements<objForm.length;nelements++){
-            if (checkfield(objForm[nelements])) return;
+// alert(objForm[nelements].name);
+			// its over 9000!!!!
+			if(objForm[nelements].value == checkedValue && checkIfNotChecked(nelements, objForm))
+				return;
+            else if (checkfield(objForm[nelements]))
+				return;
         }
     break;
+	
     case 'update':
         for (nelements=0;nelements<objForm.length;nelements++){
-            if (checkfield(objForm[nelements])) return;
-            
+			// its over 9000!!!!
+			if(objForm[nelements].value == checkedValue && checkIfNotChecked(nelements, objForm))
+				return;
+            else if (checkfield(objForm[nelements]))
+				return;
         }
     break;
+	
     case 'del':
         if (checkfield(objForm['user_id'])){detectedUser = false; return;}
         if (checkfield(objForm['user_passwd'])){detectedUser = false; return;}
     break;
+	
     case 'monitor':
-    // alert (par);
         for (nelements=0;nelements<objForm.length;nelements++){
-            if (checkfield(objForm[nelements])) return;
+            // its over 9000!!!!
+			if(objForm[nelements].value == checkedValue && checkIfNotChecked(nelements, objForm))
+				return;
+            else if (checkfield(objForm[nelements]))
+				return;
         }
-        // if (checkfield(objForm['user_id']))return;
-        // if (checkfield(objForm['user_passwd']))return;
+		
     break;
+	
     case 'confirm':
-        
     break;
     }
+	
     objForm.user_id.value=objForm.user_id.title;
     
     // builds post string
     for (nelements=0;nelements<objForm.length;nelements++){
         if (objForm[nelements].lang=='send') {
-			if (objForm[nelements].type=='checkbox') {
-				par=par+ objForm[nelements].name + '=' + objForm[nelements].checked + "&";
+			if (objForm[nelements].type=='checkbox' || objForm[nelements].type=='radio') {
+				par=par+ objForm[nelements].id + '=' + objForm[nelements].checked + "&";
 			} else {
-				par=par+ objForm[nelements].name + '=' + objForm[nelements].value + "&";
+				par=par+ objForm[nelements].id + '=' + objForm[nelements].value + "&";
 			}
 		}
     }
 	// par has username and pass
-   xmlhttp.open(method, url + '&' + par, nosync);
-   xmlhttp.send(null);
+	xmlhttp.open(method, url + '&' + par, nosync);
+	xmlhttp.send(null);
     xmlhttp.onreadystatechange = function () {
         if(xmlhttp.readyState==4) {
             code=document.getElementById('code').value;
-            // alert(xmlhttp.responseText);         
             window.location.href='weekview.php?resource=' + resource + '&date=' + date+ '&code=' + code + '&msg=' + xmlhttp.responseText;
         }
     }
@@ -442,8 +464,9 @@ function filljscombo(tagname,start,end,resolution,selection,entry) {
 
 function showfade(element,count) {
 	obj=document.getElementById('msg');
-	if (obj.innerHTML != "")
-		showError(obj.innerHTML);
+	if (obj.innerHTML != ""){
+		$.jnotify(obj.innerHTML);
+		
 	// fadeCount = count;
 	// if(!showingMsg){
 		// obj=document.getElementById('msg');
@@ -454,7 +477,8 @@ function showfade(element,count) {
 			// showingMsg = true;
 			// showFadeAux(element, fadeCount)
 		// }
-	// }
+	}
+	document.body.style.cursor='default';
 } 
 
 function showFadeAux(element, count){
@@ -507,4 +531,42 @@ function submitUser(resource) {
     formObj.user_idm.value=formObj.user_idm.title;
     formObj.action='../agendo/admin.php?resource=' + resource;
     formObj.submit();
+}
+
+function addRadioOrCheck(tableName, id, label, type){
+	// name = tableName + id;
+	name = tableName;
+	typeName = 'checkbox';
+	if(type == 3){
+		// name = tableName;
+		typeName = 'radio';
+	}
+	extraHtml = "<tr><td colspan=2><label><input lang='send' type='" + typeName + "' name=" + name + " id=" + tableName + id + " value='" + checkedValue + "'>&nbsp;" + label + "</label></td></tr>";
+	document.getElementById(tableName).innerHTML = document.getElementById(tableName).innerHTML + extraHtml;
+}
+
+// Checks if a field is empty, returns true if it is
+function checkfield(field) {  
+	// this is a horrible, horrible patch but still brilliant (the chosen two has done it again)
+	// its purpose is to be able to ignore the login fields that are empty when the user and pass are as session variables
+    if(usingSession && (field.name == 'user_id' || field.name == 'user_passwd')){
+		return false;
+	}
+	
+    if (field.value=='') {
+
+		field.focus();
+        if (document.getElementById('msg').innerHTML != "Field " + field.name + " required!")
+			document.getElementById('msg').innerHTML = "Field " + field.name + " required!";
+			
+        showfade('msg',fadeConstant);
+        clear_table(document.getElementById('caltable'),true);
+        return true;
+    }
+    return false;
+    
+}
+
+function similarResources(value){
+	window.location="./weekview.php?resource=" + value;
 }

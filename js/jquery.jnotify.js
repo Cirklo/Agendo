@@ -17,6 +17,8 @@
  *
  * Date: 2010-09-30
  * Rev:  1.1.00
+ 
+ Contribution by João Lagarto and Pedro Pires
  */
 ;(function($){
 	$.jnotify = function (m, o, d){
@@ -182,26 +184,26 @@
 			// check if a custom transition has been specified
 			if( $.isFunction(options.transition) ) options.transition.apply(self, [$parent, $msg, index, finished, options]);
 			else {
-				$msg.fadeTo(options.fadeSpeed, 0.01, function (){
+				// $msg.fadeTo(options.fadeSpeed, 0.01, function (){
+				$msg.fadeTo(options.fadeSpeed,0.01, function (){
 					// if last item, just remove
 					if( index <= 1 ) finished();
 					// slide the parent closed
-					else $parent.slideUp(options.slideSpeed, finished);
+					else $parent.fadeOut(options.slideSpeed, finished);
 				});
 				
 				// if the last notification, fade out the container
-				if( count <= 0 ) $parent.fadeOut(options.fadeSpeed);
+				// if( count <= 0 ) $parent.fadeOut(options.fadeSpeed);
+				$parent.fadeOut(options.fadeSpeed);
 			}
 		}
 		
-		if(count > 0){
-			for(i = 0; i<count; i++){
-				if(messagesList[i] == message){
-					// alert('teste');
+		// added to make sure that the same message doesnt show multiple times on the container
+		if(count > 0)
+			for(i = 0; i<count; i++)
+				if(messagesList[i] == message)
 					return null;
-				}
-			}
-		}
+					
 		// create the note
 		var $note = create(message);
 		

@@ -113,15 +113,15 @@ function DisplayUserInfo() {
 
 function DisplayEntryInfo() {
     $entry=clean_input($_GET['entry']);
-    $sql ="select xfields_name,xfieldsval_value from xfieldsval,xfields where xfieldsval_field=xfields_id and  xfieldsval_entry=".$entry;
+    $sql ="select xfields_name, xfieldsval_value, xfields_type, xfields_id from xfieldsval,xfields where xfieldsval_field=xfields_id and  xfieldsval_entry=".$entry." group by xfields_id, xfields_type";
     $res=dbHelp::mysql_query2($sql) or die ($sql);
     
-    for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
-        // mysql_data_seek($res,$i);
-        $arr=dbHelp::mysql_fetch_row2($res);
-        echo "document.getElementById('" . $arr[0] . "').value='" . $arr[1] . "';";
+	while($arr=dbHelp::mysql_fetch_row2($res)){
+		if($arr[2] == 2 || $arr[2] == 3)
+			echo "document.getElementById('".$arr[0].$arr[3]."').checked=".$arr[1].";";
+		else
+			echo "document.getElementById('".$arr[0].$arr[3]."').value='".$arr[1]."';";
     }
- 
 }
 
 ?>

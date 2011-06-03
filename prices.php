@@ -2,7 +2,7 @@
 	require_once("commonCode.php");
 	
 	echo "<table>";
-	$sql = "select resource_name, type_name, pricetype_name, price_value from resource, type, pricetype, price where price_resource = resource_id and resource_type = type_id and price_type = pricetype_id order by resource_name";
+	$sql = "select resource_name, resourcetype_name, pricetype_name, price_value from resource, resourcetype, pricetype, price where price_resource = resource_id and resource_type = resourcetype_id and price_type = pricetype_id order by resource_name";
 	$res = dbHelp::mysql_query2($sql) or die ($sql);
 	$name = '';
 	$columns = '';

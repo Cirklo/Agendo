@@ -38,6 +38,26 @@ window.onresize = function (){resizeMe();}
 		// alert(getAjaxResult());
 	}
 
+	function dostuff(){
+		document.getElementById('bla').checked=!document.getElementById('bla').checked;
+	}
+	function checkRadioButtons(elementId){
+		// var children = document.getElementById(elementId).childNodes;
+		var children = document.getElementById(elementId).getElementsByTagName('*');
+		for(i=0;i<children.length;i++){
+			if(children[i].type == 'radio')
+			alert(children[i].id+'----'+children.length);
+		}
+	}
+	
+	function addRadio(divName, addToName){
+		// var newdiv = document.createElement('div');
+		// newdiv.innerHTML = "<input type='radio' name="+divName+" id="+divName+addToName+">"+divName+addToName;
+		// var newdiv = document.createTextNode ("<input type='radio' name="+divName+" id="+divName+addToName+">"+divName+addToName);
+		// document.getElementById(divName).appendChild(newdiv);
+		// document.getElementById(divName).appendChild(bla);
+		document.getElementById(divName).innerHTML = document.getElementById(divName).innerHTML + "<tr><td><input type='radio' name="+divName+" id="+divName+addToName+"></td><td>"+divName+addToName + "</td></tr>";
+	}
 </script>
 <?php
 	// $time1 = microtime(true);
@@ -85,5 +105,19 @@ window.onresize = function (){resizeMe();}
 		echo("</form>");
 		echo("<script type='text/javascript' src='http://www.google.com/cse/tools/onthefly?form=searchbox_demo&lang='></script>");
 	}
+
+	$arr = explode(";","treta;");
+	echo "result->".sizeof($arr);
+	echo "<input lang=send type=checkbox onkeypress='return noenter()' id='bla' name='bla' checked/>";
+	echo "<input id='bla2' type=button value='bla' onclick='dostuff()'/>";
+	
+	echo "<table id='testeDiv'></div>";
+	
+	echo "<script type='text/javascript'>";
+	for($i=0;$i<5;$i++)
+		echo "addRadio('testeDiv','".$i."');";
+		echo "alert(document.getElementById('testeDiv0').checked);";
+	echo "</script>";
+	echo "<input id='bla3' type=button value='bla3' onclick=\"checkRadioButtons('testeDiv')\"/>";
 
 ?>
