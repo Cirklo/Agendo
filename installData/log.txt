@@ -4,3 +4,4 @@ Username marker replaced successfully
 Password marker replaced successfully
 Schema marker replaced successfully
 
+Successfully imported all database settings.<br><a href='../../path/index.php?class=0'>Your page</a>

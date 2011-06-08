@@ -53,11 +53,6 @@
 			return $prepSql->fetch(PDO::FETCH_NUM);
 		}
 
-		// Prepare avoids this
-		// public static mysql_real_escape_string2($string){
-			
-		// }
-		
 		public static function mysql_select_db2($db){
 			dbHelp::getConnect()->dbSelect($db);
 		}
@@ -166,24 +161,24 @@
 				return $successMsg;
 			}
 			catch(Exception $e) {
-				return "Exception with sql statement: \n'".$statements[$i]."'.\nException message: \n".$e->getMessage();
+				return $errorMsg."\nException with sql statement: '".$statements[$i]."'.\nException message: \n".$e->getMessage();
 			}
 		}
 		
-		// Gets all the data after a certain string($afterString) and before a string ($beforeString)
-		//	$array = getTablesFromScript($sql, 'CREATE TABLE IF NOT EXISTS', '('); returns an array of table names
-		public function getTablesFromScript($sql, $afterString, $beforeString){
-			$allTables = '';
-			while(($pos1 = stripos($sql, $afterString)) !== false){
-				$pos1 = $pos1 + strlen($afterString);
-				$sql = substr($sql, $pos1, strlen($sql)-$pos1);
-				if(($pos2 = stripos($sql, $beforeString)) === false)
-					break;
-				$allTables = trim(substr($sql, 0, $pos2)).';'.$allTables;
-				$sql = substr($sql, $pos2, strlen($sql));
+		public static function startTransaction($sql){
+			$resultMsg = 'success';
+			try{
+				$connect = dbHelp::getConnect();
+				// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$connect->beginTransaction();
+				$connect->exec($sql);
+				$connect->commit();
 			}
-			return explode(';', $allTables);
+			catch(PDOException $e){
+				$resultMsg = $e->getMessage();
+				// $connect->rollBack();
+			}
+			return $resultMsg;
 		}
-			
 	}
 ?>

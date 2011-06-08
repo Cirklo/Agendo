@@ -194,7 +194,7 @@
 			echo "<a href=index.php?class=0>All Resources</a><br>";
 			echo "<a href=index.php>Most used</a>";
 			echo "<hr>";
-			$sql= "select * from resourcetype order by resourcetype_name";
+			$sql= "select * from resourcetype where resourcetype_id in (select distinct resource_type from resource) order by resourcetype_name";
 			$res=dbHelp::mysql_query2($sql) or die ($sql);
 			for ($i=0;$i<dbHelp::mysql_numrows2($res);$i++) {
 				$arr=dbHelp::mysql_fetch_row2($res);
@@ -297,4 +297,37 @@
 		fwrite($fh, $string."\n");
 		fclose($fh);
 	}
+	
+	// Gets all the data after a certain string($afterString) and before a string ($beforeString)
+	//	$array = getTablesFromScript($sql, 'CREATE TABLE IF NOT EXISTS', '('); returns an array of table names
+	function getBetweenArray($all, $afterString, $beforeString, $separator = ';'){
+		$results = '';
+		while(($pos1 = stripos($all, $afterString)) !== false){
+			$pos1 = $pos1 + strlen($afterString);
+			$all = substr($all, $pos1, strlen($all)-$pos1);
+			if(($pos2 = stripos($all, $beforeString)) === false)
+				break;
+			$results = trim(substr($all, 0, $pos2)).$separator.$results;
+			$all = substr($all, $pos2, strlen($all));
+		}
+		$results = substr($results,0,strlen($results)-strlen($separator));
+		return explode($separator, $results);
+	}
+	
+	
+	function getBetweenText($all, $begin, $end = ''){
+		if(($positionBegin = stripos($all, $begin)) !== false){
+			$positionBegin = $positionBegin + strlen($begin);
+			if($end != ''){
+				if(($positionEnd = stripos($all, $end, $positionBegin)) !== false){
+					return trim(substr($all, $positionBegin, $positionEnd-$positionBegin));
+				}
+			}
+			else
+				return trim(substr($all, $positionBegin));
+		}
+		return false;
+	}
+
+	
 ?>
