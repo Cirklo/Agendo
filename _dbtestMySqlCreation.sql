@@ -1660,7 +1660,7 @@ INSERT INTO `status` (`status_id`, `status_name`) VALUES
 --
 
 INSERT INTO `institute` (`institute_id`, `institute_name`, `institute_address`, `institute_phone`, `institute_country`, `institute_vat`) VALUES
-(1, 'Instituto Gulbenkian de Ciência', '3434343', 2, 176, 2);
+(1, 'Instituto Gulbenkian de Ciï¿½ncia', '3434343', 2, 176, 2);
 
 --
 -- Dumping data for table `department`
@@ -1705,14 +1705,6 @@ INSERT INTO `type` (`type_id`, `type_name`) VALUES
 
 INSERT INTO `user` (`user_id`, `user_login`, `user_passwd`, `user_firstname`, `user_lastname`, `user_dep`, `user_phone`, `user_phonext`, `user_mobile`, `user_email`, `user_alert`, `user_level`) VALUES
 (1, 'admin', '2127f97535023818d7add4a3c2428e06d382160daab440a9183690f18e285010', 'The', 'Admin', 1, '123456789', '123', '987654321', 'admin@mail.com', 1, 0);
-
---
--- Dumping data for table `mainconfig`
---
-
-INSERT INTO `mainconfig` (`mainconfig_id`, `mainconfig_institute`, `mainconfig_shortname`, `mainconfig_url`, `mainconfig_email`, `mainconfig_password`, `mainconfig_host`, `mainconfig_port`, `mainconfig_smtpsecure`, `mainconfig_smtpauth`) VALUES
-(1, 'Instituto Gulbenkian de Ciência', 'IGC', 'www.igc.gulbenkian.pt', 'uicweb@igc.gulbenkian.pt', 'uicweb!2010', 'mail.igc.gulbenkian.pt', 25, 'none', 0);
-
 
 --
 -- Constraints for dumped tables
